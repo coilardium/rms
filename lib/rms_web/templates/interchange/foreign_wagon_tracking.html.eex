@@ -1,0 +1,108 @@
+
+<div class="m-subheader" id="interchange-foreign-tracking-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Foreign Line</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Wagon Hire</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Tracking</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Foreign line</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+         <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+
+            </div>
+        </div>
+    </div>
+</div><br>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                     <strong>Foreign line</strong>
+                </h3>
+            </div>
+
+        </div>
+    </div>
+    <!--begin::Form-->
+        <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" method="POST" enctype="multipart/form-data" id="ForeignWagonUpload">
+            <input name="id" hidden="hidden" id="id">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <div class="col-sm-6 form-group">
+                            <div class="form-group">
+                                <label for="example-input-small" class="form-label">Update Date<span style="color: red;">*</span></label>
+                                <input required type="date" name="update_date" id="update_date" class="form-control m-input clear_form">
+                                <span class="m-form__help">Please enter date</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">File<span style="color: red;">*</span>
+                            </label>
+                              <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                            <input class="form-control" type="file" id="filename" name="filename" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-form__actions m-form__actions--solid">
+                    <div class="row">
+                        <div class="col-lg-10"></div>
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-success btnSubmit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+        </form>
+             <!--end::Form-->
+</div>

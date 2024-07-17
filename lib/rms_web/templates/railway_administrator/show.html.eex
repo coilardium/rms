@@ -1,0 +1,83 @@
+
+<div class="modal fade model_select_2" id="view_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Railway Administrator Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12">
+                <div class="m-portlet__body">
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Code:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_code" disabled="true">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_description" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                           <label class="">Country:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"   id="vw_conutry" disabled="true">
+                            </div>
+                        </div>
+
+                         <div class="col-lg-6">
+                           <label class="">Status:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"   id="vw_status" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Maker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="maker" id="maker" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Checker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Checker" id="checker"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Date Created:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="created" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Date Modified:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="modified"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

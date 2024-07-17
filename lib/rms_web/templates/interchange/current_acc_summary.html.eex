@@ -1,0 +1,114 @@
+<div class="m-subheader" id="current-acc-summary-report-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Current Account Summary</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/dashboard" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Reports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Current Account Summary</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Current Account Summary
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+       <form class="m-form m-form--fit m--margin-bottom-20" action="<%= Routes.interchange_path(@conn, :account_summary_report) %>" method="POST">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-4 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Adminstrator:</label>
+                    <select required name="adminstrators[]" id="acc-summary-admin" data-admins="<%= @administrators %>" class="form-control m-select2 multi_select2_form clear_form" multiple="multiple" >
+                        <option></option>
+                        <%= for admin <- @admins do %>
+                            <option value="<%= admin.id %>"><%= admin.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-8 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Capture Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_2">
+                            <input type="text" required="true" class="form-control m-input clear_form" value="<%= @start_dt %>" name="start_dt" id="from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" required="true" class="form-control clear_form" value="<%= @end_dt %>" name="end_dt" id="to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-info m-btn m-btn--icon" id="auxiliary-filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+         <div class="m-separator m-separator--md m-separator--dashed"></div>
+        </form>
+        <table class="table table-striped table-bordered" id="current-acc-summary-dt">
+            <thead>
+                <tr>
+                    <th>Administrator</th>
+                    <th>Total Income</th>
+                    <th>Total Cost</th>
+                    <th>Net Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for admin <- @summary do %>
+                <tr>
+                    <td><%=admin.admin_name %></td>
+                    <td><%=admin.total_amount %></td>
+                    <td><%=admin.total_cost %></td>
+                    <td><%=admin.variance %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+    <div class="m-form__actions m-form__actions--solid">
+        <div class="row">
+            <div class="col-lg-12"></div>
+        </div>
+    </div>
+</div>

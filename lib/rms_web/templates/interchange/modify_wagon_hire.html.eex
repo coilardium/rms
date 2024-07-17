@@ -1,0 +1,341 @@
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Wagon History</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/dashboard" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Wagon History</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Edit Wagon History
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed edited-details" id="interchange_general_entries">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Code</label>
+                        <input required type="text" value ="<%= @entry && @entry.wagon_code %>" class="form-control m-put clear_form">
+                        <input type="hidden" name="_csrf_token" id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                        <input type="hidden" name="id" id="entry_id" value="<%= @entry && @entry.id %>">
+                        <input type="hidden" name="wagon_id"  value="<%= @entry && @entry.wagon_id %>">
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                     <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Owner</label>
+                        <input required type="text" value ="<%= @entry && @entry.wagon_owner %>"  class="form-control m-put clear_form">
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Commodity<span style="color: red;">*</span></label>
+                             <select required name="commodity_id" id="edit-commodity" data-commodity ="<%= @entry && @entry.commodity_id %>" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for commodity <- @commodity do %>
+                                <option value="<%= commodity.id %>"><%= commodity.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Commodity</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Train No.<span style="color: red;">*</span></label>
+                        <input required type="text" name="train_no"  value ="<%= @entry && @entry.train_no %>"class="form-control m-put clear_form">
+                        <span class="m-form__help">Please Enter Train No.</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Interchange Point<span style="color: red;">*</span></label>
+                             <select required name="interchange_point" id="edit-interchange-point" data-interchange-point ="<%= @entry && @entry.interchange_point %>" id="interchange_point" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Interchange Point</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Adminstrator<span style="color: red;">*</span></label>
+                             <select required name="adminstrator_id" id="edit-adminstrator-id" data-adminstrator ="<%= @entry && @entry.adminstrator_id %>" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for admin <- @admins do %>
+                                    <option value="<%= admin.id %>"><%= admin.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Adminstrator</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Direction<span style="color: red;">*</span></label>
+                         <select required name="direction"  id="direction" data-direction="<%= @entry && @entry.direction %>"   class="form-control m-select2 m_select2_1 clear_form ">
+                            <option></option>
+                            <option value="OUTGOING">OUTGOING</option>
+                            <option value="INCOMING">INCOMING</option>
+                        </select>
+                        <span class="m-form__help">Please Choose Direction</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Current location<span style="color: red;">*</span></label>
+                             <select required name="current_station_id" id="edit-current-station" data-current-station ="<%= @entry && @entry.current_station_id %>" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Current location</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Entry Date<span style="color: red;">*</span></label>
+                        <input required type="date" name="entry_date" value ="<%= @entry && @entry.entry_date %>"  class="form-control m-put clear_form">
+                        <span class="m-form__help">Please choose Entry Date</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                 <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Exit Date<span style="color: red;">*</span></label>
+                        <input required type="date" name="exit_date" value ="<%= @entry && @entry.exit_date %>" class="form-control m-put clear_form">
+                       <span class="m-form__help">Please choose Exit Date </span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">On Hire Date<span style="color: red;">*</span></label>
+                        <input required type="date" id="on_hire_date" name="on_hire_date"  value ="<%= @entry && @entry.on_hire_date %>" class="form-control m-put clear_form">
+                       <span class="m-form__help">Please choose On Hire Date</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Off Hire Date<span style="color: red;">*</span></label>
+                        <input required type="date" id="off_hire_date" name="off_hire_date"  value ="<%= @entry && @entry.off_hire_date %>" class="form-control m-put clear_form">
+                       <span class="m-form__help">Please choose Off Hire Date</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                 <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Station Accumulative Days<span style="color: red;">*</span></label>
+                        <input required type="text" name="accumulative_days" value ="<%= @entry && @entry.accumulative_days %>" class="form-control m-put clear_form">
+                       <span class="m-form__help">Enter Station Accumulative Days</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Total Accumulative Days<span style="color: red;">*</span></label>
+                        <input required type="text" name="total_accum_days"  value ="<%= @entry && @entry.total_accum_days %>" class="form-control m-put clear_form">
+                       <span class="m-form__help">Enter Total Accumulative Days</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label"> Modification Reason<span style="color: red;">*</span></label>
+                        <textarea class="form-control m-input" id="modification_reason" name="modification_reason" required  rows="1"><%= @entry && @entry.modification_reason %></textarea>
+                        <span class="m-form__help">Please enter Modification reason</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Status<span style="color: red;">*</span></label>
+                            <select required name="wagon_status_id" id="edit-wagon-status" data-wagon-status ="<%= @entry && @entry.wagon_status_id %>" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for wagon_status <- @wagon_status do %>
+                                    <option value="<%= wagon_status.id %>"><%= wagon_status.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Wagon Status</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Condition<span style="color: red;">*</span></label>
+                            <select required name="wagon_condition_id" id="edit-wagon-condition" data-wagon-condition ="<%= @entry && @entry.wagon_condition_id %>" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for condition <- @condition do %>
+                                    <option value="<%= condition.id %>"><%= condition.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Wagon Condition </span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Defects<span style="color: red;">*</span></label>
+                            <select name="interchange_defect" id="edit-defects" class="form-control m-select2 m_select2_1 m-input wagon-field-select" type="text" required >
+                                <option></option>
+                                <%= for defect <-@defects do %>
+                                    <option value="<%= defect.id %>"  data-id="<%= defect.id %>"  data-code ="<%= defect.code %>" data-description="<%= defect.description %>"><%= defect.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Defects </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+        <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                       Defects
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table table-striped- table-bordered table-hover table-checkable" id ="interchange-defect-edit-dt">
+                <thead>
+                    <tr>
+                        <th>Defect</th>
+                        <th>Code</th>
+                        <th>Spare count</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-11"></div>
+                <div class="col-lg-1">
+                    <button type="button" id="update-wagon-histroy" style="float: right" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+<div class="modal fade"  id="view_defect_spares_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;">Defect spare rates</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-portlet__body">
+                    <div class="dataTables_wrapper dt-bootstrap4 col-md-12">
+                        <div class="col-md-12">
+                            <table id="dt-interchange-defect-spares" class="table table-bordered table-hover table-striped w-100 " role="grid"  style="width: 100%;">
+                                <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                                <thead>
+                                    <tr>
+                                        <th>Spare</th>
+                                        <th>Code</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="form-group m-form__group row">
+                    <div class="col-6">
+                    </div>
+                    <label for="example-text-input" class="col-1 col-form-label"><b>Total</b></label>
+                    <div class="col-4">
+                        <input class="form-control m-input" type="text" id="defect_spare_total" disabled ="true">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

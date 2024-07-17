@@ -1,0 +1,83 @@
+<div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Client Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right col-lg-12">
+                <div class="m-portlet__body"><br>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Client Name:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_client_name" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Phone Number:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="number" class="form-control m-input"  id="vw_phone_number" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Email Address:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="email" class="form-control m-input" id="vw_email" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Address:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_address" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Maker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="maker" id="maker" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Checker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Checker" id="checker"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Date Created:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="created" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Date Modified:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="modified"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Status:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_status" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

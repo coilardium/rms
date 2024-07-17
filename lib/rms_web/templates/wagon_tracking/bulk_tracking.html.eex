@@ -1,0 +1,616 @@
+
+<div class="m-subheader" id="wagon-tracking-bulk-upload-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Bulk Tracking</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Wagon Tracking</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="<%= Routes.wagon_tracking_path(@conn, :index) %>" class="m-nav__link">
+                        <span class="m-nav__link-text">Bulk Tracking</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+         <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                     <strong>Tracking Entries</strong>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed data_entry" >
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" id="crnt_stat_id" name="departure">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <div class="col-sm-4 form-group">
+                        <div class="form-group">
+                            <label for="example-input-small" class="form-label">Train Number<span style="color: red;">*</span></label>
+                            <input type="text" id="mvt_train_no" placeholder="Enter train number" name="train_no" class="form-control m-put clear_form" required="required">
+                            <span class="m-form__help">Please enter the train number</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <div class="form-group">
+                            <label for="example-input-small" class="form-label">Current Location<span style="color: red;">*</span></label>
+                                <select name="current_location_id"  id="current_location_id" class="form-control m-select2 select2_form clear_form"  required >
+                                    <option></option>
+                                    <%= for stations <- @stations do %>
+                                    <option value="<%= stations.id %>" data-current-location ="<%= stations.description %>"><%= stations.description %></option>
+                                    <% end %>
+                                </select>
+                            <span class="m-form__help">Please Choose Current Station</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <div class="form-group">
+                            <label for="example-input-small" class="form-label">Update Date<span style="color: red;">*</span></label>
+                            <input required type="date" name="update_date" id="update_date" class="form-control m-input clear_form">
+                            <span class="m-form__help">Please enter date</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                            <div class="form-group">
+                                <label for="example-input-small" class="form-label">Domain<span style="color: red;">*</span></label>
+                                    <select name="domain_id"  id="domain_id" class="form-control m-select2 select2_form m-input clear_form"  required >
+                                        <option></option>
+                                        <%= for domain <- @domain do %>
+                                        <option value="<%= domain.id %>"><%= domain.description %></option>
+                                        <% end %>
+                                    </select>
+                                <span class="m-form__help">Please Choose Wagon owner domain</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                        <div class="form-group">
+                            <label for="example-input-small" class="form-label">Bound<span style="color: red;">*</span></label>
+                                <select name="bound"  id="bound" class="form-control m-select2 select2_form m-input clear_form"  required >
+                                    <option></option>
+                                    <option value="north">North</option>
+                                    <option value="sitting">Sitting</option>
+                                    <option value="south">South</option>
+                                    <option value="west">West</option>
+                                </select>
+                            <span class="m-form__help">Please Choose Bound</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__head" style="border-bottom: none !important;">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Wagons
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                            <li class="m-portlet__nav-item"></li>
+                            <li class="m-portlet__nav-item">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Options
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#" id="add_new_tracker"><i class="flaticon-add"></i> Attach</a>
+                                    <a class="dropdown-item" href="#" id="tracker-select-all"><i class="fa fa-toggle-on"></i>Select All</a>
+                                    <a class="dropdown-item" href="#" id="tracker-unselect-all"><i class="fa fa-toggle-off"></i>Unselect All</a>
+                                    <a class="dropdown-item" href="#" id="update-tracker-list"><i class="fa fa-check-square"></i>Update</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body table-responsive">
+                    <!--begin: Datatable -->
+                    <table class="table m-table table-bordered table-md compact" style="width:100%;" id="wagon-tracking-bulk-dt">
+                        <thead>
+                            <tr>
+                                <th>Wagon No.</th>
+                                <th>Owner</th>
+                                <th>Train No.</th>
+                                <th>Customer</th>
+                                <th>Commodity </th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Current Location</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="m-form__actions m-form__actions--solid">
+                <div class="row">
+                    <div class="col-lg-11"></div>
+                    <div class="col-lg-1">
+                        <%# <button type="button" id="save-tracked-wagons" class="btn btn-success"></i>Submit</button> %>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+
+<div class="modal fade fade model_select_2" id="edit_tracking" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Wagon Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Wagon No:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder="" id="wagon_code" disabled ="true">
+                                    <%# <input type="hidden" class="field-clr" name="id" id="consign_id">
+                                    <input type="hidden" class="field-clr" name="wagon_id" id="wagon_id"> %>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder="" id="wagon_owner" disabled ="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Train no:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <input type="text" class="form-control m-input field-clr" placeholder="" id="train_no" required="required" disabled ="true">
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Customer</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="text" id="customer" class="form-control form-control field-clr" disabled ="true">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Oirgin station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="type" id="origin_station" class="form-control form-control field-clr" disabled ="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Destination Station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="type" id="destin_station" class="form-control form-control field-clr" disabled ="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Commodity</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="type" id="commodity" disabled ="true" class="form-control form-control field-clr">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Current Status<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="current_status_id" id="current_status_id" class="form-control m-select2 select2_modal" disabled="true">
+                                        <option></option>
+                                        <%= for wagon_status <- @wagon_status do %>
+                                            <option value="<%= wagon_status.id %>"><%= wagon_status.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Condition<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="condition_id" id="condition_id" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for condition <- @condition do %>
+                                            <option value="<%= condition.id %>"><%= condition.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Sub Category:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="sub_category" id="sub_category" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <option value="long term repair">Long Term Repair</option>
+                                        <option value="rehab">Rehab</option>
+                                        <option value="short term repair">Short Term Repair</option>
+                                        <option value="side lined">Side Lined</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Repair Siding:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="yard_siding" id="yard_siding" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <option value="Loco Shade">Loco Shed</option>
+                                        <option value="Work Shop">Work Shop</option>
+                                        <option value="Yard">Yard</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input field-clr" id="comment" name="comment" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12">
+                                <label>Defects:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                     <select name="defect_ids[]"  id="defect_ids"  class="form-control  m-select2 multi_select2_modal" multiple="multiple">
+                                        <%= for wagon_defect <- @wagon_defect do %>
+                                            <option value="<%= wagon_defect.id %>"><%= wagon_defect.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="m_repeater_1">
+                        <div class="form-group" id="m_repeater_1">
+                            <div data-repeater-list="" class="col-lg-12">
+                                <div data-repeater-item data-repeater-spare class="form-group m-form__group row align-items-center">
+                                    <div class="col-sm-6">
+                                        <label>Spares</label>
+                                        <div class="input-group input-group">
+                                            <div class="input-group-prepend"></div>
+                                            <select  name="spare" class="form-control spare_id">
+                                                <option></option>
+                                                <%= for spare <- @spares do %>
+                                                    <option value="<%= spare.id %>"><%= spare.description %></option>
+                                                <% end %>
+                                            </select>
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <label>Quantity:</label>
+                                        <div class="input-group input-group">
+                                            <div class="input-group-prepend"></div>
+                                            <input type="text" name="count" class="form-control m-input count field-clr"  onkeypress="return is_amount_key(event)" placeholder="Enter Quantity">
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill mt-4">
+                                            <span>
+                                                <i class="la la-trash-o"></i>
+                                                <span>Delete</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-form__group">
+                            <label class="col-form-label"></label>
+                            <div class="col-lg-3">
+                                <div data-repeater-create="" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Add</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="update_tracker" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade fade model_select_2" id="add_new_tracker_modal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Add Wagon </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Wagon No <span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder="Wagon Number" id="mvt_wagon_code">
+                                    <input type="hidden" id="wagon_id" name="wagon_id">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder="Wagon Owner" id="new_wagon_owner" readonly ="true">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Train Number</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <input type="text" class="form-control m-input" placeholder="" id="new_train_no" readonly ="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Customer <span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_customer" id="new_customer" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for clients <- @customer do %>
+                                            <option value="<%= clients.id %>" data-customer="<%= clients.client_name %>"><%= clients.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Oirgin station<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_origin_station" id="new_origin_station" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for stations <- @stations do %>
+                                        <option value="<%= stations.id %>" data-origin ="<%= stations.description %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Destination Station<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_destin_station" id="new_destin_station" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for stations <- @stations do %>
+                                        <option value="<%= stations.id %>" data-destin="<%= stations.description %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Commodity<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_commodity_id" id="new_commodity_id" class="form-control m-select2 select2_modal">
+                                       <option></option>
+                                       <%= for commodity <- @commodity do %>
+                                            <option value="<%= commodity.id %>" data-commodity="<%= commodity.description %>"><%= commodity.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label>Condition<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_condition_id" id="new_condition_id" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for condition <- @condition do %>
+                                            <option value="<%= condition.id %>"><%= condition.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Sub Category</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_sub_category" id="new_sub_category" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <option value="long term repair">Long Term Repair</option>
+                                        <option value="rehab">Rehab</option>
+                                        <option value="short term repair">Short Term Repair</option>
+                                        <option value="side lined">Side Lined</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Repair Siding:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="new_yard_siding" id="new_yard_siding" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <option value="Work Shop">Work Shop</option>
+                                        <option value="Loco Shade">Loco Shade</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Defects</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                     <select name="defect_ids[]"  id="new_defect_ids"  class="form-control  m-select2 multi_select2_modal" multiple="multiple">
+                                        <%= for wagon_defect <- @wagon_defect do %>
+                                            <option value="<%= wagon_defect.id %>"><%= wagon_defect.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input field-clr" id="new_comment" name="new_comment" rows="1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="m_repeater_3">
+                            <div class="form-group" id="m_repeater_3">
+                                <div data-repeater-list="" class="col-lg-12">
+                                    <div data-repeater-item data-repeater-add class="form-group m-form__group row align-items-center">
+                                        <div class="col-sm-6">
+                                            <label>Spares</label>
+                                            <div class="input-group input-group">
+                                                <div class="input-group-prepend"></div>
+                                                <select  name="spare" class="form-control add_spare_id">
+                                                    <option></option>
+                                                    <%= for spare <- @spares do %>
+                                                        <option value="<%= spare.id %>"><%= spare.description %></option>
+                                                    <% end %>
+                                                </select>
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Quantity:</label>
+                                            <div class="input-group input-group">
+                                                <div class="input-group-prepend"></div>
+                                                <input type="text" name="add_count" class="form-control m-input add_count field-clr"  onkeypress="return is_amount_key(event)" placeholder="Enter Quantity">
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill mt-4">
+                                                <span>
+                                                    <i class="la la-trash-o"></i>
+                                                    <span>Delete</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-form__group">
+                                <label class="col-form-label"></label>
+                                <div class="col-lg-3">
+                                    <div data-repeater-create="3" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Add</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div><br>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: none !important;">
+                        <button type="button" id="add_new_tracker_to_dt" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade fade model_select_2" id="condition_tracker_modal" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Wagon Current Status </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-12">
+                                <label>Current Status<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="bulk_current_status_id" id="bulk_current_status_id" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for wagon_status <- @wagon_status do %>
+                                            <option value="<%= wagon_status.id %>" data-pur-code="<%= wagon_status.pur_code %>"><%= wagon_status.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="save-tracked-wagons" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

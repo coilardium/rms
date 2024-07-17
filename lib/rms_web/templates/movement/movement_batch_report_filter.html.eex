@@ -1,0 +1,90 @@
+<div class="modal fade model_select_2" id="movenment_batch_report_filter_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12" id = "movenment_batch_report_form">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Train list No:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" placeholder="" name="train_list_no" id="train_list_no">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Movement Date:</label>
+                                 <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input " placeholder=""  name="movement_date" id="movement_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Time:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="time" class="form-control m-input" placeholder="" name="movement_time" id="movement_time">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Train No</label>
+                                 <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input " placeholder=""  name="train_no" id="train_no">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Origin</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select name="origin" id="origin" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for stations <- @stations do %>
+                                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                                        <% end %>
+                                   </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Destination</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select  name="destination" id="destination" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for stations <- @stations do %>
+                                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Start Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="from" id="from">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">End Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="to" id="to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn btn-primary" id="movement_batch_report_filter">Procced</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

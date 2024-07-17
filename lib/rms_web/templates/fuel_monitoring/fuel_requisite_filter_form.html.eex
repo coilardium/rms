@@ -1,0 +1,105 @@
+<div class="modal fade model_select_2" id="fuel_requisite_form_filter" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12" id="fuel_requisite_batch_report_form">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Loco Number  :</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <select required name="fuel_loco_number" id="fuel_loco_number"  class="form-control m-select2 select2_modal">
+                                            <option></option>
+                                            <%= for locomotive <- @locomotive do %>
+                                            <option value="<%= locomotive.id %>" data-loco-number="<%= locomotive.loco_number %>"><%=  locomotive.loco_number %></option>
+                                            <% end %>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Section :</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <select required name="fuel_section_name" id="fuel_section_name" class="form-control m-select2 select2_modal">
+                                            <option></option>
+                                            <%= for section <- @section do %>
+                                            <option value="<%= section.id %>" data-section="<%= section.code %>"><%= section.code %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Train Number :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form" placeholder="Enter train number" value="" name="fuel_train_number" id="fuel_train_number" >
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                                </div>
+                            </div>
+
+                             <div class="col-lg-6">
+                            <label>Depo Refuelled :</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <select required name="fuel_depo_refueled" id="fuel_depo_refueled" class="form-control m-select2 select2_modal">
+                                            <option></option>
+                                            <%= for fuel_rate <- @fuel_rate do %>
+                                            <option value="<%= fuel_rate.id %>" data-depo-rate="<%= fuel_rate.fuel_rate %>"  data-depo-station="<%= fuel_rate.refueling_depo %>"><%= fuel_rate.refueling_depo %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Requisition Number :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" placeholder="Enter requisition number" value="" name="fuel_requisition_no"  id="fuel_requisition_no" >
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Refueling Type :</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <select required name="filter_refuel_type" id="filter_refuel_type" class="form-control m-select2 select2_modal">
+                                            <option></option>
+                                            <%= for refuel_type <- @refuel_type do %>
+                                            <option value="<%= refuel_type.id %>" data-train-origin="<%= refuel_type.description %>"><%= refuel_type.description %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+						<div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Start Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="from" id="from">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">End Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="to" id="to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" id="fuel-requisite-search">Procced</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>

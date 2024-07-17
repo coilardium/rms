@@ -1,0 +1,357 @@
+<div class="m-subheader" id="movenment-menu-draft-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Edit</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Movement</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Edit</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row" id="maximize-page">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Batch No. : <%= @batch_no %>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right entry_data m-form--group-seperator-dashed">
+        <div class="m-portlet__body">
+
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Date<span style="color: red;">*</span></label>
+                    <input type="date" class="form-control m-input"  value="<%= @batch_items && @batch_items.movement_date %>" name="movement_date" id="" placeholder="">
+                    <span class="m-form__help">Please choose the date</span>
+                    <input type="hidden" id="batch_id" name="batch_id" value="<%= @batch_id %>">
+                    <input type="hidden" name="train_list_no" value="<%= @batch_no %>">
+                    <input type="hidden" name="has_consignmt" value="<%= @batch_items && @batch_items.has_consignmt %>">
+                    <input type="hidden" id="modify_movement_entries" name="batch_id" value="<%= @batch_items && @batch_items.batch_id %>">
+                    <input type="hidden" id="entries_type" value="<%= @batch_items && @batch_items.status %>">
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Time<span style="color: red;">*</span></label>
+                     <input type="time" name="movement_time" value="<%= @batch_items && @batch_items.movement_time %>" id="movement_time" class="form-control m-input clear_form" placeholder="">
+                    <span class="m-form__help">Please enter time</span>
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Loco Number<span style="color: red;">*</span></label>
+                    <select required name="loco_no[]" id="loco_id" value="<%= @batch_items && @batch_items.loco_no %>" data_loco_no ="<%= @batch_items && @batch_items.loco_no %>" class="form-control m-select2 multi_select2_form clear_form" multiple="multiple" >
+                        <%= for loco <- @loco do %>
+                        <option value="<%= loco.id %>"><%= loco.loco_number %></option>
+                        <% end %>
+                    </select>
+                  <span class="m-form__help">Please select the Loco number</span>
+                </div>
+
+            </div>
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Dead Loco</label>
+                     <select name="dead_loco" id="dead_loco" data_dead_loco ="<%= @batch_items && @batch_items.dead_loco %>" class="form-control m-select2 select2_form clear_form">
+                            <option value="">Choose.....</option>
+                            <%= for loco <- @loco do %>
+                            <option value="<%= loco.id %>"><%= loco.description %></option>
+                            <% end %>
+                        </select>
+                    <span class="m-form__help">Please Choose Dead Loco</span>
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Reporting station<span style="color: red;">*</span></label>
+                        <select required name="movement_reporting_station_id" id="reporting_station"   data_reporting_station ="<%= @batch_items && @batch_items.movement_reporting_station_id %>" class="form-control  station_owner select2_form  clear_form">
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>" data-station_owner ="<%= stations.owner && stations.owner.description %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    <span class="m-form__help">Please Choose Reporting station</span>
+                </div>
+
+                 <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Reporting station owner</label>
+                    <input required type="text" id="station_owner" value ="<%= @batch_items && @batch_items.reporting_station_owner %>" readonly="true" class="form-control m-input clear_form">
+                    <span class="m-form__help">Reporting station owner </span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Origin station<span style="color: red;">*</span></label>
+                        <select required name="movement_origin_id" data_origin_station ="<%= @batch_items && @batch_items.movement_origin_id %>" id="origin" class="form-control select2_form  clear_form">
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    <span class="m-form__help">Please Choose Origin station</span>
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Destination station<span style="color: red;">*</span></label>
+                     <select required name="movement_destination_id" id="destination" data_destin_station ="<%= @batch_items && @batch_items.movement_destination_id %>" class="form-control select2_form clear_form">
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    <span class="m-form__help">Please Select the Destination station</span>
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Train No.<span style="color: red;">*</span></label>
+                    <input type="text" name="train_no" id="train_no" value="<%= @batch_items && @batch_items.train_no %>" class="form-control m-input clear_form" placeholder="">
+                    <span class="m-form__help">Please enter the train number</span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Wagons  : <span style='margin-left:1em' id="total_wagon_count">0</span>
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table table-striped m-table table-sm" id="mvt_modify_dt">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <thead>
+                    <tr>
+                        <th>Wagon</th>
+                        <th>Owner</th>
+                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Commodity</th>
+                        <th>Consigner</th>
+                        <th>Consignee</th>
+                        <th>Invoice No.</th>
+                        <th style="width: 70px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-11"></div>
+                <div class="col-lg-1">
+                    <%# <button type="button" class="btn btn-brand" id="save-movement" style="margin-right:5px;">Save</button> %>
+                    <button type="button" class="btn btn-success" id="update-movement-batch" style="margin-right:5px;" >Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+<div class="modal fade model_select_2" id="edit_movement"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;">Movement Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <div class="m-portlet__body">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-4">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder=""  name="wagon_code" id="mvt_wagon_code"  required="required">
+                                    <input type="hidden" class="field-clr" name="id" id="mvt_id">
+                                    <input type="hidden" class="field-clr" name="wagon_id" id="wagon_id">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder=""  name="wagon_owner" id="wagon_owner"  required="required">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="">Wagon Type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder=""  name="wagon_type" id="wagon_type"  required="required">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>origin Station:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <%# <input type="text" class="form-control m-input" placeholder="" name="orgin_station_id" id="origin-station"  required="required"> %>
+                                    <select name="origin_station_id" id="origin_station_id" class="form-control m-select2 select2_modal clear_select" required >
+                                        <option value="Choose..."></option>
+                                        <%= for stations <- @stations do %>
+                                        <option value="<%= stations.id %>" data-orgin-station="<%= stations.description %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Destination station:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <%# <input type="text" class="form-control m-input" placeholder="" name="destin_station_id" id="desitin-station"> %>
+                                     <select name="destination" id="destin_station_id" class="form-control m-select2 select2_modal clear_select" required >
+                                        <option value="Choose..."></option>
+                                        <%= for stations <- @stations do %>
+                                        <option value="<%= stations.id %>" data-destin-station ="<%= stations.description %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Commodity:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <%# <input type="text" class="form-control m-input" placeholder="" name="commodity_id" id="commodity"> %>
+                                    <select required name="commodity_id" id="commodity_id" class="form-control m-select2 select2_modal clear_select">
+                                      <option value="Choose..."></option>
+                                        <%= for commodity <- @commodity do %>
+                                        <option value="<%= commodity.id %>" data-commodity="<%= commodity.description %>"><%= commodity.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Consigner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <%# <input type="text" class="form-control m-input" placeholder="" name="consigner" id="consigner"  required="required"> %>
+                                        <select  name="consigner" id="consigner" class="form-control m-select2 select2_modal clear_select" required>
+                                           <option value="Choose..."></option>
+                                            <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>" data-consigner="<%= clients.client_name %>"><%= clients.client_name %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                             <div class="col-lg-6">
+                                <label class="">Consignee:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <%# <input type="text" class="form-control m-input" placeholder="" name="consignee" id="consignee"> %>
+                                      <select  name="consignee" id="consignee" class="form-control m-select2 select2_modal clear_select" required>
+                                           <option></option>
+                                            <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>" data-consignee="<%= clients.client_name %>"><%= clients.client_name %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Payer:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <%# <input type="text" class="form-control m-input" placeholder="" name="consignee" id="consignee"> %>
+                                      <select  name="payer_id" id="payer_name" class="form-control m-select2 select2_modal clear_select" required>
+                                           <option value="Choose..."></option>
+                                            <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>" data-payer="<%= clients.client_name %>"><%= clients.client_name %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Invoice No. :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input field-clr" placeholder="" name="invoice" id="invoice"  required="required">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Consignment Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input field-clr" placeholder="" name="consignment_date" id="consignment_date">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class=""></i></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modify-mvt-entry" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

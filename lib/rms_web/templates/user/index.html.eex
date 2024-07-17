@@ -1,0 +1,152 @@
+<div class="m-subheader" id="system-users-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator"> System users</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">User Management</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text"> System users</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+<div class="row">
+    <div class="col-md-12 col-lg-offset-2">
+        <div class="form-group">
+        <%= if get_flash(@conn, :info) do %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong><%= get_flash(@conn, :info) %></strong>
+            </div>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong>Oops!</strong> <%= get_flash(@conn, :error) %>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</div>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Users
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <%= if Rms.Accounts.User.has_role?(@user, :user, :create) do %>
+                        <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-target="#add_user" data-toggle="modal">
+                            <span>
+                                <i class="la la-plus-circle"></i>
+                                <span>Add User</span>
+                            </span>
+                        </button>
+                    <% end %>
+                </li>
+                <li class="m-portlet__nav-item"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt_user">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>User role</th>
+                    <th>Mobile</th>
+                    <th>Status</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for users <-@users do %>
+                    <tr>
+                        <td style="text-transform: capitalize;"><%= users.first_name %></td>
+                        <td style="text-transform: capitalize;"><%= users.last_name %></td>
+                        <td><%= users.email %></td>
+                        <td><%= users.role && users.role.role_desc %></td>
+                        <td><%= users.mobile %></td>
+                        <td>
+                            <%= if users.status == "A" do %>
+                                <span class="m-badge m-badge--success m-badge--wide">Active</span>
+                            <% else %>
+                                    <span class="m-badge m-badge--danger m-badge--wide">Disabled</span>
+                            <% end %>
+                        </td>
+                        <td nowrap="">
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="la la-ellipsis-h"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item view" href="#" data-mobile ="<%= users.mobile %>" data-role ="<%= users.role && users.role.role_desc %>" data-email="<%= users.email %>"  data-id="<%= users.id %>" data-first_name="<%= users.first_name %>"  data-user_region="<%= users.station && users.station.description %>" data-last_name="<%= users.last_name %>" data-status ="<%= if users.status == "A", do: "Active", else: "Disabled" %>" data-maker ="<%= "#{users.maker && users.maker.first_name} #{users.maker && users.maker.last_name}" %>"  data-checker ="<%= "#{users.checker && users.checker.first_name} #{users.checker && users.checker.last_name}" %>" data-created = "<%= Timex.format!(users.inserted_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-modified ="<%= Timex.format!(users.updated_at, "%d/%m/%Y %H:%M:%S", :strftime) %>"><i class="la la-eye"></i> View</a>
+                                    <%= if Rms.Accounts.User.has_role?(@user, :user, :edit) do %>
+                                        <a class="dropdown-item edit" href="#" data-mobile ="<%= users.mobile %>" data-role ="<%= users.role_id %>" data-email="<%= users.email %>" data-id="<%= users.id %>" data-first_name="<%= users.first_name %>"  data-user_region_id="<%= users.station_id %>" data-last_name="<%= users.last_name %>"><i class="la la-edit"></i> Edit</a>
+                                    <% end %>
+                                    <%= if Rms.Accounts.User.has_role?(@user, :user, :change_status) do %>
+                                        <a class="status dropdown-item  text-success change-status" href="#" data-id="<%= users.id %>" data-status="A" style="display: <%= if users.status == "D", do: "block;", else: "none;" %>"><i class="la la-check"></i>Activate</a>
+                                        <a class="status dropdown-item  text-warning change-status" href="#"  data-id="<%= users.id %>"  data-status="D" style="display: <%= if users.status == "A", do: "block;", else: "none;" %>"><i class="la la-close"></i>Disable</a>
+                                        <a class="dropdown-item text-danger reset-password" href="#" data-id="<%= Phoenix.Token.sign(@conn, "user salt", users.id, signed_at: System.system_time(:second))%>" ><i class="la la-rotate-left"></i>Reset Password</a>
+                                    <% end %>
+                                    <%= if Rms.Accounts.User.has_role?(@user, :loco_driver, :create) do %>
+                                        <a class="status dropdown-item admin_assign_loco" href="#" data-id="<%= users.id %>" data-status="A"><i class="la la-plus"></i>Assign - Loco Driver</a>
+                                    <% end %>
+                                    <a class="dropdown-item  text-info"  href="<%= Routes.user_path(@conn, :user_logs, %{id: Phoenix.Token.sign(@conn, "user salt", users.id, signed_at: System.system_time(:second))}) %>"><i class="la la-comments"></i> Activities</a>
+                                </div>
+                            </span>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!----------------------------------------------------------Add modal-------------------------------------------------------------------------->
+
+<%= render "new.html", assigns %>
+
+<!----------------------------------------------------------edit modal-------------------------------------------------------------------------->
+
+<%= render "edit.html", assigns %>
+
+<!----------------------------------------------------------view modal-------------------------------------------------------------------------->
+
+<%= render "show.html", assigns %>

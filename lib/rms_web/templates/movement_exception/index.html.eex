@@ -1,0 +1,154 @@
+<div class="m-subheader" id="region-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Exceptions</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Maintenance</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Movement Exceptions</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-12 col-lg-offset-2">
+        <div class="form-group">
+        <%= if get_flash(@conn, :info) do %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong><%= get_flash(@conn, :info) %></strong>
+            </div>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong>Oops!</strong> <%= get_flash(@conn, :error) %>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</div>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Movement Exceptions
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    
+                        <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-target="#add_mvt_exception" data-toggle="modal" >
+                            <span>
+                                <i class="la la-plus-circle"></i>
+                                <span>Add</span>
+                            </span>
+                        </button>
+                    
+                </li>
+                <li class="m-portlet__nav-item"></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt_mvt_exceptions">
+          <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" name="id" id="id">
+            <thead>
+                <tr>
+                    <th>Capture date</th>
+                    <th>Derailment</th>
+                    <th>Axles involved</th>
+                    <th>Light engines</th>
+                    <th>Empty wagons</th>
+                    <th>Status</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for mvt_exceptions <- @mvt_exceptions do %>
+                    <tr>
+                        <td><%= mvt_exceptions.capture_date %></td>
+                        <td><%= mvt_exceptions.derailment %></td>
+                        <td><%= mvt_exceptions.axles %></td>
+                        <td><%= mvt_exceptions.light_engines %></td>
+                        <td><%= mvt_exceptions.empty_wagons %></td>
+                        <td>
+                            <%= if mvt_exceptions.status == "A" do %>
+                                 <span class="m-badge m-badge--success m-badge--wide">Active</span>
+                            <% else %>
+                                <span class="m-badge m-badge--danger m-badge--wide">Disabled</span>
+                            <% end %>
+                        </td>
+                        <td nowrap="">
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="la la-ellipsis-h"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item view" href="#" data-date-captured ="<%= mvt_exceptions.capture_date %>" data-derailment ="<%= mvt_exceptions.derailment %>"  data-axles="<%= mvt_exceptions.axles %>" data-light-engines="<%= mvt_exceptions.light_engines %>" data-empty-wagons ="<%= mvt_exceptions.empty_wagons %>"  data-created = "<%= Timex.format!(mvt_exceptions.inserted_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-modified ="<%= Timex.format!(mvt_exceptions.updated_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" ><i class="la la-eye"></i> view</a>
+                                   
+                                    <a class="dropdown-item edit" href="#"  data-date-captured ="<%= mvt_exceptions.capture_date %>" data-id="<%= mvt_exceptions.id %>" data-derailment ="<%= mvt_exceptions.derailment %>"  data-axles="<%= mvt_exceptions.axles %>" data-light-engines="<%= mvt_exceptions.light_engines %>" data-empty-wagons="<%= mvt_exceptions.empty_wagons %>" ><i class="la la-edit"></i> Edit</a>
+                            
+                                    <a class="status dropdown-item  text-success change-status" href="#" data-id="<%= mvt_exceptions.id %>" data-status="A" style="display: <%= if mvt_exceptions.status == "D", do: "block;", else: "none;" %>"><i class="la la-check"></i>Activate</a>
+                                    <a class="status dropdown-item  text-warning change-status" href="#"  data-id="<%= mvt_exceptions.id %>"  data-status="D" style="display: <%= if mvt_exceptions.status == "A", do: "block;", else: "none;" %>"><i class="la la-close"></i>Disable</a>
+                            
+                                    <a class="dropdown-item delete text-danger" href="#"  data-id="<%= mvt_exceptions.id %>"><i class="flaticon-delete" aria-hidden="true"></i> Delete</a>
+                                   
+                                </div>
+                            </span>
+                            
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!----------------------------------------------------------Add modal-------------------------------------------------------------------------->
+
+<%= render "new.html", assigns %>
+
+<!----------------------------------------------------------edit modal-------------------------------------------------------------------------->
+
+<%= render "edit.html", assigns %>
+
+<!----------------------------------------------------------view_modal-------------------------------------------------------------------------->
+
+<%= render "show.html", assigns %>

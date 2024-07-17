@@ -1,0 +1,101 @@
+<div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">View Locomotive Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+             <form class="m-form m-form--fit m-form--label-align-right  col-lg-12" action="<%= Routes.locomotive_path(@conn, :update) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <div class="m-portlet__body"><br>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Locomotive Type:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Locomotive Type" id="vw_type_id" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Loco Number:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Loco Number" id="vw_loco_number" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Model:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Model" id="vw_model" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="description" id="vw_description" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                         <div class="col-lg-6">
+                            <label>Weight:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Weight" id="vw_weight" disabled="true">
+                            </div>
+                        </div>
+
+                         <div class="col-lg-6">
+                            <label class="">Engine Capacity:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter the engine capacity" name="loco_engine_capacity" id="vw_loco_engine_capacity" disabled="true">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Owner</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="owner" id="vw_owner" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Maker</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="maker" id="maker" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Checker</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Checker" id="checker" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Created Date:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Created" id="created" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                         <div class="col-lg-6">
+                            <label>Modified Date:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Created" id="modified" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+               <div class="modal-footer">
+                    <%# <button type="submit" class="btn btn-primary">Save</button> %>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

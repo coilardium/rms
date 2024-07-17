@@ -1,0 +1,201 @@
+<div class="m-subheader" id="fuel-requisite-list-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Requisite List </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Fuel Requisite</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Requisite List </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Requisition List
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <%= if Rms.Accounts.User.has_role?(@user, :fuel_monitoring, :fuel_order) do %>
+                        <a href="<%= Routes.fuel_monitoring_path(@conn, :fuel_order) %>"  class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air">
+                            <span>
+                                <i class="la la-plus-circle"></i>
+                                <span>Add</span>
+                            </span>
+                        </a>
+                    <% end %>
+                <li class="m-portlet__nav-item"></li>
+                 <li class="m-portlet__nav-item">
+                    <a href="#" id="download_fuel_requisite_report_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+                <%# <li class="m-portlet__nav-item">
+                    <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" id="fuel-requisite-filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Filter</span>
+                        </span>
+                    </button>
+                </li> %>
+                <li class="m-portlet__nav-item"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+            <form class="m-form m-form--fit m--margin-bottom-20" id = "fuel_requisite_batch_report_form">
+                <div class="row m--margin-bottom-20">
+                    <!--<div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Loco Number:</label>
+                        <select name="fuel_loco_number" id="fuel_loco_number" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                            <%= for locomotive <- @locomotive do %>
+                                <option value="<%= locomotive.id %>" data-loco-number="<%= locomotive.loco_number %>"><%=  locomotive.loco_number %></option>
+                            <% end %>
+                        </select>
+                    </div> -->
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                       <label class="">Locomotive Number</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select  name="fuel_loco_number" id="fuel_loco_number" class="form-control js-data-locomotive-ajax loco-capacity-lookup clear_select">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Section:</label>
+                        <select name="fuel_section_name" id="fuel_section_name" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                            <%= for section <- @section do %>
+                                <option value="<%= section.id %>" data-section="<%= section.code %>"><%= section.code %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Train Number:</label>
+                         <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                        <input type="text" class="form-control m-input clear_form" placeholder="Enter train number" value="" name="fuel_train_number" id="fuel_train_number" >
+                    </div>
+                    <!--<div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Depo Refuelled:</label>
+                        <select required name="fuel_depo_refueled" id="fuel_depo_refueled" class="form-control m-select2 select2_form clear_select">
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    </div> -->
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                       <label class="">Depo Refuelled</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select  name="fuel_depo_refueled" id="fuel_depo_refueled" class="form-control js-station-ajax clear_select">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row m--margin-bottom-20">
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Requisition Number:</label>
+                        <input type="text" class="form-control m-input clear_form" placeholder="Enter requisition number" value="" name="fuel_requisition_no"  id="fuel_requisition_no" >
+                    </div>
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Refueling Type:</label>
+                        <select name="filter_refuel_type" id="filter_refuel_type" class="form-control m-select2 select2_form clear_select">
+                            <option></option>
+                            <%= for refuel_type <- @refuel_type do %>
+                            <option value="<%= refuel_type.id %>" data-train-origin="<%= refuel_type.description %>"><%= refuel_type.description %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                        <label>Requisition Date:</label>
+                        <div class="">
+                            <div class="input-daterange input-group" id="m_datepicker_6">
+                                <input type="text" class="form-control m-input clear_form" name="from" id="from" placeholder="From" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                </div>
+                                <input type="text" class="form-control clear_form" name="to" id="to" placeholder="To" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-separator m-separator--md m-separator--dashed"></div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" id="fuel-requisite-search" class="btn btn-info m-btn m-btn--icon">
+                            <span>
+                                <i class="la la-search"></i>
+                                <span>Search</span>
+                            </span>
+                        </button>
+                        &nbsp;&nbsp;
+                        <button   type="button" id="fuel_report_reset_filter"class="btn btn-metal m-btn m-btn--icon" id="">
+                            <span>
+                                <i class="la la-close"></i>
+                                <span>Reset</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!--begin: Datatable -->
+            <table class="table table-striped m-table table-sm" id="dt-fuel-report">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" id="id" name="id">
+
+                    <thead>
+                    <tr>
+                        <th> Train No</th>
+                        <th> Requisition Number</th>
+                        <th> Approved Refuel</th>
+                        <th> Quantity Refueled</th>
+                        <th> Before Refuel</th>
+                        <th> After Refuel</th>
+                        <th> Total Cost</th>
+                        <th> Time</th>
+                        <th> Status</th>
+                        <th> Action</th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--begin::Form-->

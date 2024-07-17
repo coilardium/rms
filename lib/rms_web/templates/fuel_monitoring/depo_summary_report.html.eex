@@ -1,0 +1,202 @@
+
+<div class="m-subheader load_report" id="depo-summary-report-link" style="padding: 0px 0px 0 0px;">
+
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Reports</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Fuel Requisite</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Depo Summary</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                    <i class="la la-plus m--hide"></i>
+                    <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="m-dropdown__wrapper" style="z-index: 101;">
+                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: 30; right: 21.5px;"></span>
+                    <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                            <div class="m-dropdown__content-sm" >
+								<ul class="m-nav">
+									<li class="m-nav__section m-nav__section--first">
+										<span class="m-nav__section-text">Quick Actions</span>
+									</li>
+									<li class="m-nav__item">
+                                        <a href="#"  data-target="#onboardingWideFormModal" data-toggle="modal" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-search"></i>
+                                            <span class="m-nav__link-text">Search</span>
+                                        </a>
+                                    </li>
+									<li class="m-nav__item">
+                                        <a href="<%= Routes.fuel_monitoring_path(@conn, :depo_summary_generate_pdf, %{end_dt:  @end_date, start_dt: @start_date , depo: "fuel Based"}) %>" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-download"></i>
+                                            <span class="m-nav__link-text">Generate Pdf</span>
+                                        </a>
+                                    </li>
+								</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="m-portlet">
+			<div class="m-portlet__body m-portlet__body--no-padding">
+				<div class="m-invoice-2">
+					<div class="m-invoice__wrapper">
+						<div class="m-invoice__head">
+							<div class="m-invoice__container m-invoice__container--centered">
+								<div class="m-invoice__logo">
+									<div class="row">
+										<div class="col-md-3 mt-5">
+											<a href="#" style ="cursor:default; text-decoration: none;">
+												<h4 style="color: #6f727d; margin-left: 0px">DEPO SUMMARY</h4>
+												<span class="m-invoice__text text-muted">Fuel Based</span>
+											</a>
+										</div>
+										<div class="col-md-6 text-center"><h3>Zambia Railways Limited</h3></div>
+										<div class="col-md-3 text-right">
+											<a href="#">
+												<img src="<%= Routes.static_path(@conn, "/images/Logo_mark.png") %>" style="width:55px; height:55px;">
+											</a>
+										</div>
+									</div>
+								</div>
+								<span class="m-invoice__desc">
+									<span style ="color: #9699a2 !important;"><%= @company && @company.company_name %></span>
+									<span style ="color: #9699a2 !important;"><%= @company && @company.company_address %></span>
+								</span><br>
+								<div class="m-invoice__items" style="padding: 2rem 0 3rem 0;">
+									<div class="m-invoice__item"  >
+										<span class="m-invoice__text"><%= Timex.format!(Date.from_iso8601!(@start_date),"%A, %B %e, %Y", :strftime) %> To  <%= Timex.format!(Date.from_iso8601!(@end_date),"%A, %B %e, %Y", :strftime) %></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="m-invoice__body m-invoice__body--centered">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>DEPO</th>
+											<th>REFUELINGS</th>
+											<th>QTY REFUELED</th>
+											<th>COST</th>
+										</tr>
+									</thead>
+									<tbody>
+                                        <%= for {depo, results} <- @depo_summary do %>
+										<tr>
+											<td ><%= depo %></td>
+											<td ></td>
+											<td ></td>
+											<td ></td>
+										</tr>
+										<%= for depo <- results  do %>
+										<tr>
+											<td></td>
+                                            <td style=" font-weight: normal !important;"><%= depo.count %></td>
+                                            <td style=" font-weight: normal !important;"><%= Number.Delimit.number_to_delimited(depo.qty_refueled || 0, precision: 0) %></td>
+                                            <td style=" font-weight: normal !important;"><%= Number.Delimit.number_to_delimited(depo.total_cost || 0, precision: 0) %></td>
+										</tr>
+										<% end %>
+										<tr>
+											<td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+										</tr>
+										<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="m-invoice__footer" style="margin-top: 2rem;">
+							<div class="m-invoice__table  m-invoice__table--centered table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>TOTAL REFUEL</th>
+											<th>QTY REFUELED</th>
+                                            <th>TOTAL COST</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><%= Number.Delimit.number_to_delimited(@total_refuels || 0, precision: 0) %></td>
+											<td><%=Number.Delimit.number_to_delimited(@qty_refueled || 0, precision: 0) %></td>
+                                            <td class="m--font-danger"><%= Number.Delimit.number_to_delimited(@total_cost || 0, precision: 0) %></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade model_select_2" id="onboardingWideFormModal">
+    <div class="modal-dialog modal-lg modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="<%= Routes.fuel_monitoring_path(@conn, :depo_summary_report) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <div class="m-portlet__body">
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Start Date</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" name="start_date">
+                            </div>
+                            <span class="m-form__help">Please select Start date</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">End Date</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" name="end_date" required="required">
+                            </div>
+                            <span class="m-form__help">Please select End date</span>
+                        </div>
+                    </div>
+
+                </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+            </form>
+        </div>
+    </div>
+</div>

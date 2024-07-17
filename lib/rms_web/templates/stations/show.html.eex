@@ -1,0 +1,104 @@
+
+<div class="modal fade model_select_2" id="view_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Station Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right col-lg-12">
+                <div class="m-portlet__body"><br>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" disabled="true" id="vw_description">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Station ID:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" disabled="true" id="vw_station">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Acronym:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" disabled="true" id="vw_acronym">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Station Admin:</label>
+                               <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="vw_owner">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Domain:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" disabled="true" id="vw_domain">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Interchange Point:</label>
+                               <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="vw_interchange_point">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">region:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" disabled="true" id="vw_region">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Status:</label>
+                               <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="vw_status">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Maker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="maker" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Checker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="checker"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Date Created:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="created" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Date Modified:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="modified"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

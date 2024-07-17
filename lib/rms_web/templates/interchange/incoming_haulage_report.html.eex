@@ -1,0 +1,251 @@
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Incoming Tariffic</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Reports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Haulage Tariffic</span>
+                    </a>
+                </li>
+                 <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text" id="incoming_haulage_report" >Incoming Tariffic</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+<br>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                   Incoming Tariffic
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+               <li class="m-portlet__nav-item">
+                    <a href="#" id="download_interchange_report_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <form class="m-form m-form--fit m--margin-bottom-20" id = "interchange_batch_report_form">
+            <input type="hidden" name="report_type" id="report_type" value ="INCOMING_HAULAGE_REPORT">
+            <input type="hidden" name="direction" id="haulage_direction" value ="INCOMING">
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Train No:</label>
+                    <input type="text" class="form-control m-input clear_form" placeholder="Train Number" name="train_no" id="train_no" >
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Administrator:</label>
+                    <select name="admin" id="admin" class="form-control m-select2 select2_form">
+                       <option></option>
+                          <%= for admin <- @admins do %>
+                                <option value="<%= admin.id %>"><%= admin.description %></option>
+                            <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_6">
+                            <input type="text" class="form-control m-input clear_form" name="date_from" id="date_from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="date_to" id="date_to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Capture Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_3">
+                            <input type="text" class="form-control m-input clear_form" name="from" id="from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="to" id="to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10">
+                    <button type="button" class="btn btn-info m-btn m-btn--icon" id="haulage-report-filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button  type="button" class="btn btn-metal m-btn m-btn--icon" id="haulage-report-reset-filter">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+        </form>
+        <table class="table m-table table-bordered table-md compact" id="haulage-report-dt">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Train No</th>
+                    <th>Loco No.</th>
+                    <th>Administrator</th>
+                    <th>Wagon Ratio</th>
+                    <th>Currency</th>
+                    <th>Amount</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+    <div class="m-form__actions m-form__actions--solid">
+        <div class="row">
+            <div class="col-lg-12"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade model_select_2" id="vw-haulage-model" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;">Haulage Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Loco No:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-loco-no" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Train No:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-train-no" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Admin:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-admin" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Number of Wagons:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-number-of-wagons" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Total Wagons:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-total-wagons" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Wagon Ratio:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-wagon-ratio" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Rate:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-rate" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Amount:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" id="vw-amount" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Observations</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input" id="vw-observations"rows="2" disabled="true"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Remarks</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input" id="vw-comment"rows="2" disabled="true"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

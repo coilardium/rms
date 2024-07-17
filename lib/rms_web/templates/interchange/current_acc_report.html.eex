@@ -1,0 +1,222 @@
+<div class="m-subheader" id="current-acc-report-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Current Account</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Report</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                 <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Current Account</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                   Current Account
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <form class="m-form m-form--fit m--margin-bottom-20" id = "interchange_batch_report_form" action="<%= Routes.interchange_path(@conn, :current_acc_report) %>" method="POST">
+            <input type="hidden" name="report_type" id="report_type" value ="INTERCHANGE_LIST_REPORT">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-6 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Administrator:</label>
+                    <select name="administrator" id="current-administrator" data-administrator ="<%= @administrator %>" class="form-control m-select2 select2_form">
+                       <option></option>
+                            <%= for admin <- @admins do %>
+                                <option value="<%= admin.id %>"><%= admin.description %></option>
+                            <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-6 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Year:</label>
+                    <select name="year" id="current-year" data-year ="<%= @year %>" class="form-control m-select2 select2_form" required>
+                        <option></option>
+                            <%= for year <- 2020..Timex.local.year do %>
+                                <option value="<%= year %>"><%= year %></option>
+                            <%end%>
+                    </select>
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+            <div class="row">
+                <div class="col-lg-10"></div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-info m-btn m-btn--icon" style="float: right" id="interchange_list_report_filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="m-portlet m-portlet--tabs">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-tools">
+            <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x m-tabs-line--right" role="tablist">
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_portlet_base_demo_2_3_tab_content" role="tab">
+                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>A/C CURRENT INCOME
+                    </a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_portlet_base_demo_2_2_tab_content" role="tab">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>A/C CURRENT COST
+                    </a>
+                </li>
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_portlet_base_demo_2_4_tab_content" role="tab">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>A/C SUMMARY
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <div class="tab-content">
+            <div class="tab-pane active" id="m_portlet_base_demo_2_3_tab_content" role="tabpanel">
+                <div class="m-portlet__body">
+                    <table class="table table-striped table-bordered" id="current-acc-income-dt">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Haulage</th>
+                                <th>Repairs</th>
+                                <th>Auxiliary Hire</th>
+                                <th>Wagan Hire</th>
+                                <th>Loco Detention</th>
+                                <th>Total Income</th>
+                                <th>Variance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%= if @incoming_accounts != [] do %>
+                                <%= for month_no <- 1..12 do %>
+                                    <tr>
+                                        <td><%= Timex.month_name(month_no) %></td>
+                                        <%= for account <- @incoming_accounts do %>
+                                            <%= if month_no == account.month_No do %>
+                                                <td><%= account.haulage_amount  %></td>
+                                                <td><%= account.material_sup_amount %></td>
+                                                <td><%= account.axuxilary_amount %></td>
+                                                <td><%= account.wagon_hire_amount %></td>
+                                                <td><%= account.loco_dent_amount %></td>
+                                                <td><%= account.total_amount %></td>
+                                                <td><%=
+                                                    item = Enum.find( @outgoing_accounts, fn item -> item.month_No == month_no  end)
+                                                        Decimal.to_float(account.total_amount) - Decimal.to_float(item.total_amount)
+                                                    %>
+                                                </td>
+                                            <% end %>
+                                        <% end %>
+                                    </tr>
+                                <% end %>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="m_portlet_base_demo_2_2_tab_content" role="tabpanel">
+                <div class="m-portlet__body">
+                    <table class="table  table-striped table-bordered" id="current-acc-cost-dt">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Haulage</th>
+                                <th>Repairs</th>
+                                <th>Auxiliary Hire</th>
+                                <th>Wagan Hire</th>
+                                <th>Loco Detention</th>
+                                <th>Total Cost</th>
+                                <th>Variance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%= if @outgoing_accounts != [] do %>
+                            <%= for month_no <- 1..12 do %>
+                            <tr>
+                                <td><%= Timex.month_name(month_no) %></td>
+                                <%= for account <- @outgoing_accounts do %>
+                                    <%= if month_no == account.month_No do %>
+                                        <td><%= account.haulage_amount  %></td>
+                                        <td><%= account.material_sup_amount %></td>
+                                        <td><%= account.axuxilary_amount %></td>
+                                        <td><%= account.wagon_hire_amount %></td>
+                                        <td><%= account.loco_dent_amount %></td>
+                                        <td><%= account.total_amount %></td>
+                                        <td><%=
+                                            item = Enum.find( @incoming_accounts, fn item -> item.month_No == month_no  end)
+                                                Decimal.to_float(account.total_amount) - Decimal.to_float(item.total_amount)
+                                            %>
+                                        </td>
+                                    <% end %>
+                                <% end %>
+                            </tr>
+                            <% end %>
+                        <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="m_portlet_base_demo_2_4_tab_content" role="tabpanel">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed interchange_general_entries" id="interchange_general_entries">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-sm-4 form-group">
+                                <div class="form-group">
+                                    <label for="example-input-small" class="form-label">Total Income</label>
+                                    <input required type="text" value="<%= @total_income %>" disabled  class="form-control m-put clear_input">
+                                    <span class="m-form__help">Total Income</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <div class=input-group'>
+                                    <label for="example-input-small" class="form-label">Total Cost</label>
+                                    <input required type="text" value="<%= @total_cost %>" disabled class="form-control m-put clear_input">
+                                <span class="m-form__help">Total Cost</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <div class=input-group'>
+                                    <label for="example-input-small" class="form-label">Net Position</label>
+                                    <input required type="text"  value="<%= @net_postion %>" disabled class="form-control m-put clear_input">
+                                <span class="m-form__help">Net Position </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

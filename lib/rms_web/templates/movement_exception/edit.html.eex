@@ -1,0 +1,72 @@
+<div class="modal fade" id="edit_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Edit Exceptions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12" action="<%= Routes.movement_exception_path(@conn, :update) %>" method="POST"> 
+                <div class="m-portlet__body">
+                    <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <input type="hidden" name="id" id="edit_id">
+                    <input type="hidden" name="status" id="D">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Capture Date:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" placeholder="" name="capture_date" id="edit_date_captured"  required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please pick a date</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Derailment:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="enter number of derailments" name="derailment" id="edit_derailed">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-subway"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of derailment</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Axles Involved:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter number of axles involved" name="axles" id="edit_axles">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-adn"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of axles involved</span> 
+                        </div>
+
+                       <div class="col-lg-6">
+                            <label class="">Light Engines:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter number of light engines" name="light_engines" id="edit_light_engines">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-adn"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of light engines</span> 
+                        </div>
+                    </div>
+
+                     <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Empty Wagons:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter number of empty wagons" name="empty_wagons" id="edit_empty_wagons">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-adn"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of empty wagons</span> 
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

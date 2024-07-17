@@ -1,0 +1,105 @@
+<%= for {category, vals} <- @fuel_summary do %>
+		<tr>
+			<td><%= category %></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<%= for {week, results} <- vals do %>
+			<%= for week_entries <- results  do %>
+				<tr>
+					<td style=" font-weight: normal !important;"><%= week_entries.refuel_type %></td>
+					<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 0, do: Number.Delimit.number_to_delimited(week_entries.total_consumed || 0, precision: 2), else: 0 %></td>
+					<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 1, do: Number.Delimit.number_to_delimited(week_entries.total_consumed || 0, precision: 2), else: 0 %></td>
+					<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 2, do: Number.Delimit.number_to_delimited(week_entries.total_consumed || 0, precision: 2), else: 0 %></td>
+					<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 3, do: Number.Delimit.number_to_delimited(week_entries.total_consumed || 0, precision: 2), else: 0 %></td>
+					<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 4, do: Number.Delimit.number_to_delimited(week_entries.total_consumed || 0, precision: 2), else: 0 %></td>
+
+				</tr>
+			<% end %>
+		<% end %>
+<% end %>
+<%= if @fuel_summary["main"] do %>
+	<tr>
+		<td style="font-weight: normal !important;">Total ZR Fuel</td>
+		<%= for month <- @weeks do %>
+			<td style="color: #6f727d; font-weight: normal !important;">
+			<%= Number.Delimit.number_to_delimited(Enum.reduce(@fuel_summary["main"][month] || [], 0, &Decimal.add((&1.total_consumed || 0), &2)), precision: 2) %>
+			</td>
+		<% end %>
+		<td>
+			<%= Number.Delimit.number_to_delimited(Enum.reduce(@weeks, 0, fn week, acc -> Decimal.add(acc, Enum.reduce(@fuel_summary["main"][week] || [], 0, &Decimal.add((&1.total_consumed || 0), &2))) end), precision: 1) %>
+		</td>
+	</tr>
+<% end %>
+<tr>
+	<td style=" font-weight: normal !important;">Total Consumption</td>
+	<%= for total <- @total_consumed do %>
+		<td style="color: #6f727d; font-weight: normal !important;"><%= Number.Delimit.number_to_delimited(total || 0, precision: 2) %></td>
+	<% end %>
+	<td>
+		<%= Number.Delimit.number_to_delimited(Enum.reduce(@total_consumed, 0, &Decimal.add(&1, &2)), precision: 2) %>
+	</td>
+</tr>
+<tr>
+	<td class="border-top" style=" font-weight: normal !important;">Avg Distance</td>
+	<%= for month <- @weeks do %>
+		<td class="border-top" style=" font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@distance, 0, fn %{date: distance_month} = dist -> if distance_month == month, do: dist.distance end), precision: 2) %>
+		</td>
+	<% end %>
+	<td class="border-top"><%= @comltive_dist %></td>
+</tr>
+<tr>
+	<td style=" font-weight: normal !important;">Tonnage</td>
+	<%= for month <- @weeks do %>
+		<td style=" font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@ton_lookup, 0, fn %{date: ton_month} = ton -> if ton_month == month, do: ton.tonnages end), precision: 2) %>
+		</td>
+	<% end %>
+	<td><%= Number.Delimit.number_to_delimited(@total_tonnages, precision: 2) %></td>
+</tr>
+<tr>
+	<td style=" font-weight: normal !important;">Ton/KM</td>
+	<%= for month <- @weeks do %>
+		<td style=" font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@ton_lookup, 0, fn %{date: ton_month} = ton -> if ton_month == month, do: ton.tonnages_per_km end), precision: 2) %>
+		</td>
+	<% end %>
+	<td><%= Number.Delimit.number_to_delimited(@comltive_tonkm, precision: 2) %></td>
+</tr>
+<tr>
+	<td style=" font-weight: normal !important;">Fuel Rate</td>
+	<%= for month <- @weeks do %>
+		<td style=" font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@fuel_rate, 0, fn %{date: rate_month} = rate -> if rate_month == month, do: rate.fuel_avg end), precision: 2) %>
+		</td>
+	<% end %>
+</tr>
+<tr>
+	<td class="border-bottom" style="font-weight: bold">Costs/Revenue Per week</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Fuel Cost</td>
+	<%= for cost <- @main_refuel_costs do %>
+		<td class="border-top" style="font-weight: normal !important;"><%= Number.Delimit.number_to_delimited(cost, precision: 2)  %></td>
+	<% end %>
+	<td class="border-top">
+		<%= Number.Delimit.number_to_delimited(Enum.reduce(@main_refuel_costs, 0, &Decimal.add(&1, &2)), precision: 2) %>
+	</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Movement Revenue</td>
+	<%= for week <- @weeks do %>
+		<td style="font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@ton_lookup, 0, fn %{date: revenue} = rev -> if revenue == week, do: rev.mvt_revenue end), precision: 2) %>
+		</td>
+	<% end %>
+	<td><%= Number.Delimit.number_to_delimited(@comltive_mvtrev, precision: 2) %></td>
+</tr>
+<tr>
+	<td class="border-bottom" style="font-weight: bold">Wagons Moved Per Week</td>
+</tr>
+<%= render "weekly_fuel_smry_2.html", assigns %>
+<%= render "weekly_fuel_smry_3.html", assigns %>

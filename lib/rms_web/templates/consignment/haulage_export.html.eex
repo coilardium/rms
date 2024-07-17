@@ -1,0 +1,147 @@
+
+<div class="m-subheader" id="consignment_haulage_report" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Haulage Export</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Report Exports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Consignment</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Haulage Export</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Haulage Export
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <form class="m-form m-form--fit m--margin-bottom-20" id = "consignment_batch_report_form">
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Consignment List No:</label>
+                    <input type="text" class="form-control m-input clear_form" placeholder="Consignment List" name="consignment_sales_order" id="consignment_sales_order" >
+                    <input type="hidden" id="report_type" name= "report_type" value="HAULAGE_EXPORT_CONSIGNMENT_REPORT">
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>PZ Code:</label>
+                    <input type="text" class="form-control m-input clear_form" placeholder="PZ Code"   name="consignment_station_code" id="consignment_station_code">
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label for="example-input-small" class="form-label">Reporting Station:</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <select  name="consignment_reporting_station" id="consignment_reporting_station" class="form-control js-consign-search-station clear_form clear_select" required>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label for="example-input-small" class="form-label">Customer</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <select  name="consignment_customer" id="consignment_customer" class="form-control js-search_client-ajax clear_form clear_select" required>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label for="example-input-small" class="form-label">Consignee</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <select  name="consignment_consignee" id="consignment_consignee" class="form-control js-search_client-ajax clear_form clear_select" required>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label for="example-input-small" class="form-label">Payer</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <select  name="consignment_payer" id="consignment_payer" class="form-control js-search_client-ajax clear_form clear_select" required>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label for="example-input-small" class="form-label">Commodity</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <select  name="consignment_commodity" id="consignment_commodity" class="form-control js-consign-search-cmmdity clear_form clear_select" required>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Created Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_6">
+                            <input type="text" class="form-control m-input clear_form" name="from" id="from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="to" id="to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" id="download_consignment_report_excel" class="btn btn-success m-btn m-btn--icon">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button  type="button" id="consignment_reset_report_filter"class="btn btn-metal m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+        </form>
+
+        <!--begin: Datatable -->
+    </div>
+</div>

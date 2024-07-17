@@ -1,0 +1,121 @@
+<div class="modal fade model_select_2" id="consignment_batch_report_filter_model"  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12" id="consignment_batch_report_form">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Customer</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_customer" id="consignment_customer" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for client <- @clients do %>
+                                            <option value="<%= client.id %>"><%=  client.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                           <div class="col-lg-6">
+                                <label class="">Station Code</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" placeholder="" name="consignment_station_code" id="consignment_station_code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Sales Order</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" placeholder="" name="consignment_sales_order" id="consignment_sales_order">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Reporting Station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_reporting_station" id="consignment_reporting_station" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for stations <- @stations do %>
+                                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Capture Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="consignment_capture_date" id="consignment_capture_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Consignee</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_consignee" id="consignment_consignee" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Payer</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_payer" id="consignment_payer" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Commodity</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_commodity" id="consignment_commodity" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for commodity <- @commodity do %>
+                                             <option value="<%= commodity.id %>"><%= commodity.code %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Start Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="from" id="from">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">End Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="to" id="to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn btn-primary" id="consignment_batch_report_filter">Procced</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,90 @@
+
+<div class="modal fade model_select_2" id="view_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Price Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+             <form class="m-form m-form--fit m-form--label-align-right col-lg-12">
+                <div class="m-portlet__body">
+                	<div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                           <label>Spare</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_spare" disabled="true" >
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Start date</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw_start_date" disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Currency</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_currency" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Amount</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text"  class="form-control m-input"  id="vw_amount" disabled="true" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Railay Administrator:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_admin" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Cataloge No.:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw_cataloge"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Maker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="maker" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Checker:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="checker"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Date Created:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="created" disabled="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Date Modified:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  placeholder="Date" id="modified"  disabled="true">
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+
+<div class="m-subheader" id="movenment-menu-train-intransit-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Intransit Trains</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Movement</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Intransit Trains</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Intransit Trains
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table m-table table-sm" id="dt_movenment_batch">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <input type="hidden" name="id" id="id">
+            <thead>
+                <tr>
+                    <th>Train list No.</th>
+                    <th>Train No</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Reporting Station</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for batch <-@batches do %>
+                <tr>
+                    <td><%= batch.train_list_no %></td>
+                    <td><%= batch.train_no %></td>
+                    <td><%= batch.movement_time %></td>
+                    <td><%= batch.movement_date %></td>
+                    <td><%= batch.origin_name %></td>
+                    <td><%= batch.destination_name %></td>
+                    <td><%= batch.reporting_stat %></td>
+                    <td nowrap="">
+                        <span class="dropdown">
+                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                <i class="la la-ellipsis-h"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="<%= Routes.movement_path(@conn, :movement_intransit_entries,  batch.batch_id) %>" ><i class="la la-eye"></i>View</a>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

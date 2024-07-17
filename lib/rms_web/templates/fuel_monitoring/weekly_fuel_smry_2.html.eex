@@ -1,0 +1,66 @@
+<tr>
+	<td class="text-left" style="font-weight: normal !important;">Empty Wagons</td>
+	<%= for week <- @weeks do %>
+		<td class="border-top" style="font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@mvt_exception, 0, fn %{week_no: empties} = exceptions -> if empties == week, do: exceptions.empty_wagons end), precision: 0) %>
+		</td>
+	<% end %>
+	<td class="border-top"><%= Number.Delimit.number_to_delimited(@cmltive_empties, precision: 2) %></td>
+</tr>
+<tr>
+	<td class="border-bottom" style="font-weight: bold">Fuel Efficiency</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Total Efficiency</td>
+	<%= for efficiency <- @total_efficiency do %>
+		<td class="border-top" style="font-weight: normal !important;"><%= Number.Delimit.number_to_delimited(efficiency, precision: 4)  %></td>
+	<% end %>
+	<td class="border-top">
+		<%= Number.Delimit.number_to_delimited(Enum.reduce(@total_efficiency, 0, &Decimal.add(&1, &2)), precision: 4) %>
+	</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Total Main Efficiency</td>
+	<%= for efficiency <- @main_efficiency do %>
+		<td style="font-weight: normal !important;"><%= Number.Delimit.number_to_delimited(efficiency, precision: 4)  %></td>
+	<% end %>
+	<td>
+		<%= Number.Delimit.number_to_delimited(Enum.reduce(@main_efficiency, 0, &Decimal.add(&1, &2)), precision: 4) %>
+	</td>
+</tr>
+<tr>
+	<td class="border-bottom" style="font-weight: bold">Derailment Activities</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Derailments' statistic</td>
+	<%= for week <- @weeks do %>
+		<td class="border-top" style="font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@mvt_exception, 0, fn %{week_no: derailed} = exceptions -> if derailed == week, do: exceptions.derailment end), precision: 0) %>
+		</td>
+	<% end %>
+	<td class="border-top">
+		<%= Number.Delimit.number_to_delimited(Decimal.div(Enum.reduce(@mvt_exception, 0, &Decimal.add(&1.derailment, &2)), length(@weeks)), precision: 0) %>
+	</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Axles involved</td>
+	<%= for week <- @weeks do %>
+		<td style="font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@mvt_exception, 0, fn %{week_no: axles} = exceptions -> if axles == week, do: exceptions.axles end), precision: 0) %>
+		</td>
+	<% end %>
+	<td>
+		<%= Number.Delimit.number_to_delimited(Decimal.div(Enum.reduce(@mvt_exception, 0, &Decimal.add(&1.axles, &2)), length(@weeks)), precision: 0) %>
+	</td>
+</tr>
+<tr>
+	<td style="font-weight: normal !important;">Light Engines</td>
+	<%= for week <- @weeks do %>
+		<td style="font-weight: normal !important;">
+		<%= Number.Delimit.number_to_delimited(Enum.find_value(@mvt_exception, 0, fn %{week_no: lightengine} = exceptions -> if lightengine == week, do: exceptions.light_engines end), precision: 0) %>
+		</td>
+	<% end %>
+	<td>
+		<%= Number.Delimit.number_to_delimited(Decimal.div(Enum.reduce(@mvt_exception, 0, &Decimal.add(&1.light_engines, &2)), length(@weeks)), precision: 0) %>
+	</td>
+</tr>

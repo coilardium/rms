@@ -1,0 +1,177 @@
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Outgoing</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/dashboard" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Auxiliary hire</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text" id="outgoing-auxiliary-hire-link">Outgoing</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                  Outgoing
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+               <li class="m-portlet__nav-item">
+                    <a href="#" id="download_interchange_report_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+       <form class="m-form m-form--fit m--margin-bottom-20" id = "interchange_batch_report_form">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" id="materal-direction" name="direction" value="OUTGOING">
+            <input type="hidden" id="materal-status" name="status" value="PENDING">
+            <input type="hidden" name="report_type" id="report_type" value ="OUTGOING_AUXILIARY_ON_HIRE_REPORT">
+            <div class="row m--margin-bottom-20">
+                 <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Administrator:</label>
+                    <select name="administrator" id="administrator" class="form-control m-select2 select2_form">
+                       <option></option>
+                          <%= for admin <- @admins do %>
+                                <option value="<%= admin.id %>"><%= admin.description %></option>
+                            <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Equipment:</label>
+                    <select name="equipment" id="equipment" class="form-control m-select2 select2_form">
+                        <option></option>
+                        <%= for equipment <- @equipments do %>
+                            <option value="<%= equipment.id %>"><%= equipment.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Date Sent:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_5">
+                            <input type="text" class="form-control m-input clear_form" name="date_sent_from" id="date_sent_from" placeholder="From"  />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="date_sent_to"  id ="date_sent_to" placeholder="To" />
+                            <input type="hidden" class="form-control" name="date_received_from"  id ="date_received_from"/>
+                            <input type="hidden" class="form-control" name="date_received_to"  id ="date_received_to"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Capture Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_6">
+                            <input type="text" class="form-control m-input clear_form" name="from" id="from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="to" id="to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10">
+                    <button type="button" class="btn btn-info m-btn m-btn--icon" id="auxiliary-filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button  type="button" class="btn btn-metal m-btn m-btn--icon" id="auxiliary-reset-report-filter">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="col-lg-2" style="display: flex; justify-content: flex-end">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" id="aux-set-on-hire"><i class="fa fa-plus-square"></i>On Hire</a>
+                        <a class="dropdown-item" href="#" id="aux-set-off-hire"><i class="fa fa-minus-square"></i>Off Hire</a>
+                        <a class="dropdown-item" href="#" id="close-aux"><i class="flaticon-open-box"></i>Archive</a>
+                        <a class="dropdown-item" href="#" id="aux-select-all"><i class="fa fa-toggle-on"></i>Select All</a>
+                        <a class="dropdown-item" href="#" id="aux-unselect-all"><i class="fa fa-toggle-off"></i>Unselect All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+        </form>
+        <table class="table m-table table-sm" id="auxiliary-on-hire-dt">
+            <thead>
+                <tr>
+                    <th>Administrator</th>
+                    <th>Equipment</th>
+                    <th>Equipment Code</th>
+                    <th>Wagon</th>
+                    <th>Location</th>
+                    <th>Amount</th>
+                    <th>Accumulated days</th>
+                    <th>Date Sent</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+    <div class="m-form__actions m-form__actions--solid">
+        <div class="row">
+            <div class="col-lg-12"></div>
+        </div>
+    </div>
+</div>
+
+<%= render "auxiliary_hiring_model.html", assigns %>
+
+<%= render "auxiliary_off_hiring_model.html", assigns %>
+
+<%= render "auxiliary_view_model.html", assigns %>
+
+<%= render "auxilliary_archive_model.html", assigns %>

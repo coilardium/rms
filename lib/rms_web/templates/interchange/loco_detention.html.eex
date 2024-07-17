@@ -1,0 +1,150 @@
+<div class="m-subheader" id="new-loco-detention" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">New</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Loco Detention</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">New</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                   New
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed data_entry">
+        <div class="m-portlet__body">
+            <input type="hidden" name="_csrf_token"  id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Interchange Date<span style="color: red;">*</span></label>
+                        <input required type="date" id="interchange_date" name="interchange_date" class="form-control m-put clear_input">
+                        <span class="m-form__help">Please choose Interchange Date</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Arrival Time<span style="color: red;">*</span></label>
+                        <input type="time" name="arrival_time" id="arrival_time" class="form-control m-input clear_input">
+                        <span class="m-form__help">Please enter Arrival Time</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Train No<span style="color: red;">*</span></label>
+                        <input type="text" placeholder="Train No" name="train_no" id="train_no" class="form-control m-put clear_input" required="required">
+                        <span class="m-form__help">Please enter Train Numnber</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                 <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Loco Number<span style="color: red;">*</span></label>
+                            <select required id="locomotive_id" class="form-control m-select2 multi_select2_form clear_select" multiple="multiple" >
+                                <%= for loco <- @locos do %>
+                                <option value="<%= loco.id %>"><%= loco.loco_number %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please select the Loco number</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Adminstrator<span style="color: red;">*</span></label>
+                             <select required name="admin_id" id="adminstrator_id" class="form-control m-select2 m_select2_1 m-input clear_select">
+                                <option></option>
+                                <%= for admin <- @admins do %>
+                                    <option value="<%= admin.id %>" data-admin ="<%= admin.description %>"><%= admin.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Adminstrator</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Direction<span style="color: red;">*</span></label>
+                         <select required name="direction" id="direction" class="form-control m-select2 m_select2_1 clear_select">
+                            <option></option>
+                            <option value="OUTGOING">OUTGOING</option>
+                            <option value="INCOMING">INCOMING</option>
+                        </select>
+                        <span class="m-form__help">Please Choose Direction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-11"></div>
+                <div class="col-lg-1">
+                    <button type="button" id="create-loco-detention" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--end::Form-->
+</div>

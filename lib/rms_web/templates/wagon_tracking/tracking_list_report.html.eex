@@ -1,0 +1,180 @@
+<div class="m-subheader" id="wagon-tracking-list-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Tracking list</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Wagon</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Tracking list</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Tracked List
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="#" id="download_tracking_report_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <form class="m-form m-form--fit m--margin-bottom-20" id = "wagon_tracking_report_form">
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Wagon Code</label>
+                    <input type="text" name="wagon_id" id="wagon_id" class="form-control m-input clear_form" placeholder="Wagon Code" >
+                    <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <input type="hidden" name="yard_siding" id="yard_siding">
+                    <input type="hidden" name="report_type" value="WAGON_TRACKING">
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Customer</label>
+                    <select required name="customer_id" id="customer_id" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                        <%= for customer <- @customer do %>
+                            <option value="<%= customer.id %>"><%= customer.client_name %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Current Location:</label>
+                    <select required  name="current_location_id" id="current_location_id" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                        <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                 <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Commodity:</label>
+                    <select required name="commodity_id" id="commodity_id" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                            <%= for commodity <- @commodity do %>
+                                <option value="<%= commodity.id %>"><%= commodity.description %></option>
+                            <% end %>
+                    </select>
+                </div>
+            </div>
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Origin Station:</label>
+                    <select required name="origin_id" id="origin_id" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                        <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Destination Station:</label>
+                    <select required name="destination_id" id="destination_id" class="form-control m-select2 select2_form clear_select">
+                        <option></option>
+                         <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Update Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_6">
+                            <input type="text" class="form-control m-input clear_form" name="update_date_from" id="update_date_from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="update_date_to" id="update_date_to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Train No.</label>
+                    <input type="text" name="train_no" id="train_no" class="form-control m-input clear_form" placeholder="Wagon Code" >
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" id="report-filter" class="btn btn-info m-btn m-btn--icon">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button  type="button" id="reset_wagon_tracking_report_filter"class="btn btn-metal m-btn m-btn--icon" id="movement_report_reset_filter">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt-wagon-tracker">
+            <thead>
+                <tr>
+                    <th>wagon</th>
+                    <th>Train No.</th>
+                    <th>Customer</th>
+                    <th>Commodity</th>
+                    <th>Origin Station </th>
+                    <th>Current Location </th>
+                    <th>Destination Station </th>
+                    <th>Yard</th>
+                    <th>Update Date </th>
+                    <th> Action </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+    <div class="m-form__actions m-form__actions--solid">
+        <div class="row">
+            <div class="col-lg-12"></div>
+        </div>
+    </div>
+    </div>
+    <!--end::Form-->
+</div>

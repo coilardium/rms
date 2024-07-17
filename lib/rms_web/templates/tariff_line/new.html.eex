@@ -1,0 +1,178 @@
+<div class="modal fade model_select_2 " id="add_tariff_line" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Add Tarrif Line</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form action="#" class="m-form tariff_lines">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Client</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <select  class="form-control m-select2 select2_modal"  name="client_id" class="form-control">
+                                    <option></option>
+                                    <%= for client <- @clients do %>
+                                    <option value="<%= client.id %>"><%= client.client_name %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Origin</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <select  name="orig_station_id" id="new-orig_station_id" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for station <- @stations do %>
+                                    <option value="<%= station.id %>"><%= station.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Destination</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                    <select  name="destin_station_id" id="new-destin_station_id" class="form-control m-select2 select2_modal">
+                                        <option value="" disabled selected hidden>Please Choose...</option>
+                                        <%= for station <- @stations do %>
+                                        <option value="<%= station.id %>"><%= station.description %></option>
+                                        <% end %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Commodity</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                    <select  name="commodity_id" id="new-commodity_id" class="form-control m-select2 select2_modal">
+                                        <option value="" disabled selected hidden>Please Choose...</option>
+                                        <%= for commodity <- @commodity do %>
+                                        <option value="<%= commodity.id %>"><%= commodity.description %></option>
+                                        <% end %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Payment Type</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                    <select  name="pay_type_id" id="new-pay_type_id" class="form-control m-select2 select2_modal">
+                                    <option value="" disabled selected hidden>Please Choose...</option>
+                                        <%= for payment_type <- @payment_type do %>
+                                        <option value="<%= payment_type.id %>"><%= payment_type.description %></option>
+                                        <% end %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Currency</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                    <select  name="currency_id" id="new-currency_id" class="form-control m-select2 select2_modal">
+                                        <%= for currency <- @currency do %>
+                                        <option value="<%= currency.id %>"><%= currency.description %></option>
+                                        <% end %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Active From</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input class="form-control m-input" name="start_dt" id="new-start_dt" type="date" placeholder="Date" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Surcharge</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <select  name="surcharge_id" id="new-surcharge_id" class="form-control m-select2 select2_modal">
+                                    <option value="" disabled selected hidden>Please Choose...</option>
+                                        <%= for surcharge <- @surcharge do %>
+                                        <option value="<%= surcharge.id %>"><%= surcharge.description %></option>
+                                        <% end %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Tariff Category</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <select  name="category" id="new-category" class="form-control m-select2 select2_modal">
+                                    <option value="" disabled selected hidden>Please Choose...</option>
+                                    <option value="EXPORT">EXPORT</option>
+                                    <option value="LOCAL">LOCAL</option>
+                                    <option value="INTERMINE">INTERMINE</option>
+                                    <option value="IMPORTS">IMPORTS</option>
+                                    <option value="TRANSIT">TRANSIT</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class= "form-group m-form__group">
+                        </div>
+                    </div>
+                    <div id="m_repeater_1">
+                        <div class="form-group  m-form__group row" id="m_repeater_1">
+                            <div data-repeater-list="" class="col-lg-12">
+                                <div data-repeater-item class="form-group m-form__group row align-items-center">
+                                    <div class="col-sm-6">
+                                        <label>Administrator</label>
+                                        <div class="input-group input-group">
+                                            <div class="input-group-prepend"></div>
+                                            <select  name="Traiff_rate" id="Traiff_rate" class="form-control rail-admin">
+                                                <option></option>
+                                                <%= for admin <- @admins do %>
+                                                <option value="<%= admin.id %>"><%= admin.description %></option>
+                                                <% end %>
+                                            </select>
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <label>Amount:</label>
+                                        <div class="input-group input-group">
+                                            <div class="input-group-prepend"></div>
+                                            <input type="text" name="rate" class="form-control m-input rate"  onkeypress="return is_amount_key(event)" placeholder="Enter Amount">
+
+                                        </div>
+                                        <div class="d-md-none m--margin-bottom-10"></div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill mt-4">
+                                            <span>
+                                                <i class="la la-trash-o"></i>
+                                                <span>Delete</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-form__group form-group row">
+                            <label class="col-form-label"></label>
+                            <div class="col-lg-3">
+                                <div data-repeater-create="" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide">
+                                    <span>
+                                        <i class="la la-plus"></i>
+                                        <span>Add</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button"  id="create-tariff-line" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

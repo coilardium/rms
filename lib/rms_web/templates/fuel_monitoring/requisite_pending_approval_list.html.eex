@@ -1,0 +1,83 @@
+<div class="m-subheader" id="fuel-requisite-menu-approval-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Fuel Requisite</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Requisites</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Pending Approval</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><br>
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                   Pending Approval List
+                </h3>
+            </div>
+        </div>
+    </div>
+
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table table-striped- table-bordered table-hover table-checkable" id="dt-req-pending-approval-list">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" id="id" name="id">
+                    <thead>
+                    <tr>
+                        <th> Train No</th>
+                        <th> Requisition Number</th>
+                        <th> Before Refuel</th>
+                        <th> Meter Before</th>
+                        <th> Reading</th>
+                        <th> Fuel Rate</th>
+                        <th> Date</th>
+                        <th> Status</th>
+                        <th> Action</th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                <%= for pending_list <- @pending_list do %>
+                <tr>
+                        <td><%= pending_list.train_number %></td>
+                        <td><%= pending_list.requisition_no %></td>
+                        <td><%= pending_list.balance_before_refuel %></td>
+                        <td><%= pending_list.bp_meter_before %></td>
+                        <td><%= pending_list.reading %></td>
+                        <td><%= pending_list.fuel_rate %></td>
+                        <td><%= pending_list.date %></td>
+                        <td><%= pending_list.status %></td>
+                        <td nowrap="">
+                            <a href= "<%= Routes.fuel_monitoring_path(@conn, :pending_req_form,  pending_list.id) %>" class= "m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill " title= "View "> <i class= "la la-eye "></i></a>
+                        </td>
+                </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+    <!--begin::Form-->

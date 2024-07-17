@@ -1,0 +1,64 @@
+<div class="modal fade model_select_2" id="add_status" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Status Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="<%= Routes.wagon_status_path(@conn, :create) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <input type="hidden" name="id" id="id">
+                <div class="m-portlet__body">
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Code:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter Code"  name="code" id="code" >
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Code</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter description" name="description" id="description"  required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter description</span>
+                        </div>
+                    </div>
+					<div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Status:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter record status" name="status" id="rec_status" required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter status</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Purpose Code:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <select required name="pur_code" id="pur_code" class="form-control m-select2 select2_modal" >
+                                    <option></option>
+                                    <option value="ARRIVAL">ARRIVAL</option>
+                                    <option value="LOADING">LOADING</option>
+                                    <option value="OFFLOADING">OFFLOADING</option>
+                                    <option value="OTHER">OTHER</option>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Purpose code </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

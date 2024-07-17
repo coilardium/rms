@@ -1,0 +1,38 @@
+<div class="modal fade" id="reject_requisite_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Reject Reason</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <div class="m-portlet__body">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-12">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input wagon-field-clr" id="reason" name="" rows="3"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+
+                        </div><br>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                           <div class="modal-footer">
+                           <button type="button" class="btn btn-primary" id="reject-requisite">Reject</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>  
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+
+    </div>
+</div>

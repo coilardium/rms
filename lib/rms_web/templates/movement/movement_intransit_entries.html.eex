@@ -1,0 +1,215 @@
+
+<div class="m-subheader" id="movenment-menu-train-intransit-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Intransit Train</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                 <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Movement</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Intransit Trains</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text"> Intransit Train</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Batch No. : <%= @batch_no %>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right entry_data m-form--group-seperator-dashed">
+        <div class="m-portlet__body">
+
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Date</label>
+                    <input type="date" class="form-control m-input disable-fields"  value="<%= @batch_items && @batch_items.movement_date %>" name="movement_date">
+                    <input type="hidden" id="batch_id" name="batch_id" value="<%= @batch_id %>">
+                    <input type="hidden" name="train_list_no" id="train_list_no" value="<%= @batch_no %>">
+                    <input type="hidden" id="movement_verification_entries" name="batch_id" value="<%= @batch_id %>">
+                    <input type="hidden" id="entries_type" value="INTRANSIT">
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Time</label>
+                    <input type="time" name="movement_time" value="<%= @batch_items && @batch_items.movement_time %>" id="movement_time" class="form-control m-input disable-fields" placeholder="">
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Loco Number</label>
+                    <select required name="loco_id" id="loco_id" data_loco_no ="<%= @batch_items && @batch_items.loco_no %>" class="form-control m-select2 multi_select2_form disable-fields" multiple="multiple" >
+                        <%= for loco <- @loco do %>
+                        <option value="<%= loco.id %>"><%= loco.loco_number %></option>
+                        <% end %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Dead Loco</label>
+                     <select required name="dead_loco" id="dead_loco" data_dead_loco ="<%= @batch_items && @batch_items.dead_loco %>" class="form-control m-select2 select2_form disable-fields">
+                        <option value="">Choose.....</option>
+                        <%= for loco <- @loco do %>
+                        <option value="<%= loco.id %>"><%= loco.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Reporting station</label>
+                    <select required name="movement_reporting_station_id" id="reporting_station"   data_reporting_station ="<%= @batch_items && @batch_items.movement_reporting_station_id %>" class="form-control  station_owner select2_form  disable-fields">
+                        <option></option>
+                        <%= for stations <- @stations do %>
+                           <option value="<%= stations.id %>" data-station_owner ="<%= stations.owner && stations.owner.description %>"><%= stations.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                 <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Reporting station owner</label>
+                    <input required type="text" id="station_owner" value ="<%= @batch_items && @batch_items.reporting_station_owner %>" readonly="true" class="form-control m-input disable-fields">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Origin station</label>
+                    <select required name="movement_origin_id" data_origin_station ="<%= @batch_items && @batch_items.movement_origin_id %>" id="origin" class="form-control select2_form  disable-fields">
+                        <option></option>
+                        <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Destination station</label>
+                     <select required name="movement_destination_id" id="destination" data_destin_station ="<%= @batch_items && @batch_items.movement_destination_id %>" class="form-control select2_form disable-fields">
+                        <option></option>
+                        <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Train No.</label>
+                    <input type="text" name="train_no" id="train_no" value="<%= @batch_items && @batch_items.train_no %>" class="form-control m-input disable-fields" placeholder="">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Wagons  : <span style='margin-left:1em' id="total_wagon_count">0</span>
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                    <li class="m-portlet__nav-item"></li>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#" id="mvt-wagon-select-all"><i class="fa fa-toggle-on"></i>Select All</a>
+                            <a class="dropdown-item" href="#" id="mvt-wagon-unselect-all"><i class="fa fa-toggle-off"></i>Unselect All</a>
+                            <a class="dropdown-item" href="<%= Routes.movement_path(@conn, :intransit_train_attachment,  @batch_items && @batch_items.train_no) %>"><i class="la la-plus-square"></i> Attach</a>
+                            <a class="dropdown-item" href="#" id="detach-mvt-wagon"><i class="la la-minus-square"></i> Detach</a>
+                            <a class="dropdown-item text-success" href="#" id="mvt-train-arrived"><i class="la la-check-square"></i>Mark as Arrived</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table m-table table-bordered" id="verification_movement_dt">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <thead>
+                    <tr>
+                        <th>Wagon</th>
+                        <th>Owner</th>
+                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Commodity</th>
+                        <th>Consigner</th>
+                        <th>Consignee</th>
+                        <th>Consign Date</th>
+                        <th>Invoice No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                 <div class="col-lg-9"></div>
+                <div class="col-lg-3">
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+<%= render "detach_wagon_model.html", assigns %>
+<%= render "arrival_train_model.html", assigns %>

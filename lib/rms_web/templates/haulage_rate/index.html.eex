@@ -1,0 +1,161 @@
+<div class="m-subheader" id="haulage-rate-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Haulage Rates</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text"> System Maintenance</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Haulage Rates</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+<div class="row">
+    <div class="col-md-12 col-lg-offset-2">
+        <div class="form-group">
+        <%= if get_flash(@conn, :info) do %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong><%= get_flash(@conn, :info) %></strong>
+            </div>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong>Oops!</strong> <%= get_flash(@conn, :error) %>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</div>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Rates
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <%= if Rms.Accounts.User.has_role?(@user, :haulage_rate, :create) do %>
+                        <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-target="#onboardingWideFormModal" data-toggle="modal" >
+                            <span>
+                                <i class="la la-plus-circle"></i>
+                                <span>Add Haulage rate</span>
+                            </span>
+                        </button>
+                    <% end %>
+                </li>
+                <li class="m-portlet__nav-item"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="haulage-rate-dt">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <input type="hidden" name="id" id="id">
+            <thead>
+                <tr>
+                    <th>Administrator</th>
+                    <th>Amount</th>
+                    <th>Currency</th>
+                    <th>Rate type</th>
+                    <th>Distance</th>
+                    <th>Category</th>
+                    <th>Start Date</th>
+                    <th>Status</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for fee <- @rates do %>
+                <tr>
+                    <td><%= fee.admin && fee.admin.description %></td>
+                    <td><%= fee.rate %></td>
+                    <td><%= fee.currency && fee.currency.description %>  </td>
+                    <td><%= fee.rate_type %></td>
+                    <td><%= fee.distance %></td>
+                    <td>
+                        <%= if fee.category == "INCOMING" do %>
+                            Incoming Traffic
+                        <% else %>
+                            Outgoing Traffic
+                        <% end %>
+                    </td>
+                    <td><%= fee.start_date %></td>
+                    <td>
+                        <%= if fee.status == "A" do %>
+                            <span class="m-badge m-badge--success m-badge--wide">Active</span>
+                        <% else %>
+                            <span class="m-badge m-badge--danger m-badge--wide">Disabled</span>
+                        <% end %>
+                    </td>
+                    <td nowrap="">
+                        <span class="dropdown">
+                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                <i class="la la-ellipsis-h"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item view" href="#" data-currency="<%= fee.currency && fee.currency.description %>" data-distance ="<%= fee.distance %>" data-amount="<%= fee.rate %>" data-partner="<%= fee.admin && fee.admin.description %>" data-rate-type ="<%=  fee.rate_type %>" data-year="<%= fee.start_date %>"  data-maker ="<%= "#{fee.maker && fee.maker.first_name} #{fee.maker && fee.maker.last_name}" %>"  data-checker ="<%= "#{fee.checker && fee.checker.first_name} #{fee.checker && fee.checker.last_name}" %>" data-created = "<%= Timex.format!(fee.inserted_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-modified ="<%= Timex.format!(fee.updated_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-status ="<%= if fee.status == "D", do: "Disabled", else: "Active" %>" data-category ="<%= if fee.category == "INCOMING", do: "Incoming Traffic", else: "Outgoing Traffic" %>" ><i class="la la-eye"></i>View</a>
+                                <%= if Rms.Accounts.User.has_role?(@user, :haulage_rate, :edit) do %>
+                                    <a class="dropdown-item edit" href="#" data-id="<%= fee.id %>" data-distance ="<%= fee.distance %>" data-currency="<%= fee.currency_id %>" data-amount="<%= fee.rate %>" data-partner="<%= fee.admin_id %>" data-rate-type ="<%= fee.rate_type %>" data-year="<%= fee.start_date %>" data-category ="<%= fee.category %>" ><i class="la la-edit"></i>Edit</a>
+                                <% end %>
+                                <%= if Rms.Accounts.User.has_role?(@user, :haulage_rate, :change_status) do %>
+                                    <a class="status dropdown-item  text-success change-status" href="#" data-id="<%= fee.id %>" data-status="A" style="display: <%= if fee.status == "D", do: "block;", else: "none;" %>"><i class="la la-check"></i>Activate</a>
+                                    <a class="status dropdown-item  text-warning change-status" href="#"  data-id="<%= fee.id %>"  data-status="D" style="display: <%= if fee.status == "A", do: "block;", else: "none;" %>"><i class="la la-close"></i>Disable</a>
+                                <% end %>
+                                <%= if Rms.Accounts.User.has_role?(@user, :haulage_rate, :delete) do %>
+                                    <a class="dropdown-item delete text-danger" href="#"  data-id="<%= fee.id %>"><i class="flaticon-delete" aria-hidden="true"></i> Delete</a>
+                                <% end %>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!----------------------------------------------------------Add modal-------------------------------------------------------------------------->
+
+<%= render "new.html", assigns %>
+
+<!----------------------------------------------------------edit modal-------------------------------------------------------------------------->
+
+<%= render "edit.html", assigns %>
+
+<!----------------------------------------------------------view_modal-------------------------------------------------------------------------->
+
+<%= render "show.html", assigns %>

@@ -1,0 +1,223 @@
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Company Settings</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Company Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <!--begin::Portlet-->
+        <div class="m-portlet"  id="company-info-link">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <span class="m-portlet__head-icon m--hide">
+                            <i class="la la-gear"></i>
+                        </span>
+                        <h3 class="m-portlet__head-text">
+                            Company Settings
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <ul class="m-portlet__nav">
+                        <li class="m-portlet__nav-item">
+                            <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                                <span>
+                                    <i class="fa fa-arrow-left"></i>
+                                    <span>&nbsp; Back</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--begin::Form-->
+
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                <input type="hidden" name="_csrf_token" id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <input type="hidden" id="id" name="id" value="<%= @company &&  @company.id %>">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Company Name <span style="color: red;">*</span></label>
+                            <div class="input-group m-input-group m-input-group--square">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-bank"></i></span></div>
+                                <input type="text" name ="company_name" value="<%= @company &&  @company.company_name %>" id="company_name" class="form-control m-input" name="" placeholder="">
+                            </div>
+                            <span class="m-form__help">Please enter your Company name</span>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <div class="form-group">
+                                <label for="example-input-small" class="form-label">Current Railway Administrator <span style="color: red;">*</span></label>
+                                <select name="current_railway_admin"  id="current_railway_admin" data-current_railway_admin ="<%= @company &&  @company.current_railway_admin %>" class="form-control m-select2 select2_form clear_selects">
+                                    <option></option>
+                                        <%= for admin <- @admins do %>
+                                        <option value="<%= admin.id %>"><%= admin.description %></option>
+                                        <% end %>
+                                </select>
+                                <span class="m-form__help">Please select Current Railway Administrator </span>
+                            </div>
+                        </div>
+                         <div class="col-sm-4 form-group">
+                            <div class="form-group">
+                                <label for="example-input-small" class="form-label">LOG Railway Administrator <span style="color: red;">*</span></label>
+                                <select name="log_admin_id"  id="log_admin_id" data-log_admin_id ="<%= @company &&  @company.log_admin_id %>" class="form-control m-select2 select2_form clear_selects">
+                                    <option></option>
+                                        <%= for admin <- @admins do %>
+                                        <option value="<%= admin.id %>"><%= admin.description %></option>
+                                        <% end %>
+                                </select>
+                                <span class="m-form__help">Please select LOG Railway Administrator </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Company Email <span style="color: red;">*</span></label>
+                            <div class="input-group m-input-group m-input-group--square">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
+                                <input type="email" name="company_email" id="company_email"  value="<%= @company &&  @company.company_email %>" class="form-control m-input" placeholder="">
+                            </div>
+                            <span class="m-form__help">Please enter your Company Email</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Campany Telephone <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" name="company_telephone" id="company_telephone"  value="<%= @company &&  @company.company_telephone %>" class="form-control m-input" >
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone-square"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Company Telephone</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Company Address <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" name ="company_address" id="company_address" value="<%= @company &&  @company.company_address %>" class="form-control m-input">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-map-marker"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter your Company Address</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label class="">Prefered Currency <span style="color: red;">*</span></label>
+                            <select name="prefered_ccy_id" id="prefered_ccy_id" data-prefered_ccy_id="<%= @company &&  @company.prefered_ccy_id %>"  class="form-control m-select2 select2_form">
+                                <option></option>
+                                <%= for currency <- @currency do %>
+                                    <option value="<%= currency.id %>"><%= currency.description %></option>
+                                <% end %>
+                            </select>
+                            <span class="m-form__help">Please select your Prefered currency</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Password Expiry Days <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" name="password_expiry_days" id="password_expiry_days" value="<%= @company &&  @company.password_expiry_days %>"  class="form-control m-input" onkeypress="return is_number_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-unlock-alt"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter the number days a password should be valid</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Login Attempts <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text"name ="login_attempts" id="login_attempts" value="<%= @company &&  @company.login_attempts %>"  class="form-control m-input" onkeypress="return is_number_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-unlock"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of Login Attempts</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label class="">On hire max period <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text"name ="on_hire_max_period" id="on_hire_max_period" value="<%= @company &&  @company.on_hire_max_period %>"  class="form-control m-input" onkeypress="return is_number_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-unlock-alt"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of on hire max Period days</span>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label class="">Unmatched aging period<span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text"name ="unmatched_aging_period" id="unmatched_aging_period" value="<%= @company &&  @company.unmatched_aging_period %>"  class="form-control m-input" onkeypress="return is_number_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-unlock-alt"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter number of unmatched aging period days</span>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label class="">Inactivate wagon max days<span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text"name ="wagon_mvt_status" id="wagon_mvt_status" value="<%= @company &&  @company.wagon_mvt_status %>"  class="form-control m-input" onkeypress="return is_number_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-unlock-alt"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Inactivate wagon max days</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>VAT <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" name="vat" id="vat" value="<%= @company &&  @company.vat %>" class="form-control m-input">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-money"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter your VAT</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Free Days<span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" name="free_days" id="free_days" value="<%= @company &&  @company.free_days %>" class="form-control m-input">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-money"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter your Free Days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions--solid">
+                        <div class="row">
+                            <div class="col-lg-11"></div>
+                            <div class="col-lg-1">
+                                <%= if Rms.Accounts.User.has_role?(@user, :company_info, :create) do %>
+                                    <button type="button" id="create-company-info" class="btn btn-success">Submit</button>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!--end::Form-->
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>

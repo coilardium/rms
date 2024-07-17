@@ -1,0 +1,319 @@
+
+
+<div class="m-subheader" id="consignment-matching-report-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Manual Matching</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Reports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Manual Matching</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                   Manual Matching
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+               <li class="m-portlet__nav-item">
+                    <a href="#" id="download_consignment_manual_matching_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="m-portlet__nav-item">
+                    <a href="#"  id="consignment-report-filter" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Filter</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="m-portlet__nav-item"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt-manual-matching-report-batch-entries">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Sales Order</th>
+                    <th>Document Date</th>
+                    <th>Consignee</th>
+                    <th>Payer</th>
+                    <th>Commodity</th>
+                    <th>Origin Station</th>
+                    <th>Destination Station</th>
+                    <th>Wagon No.</th>
+                    <th>Wagon Type</th>
+                    <th>Wagon Owner</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade model_select_2" id="consignment_batch_report_filter_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Filter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12" id="consignment_batch_report_form">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Customer</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_customer" id="consignment_customer" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for client <- @clients do %>
+                                            <option value="<%= client.id %>"><%=  client.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                           <div class="col-lg-6">
+                                <label class="">Station Code</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" placeholder="" name="consignment_station_code" id="consignment_station_code">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Sales Order</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" placeholder="" name="consignment_sales_order" id="consignment_sales_order">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>Reporting Station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_reporting_station" id="consignment_reporting_station" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for stations <- @stations do %>
+                                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Capture Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="consignment_capture_date" id="consignment_capture_date">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>Consignee</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_consignee" id="consignment_consignee" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Payer</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_payer" id="consignment_payer" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for clients <- @clients do %>
+                                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>Commodity</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="consignment_commodity" id="consignment_commodity" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for commodity <- @commodity do %>
+                                             <option value="<%= commodity.id %>"><%= commodity.code %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Start Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="from" id="from">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">End Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control m-input" placeholder="" name="to" id="to">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn btn-primary" id="manual_matching_report_filter">Procced</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="related_movement_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;">Related Movement Entries</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Wagon code</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields" id="related_wagon_code" disabled="true">
+                                    <input type="hidden" class="cr-fields" name="related_movenment_id" id="related_movenment_id">
+                                    <input type="hidden" class="cr-fields" name ="related_consignment_id" id="related_consignment_id">
+                                </div>
+                            </div>
+                           <div class="col-lg-6">
+                                <label class="">Wagon Owner</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields" id="related_wagon_owner" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Train List No.</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields" id="related_train_list" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Train No.</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields" id="related_train_no" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Origin Station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields"id="related_origin" disabled="true">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Destination Station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields"id="related_destination" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                           <div class="col-lg-6">
+                                <label class="">Consignment date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields"id="related_date" disabled="true">
+                                </div>
+                            </div>
+
+                           <div class="col-lg-6">
+                                <label class="">Reporting Time</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input cr-fields"id="related_time" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn btn-primary" id="match_entries">Procced</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

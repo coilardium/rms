@@ -1,0 +1,381 @@
+<div class="m-subheader" id="works-order-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Works Order</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Works Order</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Works Order
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed interchange_general_entries" id="interchange_general_entries">
+        <input type="hidden" name="_csrf_token" id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Area Name</label>
+                        <input type="text" name="area_name" id="area_name" placeholder="Area Name" class="form-control m-put clear-required">
+                        <span class="m-form__help">Please enter Area Name</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Train No.</label>
+                        <input type="text" name="train_no" id="train_no" placeholder="Train No." class="form-control m-put clear-required">
+                        <span class="m-form__help">Please enter Train No.</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Driver's Name<span style="color: red;">*</span></label>
+                        <input type="text" id="driver_name" name="driver_name" placeholder="Driver's Name" class="form-control m-put clear-required">
+                        <span class="m-form__help">Please Enter Driver's Name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Yard Foreman<span style="color: red;">*</span></label>
+                        <input type="text" id="yard_foreman" name="yard_foreman" placeholder="Yard Foreman" class="form-control m-put clear-required">
+                        <span class="m-form__help">Please Enter Yard Foreman</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Client<span style="color: red;">*</span></label>
+                            <select  name="client_id" id="client_id" class="form-control m-select2 m_select2_1 m-input clear-required-selects">
+                                <option></option>
+                                <%= for clients <- @clients do %>
+                                   <option value="<%= clients.id %>" data-client ="<%= clients.client_name %>"><%= clients.client_name %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Client</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Time Arrival At Location<span style="color: red;">*</span></label>
+                        <input required type="time" id="time_arrival" name="time_arrival" class="form-control m-put clear-required">
+                       <span class="m-form__help">Please choose Time Arrival At Location</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Departure Date<span style="color: red;">*</span></label>
+                        <input required type="date" id="departure_date" name="departure_date" class="form-control m-put clear-required">
+                       <span class="m-form__help">Please choose Departure Date</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Departure Time<span style="color: red;">*</span></label>
+                        <input required type="time" id="departure_time" name="departure_time" class="form-control m-put clear-required">
+                       <span class="m-form__help">Please choose Departure Time</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Time Out<span style="color: red;">*</span></label>
+                        <input required type="time" id="time_out" name="time_out" class="form-control m-put clear-required">
+                       <span class="m-form__help">Please choose Time Out</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Placed/Removed<span style="color: red;">*</span></label>
+                             <select required name="placed" id="placed" class="form-control m-select2 m_select2_1 m-input clear-required-selects">
+                                <option></option>
+                                <option value="PLACED">PLACED</option>
+                                <option value="REMOVED">REMOVED</option>
+                            </select>
+                        <span class="m-form__help">Please Choose Placed/Removed</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon ID</label>
+                        <input type="text" id="mvt_wagon_code" placeholder="Enter Wagon ID" class="form-control m-put clear-form">
+                        <input hidden="hidden" class="clear-form" name="wagon_id" id="wagon_id">
+                        <span class="m-form__help">Please enter Wagon No.</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Owner</label>
+                        <input type="text" id="wagon_owner" name="wagon_owner" placeholder="Wagon Owner" class="form-control m-put clear-form" readonly="true">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Commodity<span style="color: red;">*</span></label>
+                             <select required name="commodity_id" id="commodity_id" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for commodity <- @commodity do %>
+                                    <option value="<%= commodity.id %>" data-commodity="<%= commodity.description %>"><%= commodity.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Commodity</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">From<span style="color: red;">*</span></label>
+                            <select  name="origin_station_id" id="origin_station_id" class="form-control m-select2 m_select2_1 m-input  clear_selects">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                    <option value="<%= stations.id %>" data-station ="<%= stations.description %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose From</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">To<span style="color: red;">*</span></label>
+                             <select required name="destin_station_id" id="destin_station_id" class="form-control m-select2 m_select2_1 m-input  clear_selects">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                    <option value="<%= stations.id %>" data-station ="<%= stations.description %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose To</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Order No.</label>
+                        <input type="text" id="order_no" name="order_no" placeholder="Order No." class="form-control m-put clear-form">
+                        <span class="m-form__help">Please enter Order No.</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Load Date</label>
+                        <input required type="date" id="load_date" name="load_date" class="form-control m-put clear-form">
+                       <span class="m-form__help">Please choose Load Date</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Off Loading Date</label>
+                        <input required type="date" id="off_loading_date" name="off_loading_date" class="form-control m-put clear-form">
+                       <span class="m-form__help">Please choose Off Loading Date</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Left Behind/Supplied</label>
+                        <input type="text" id="supplied" name="supplied" placeholder="Left Behind/Supplied" class="form-control m-put clear-form">
+                        <span class="m-form__help">Please enter Left Behind/Supplied</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Date On Label</label>
+                        <input required type="date" id="date_on_label" name="date_on_label" class="form-control m-put clear-form">
+                       <span class="m-form__help">Please choose Date On Label</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Remarks</label>
+                        <textarea class="form-control m-input clear-form" id="comment" name="comment" required  rows="1"></textarea>
+                        <span class="m-form__help">Please enter Remarks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                       Wagon
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                    <li class="m-portlet__nav-item"></li>
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="btn btn-info m-btn m-btn--icon" id="add-works-order">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Add</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="btn btn-success m-btn m-btn--icon" id="submit-workers-order">
+                            <span>
+                                <i class="la la-save"></i>
+                                <span>Submit</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table table-striped- table-bordered table-hover table-checkable" id="workers-order-dt">
+                <thead>
+                    <tr>
+                        <th>Wagon No.</th>
+                        <th>Wagon Owner</th>
+                        <th>Commodity</th>
+                        <th>To</th>
+                        <th>From</th>
+                        <th>Left Behind/Supplied</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-12"></div>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+<div class="modal fade fade model_select_2" id="view-works-order-model" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Workers Order Details </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right col-lg-12">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Order No.:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Order No." id="vw-order-no" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Load Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-load-date" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Off Leading Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="Date" class="form-control m-input" id="vw-off-loading-date" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Left Behind/Supplied:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Left Behind/Supplied" id="vw-supplied" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Date On Label:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-date-on-label" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Remarks:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" id="vw-remarks" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

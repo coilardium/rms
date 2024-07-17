@@ -1,0 +1,87 @@
+<!--begin::Modal-->
+<div class="modal fade" id="ctc_display_input_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >CTC REFUELING FORM</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--begin::Portlet-->
+                <div class="m-portlet">
+                   
+                    <!--begin::Form-->
+                    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed data_entry ">
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-6">
+                                    <label>Date:</label>
+                                    <input type="date" name="ctc_datestamp" id="ctc_datestamp" class="form-control m-input" placeholder="">
+                                    <span class="m-form__help">Please select the date</span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="">Time:</label>
+                                    <input type="time" name="ctc_time" id="ctc_time" class="form-control m-input" placeholder="">
+                                    <span class="m-form__help">Please select the time</span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                               
+                                <div class="col-lg-6">
+                                    <label class="">Balance of fuel in figures:</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <input type="text" name="fuel_blc_figures" id="fuel_blc_figures" class="form-control m-input" placeholder="">
+                                        <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class=""></i></span></span>
+                                    </div>
+                                    <span class="m-form__help">Please enter fax</span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Balance in words:</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <input type="text" name="fuel_blc_words" id="fuel_blc_words" class="form-control m-input" placeholder="">
+                                    </div>
+                                    <span class="m-form__help">Please fuel balance in words</span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-6">
+                                    <label class="">Litres authorized by CTC in figures:</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <input type="text" name="approved_refuel" id="approved_refuel" class="form-control m-input clear_form " placeholder="Enter approved refuel" name="approved_refuel" id="approved_refuel" required="required" autocomplete="off">
+                                        <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class=""></i></span></span>
+                                    </div>
+                                    <span class="m-form__help">Please enter the litres approved</span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Litres in words:</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <input type="text" name="litres_in_words" id="litres_in_words" class="form-control m-input" placeholder="">
+                                    </div>
+                                    <span class="m-form__help">Please fuel balance in words</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input wagon-field-clr" id="comment" name="comment" rows="3"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--end::Form-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <%# <button type="button" class="btn btn-primary">Send message</button> %>
+                <button type="button" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" id="control-submit-form"  data-status="PENDING_COMPLETION"> PROCEED <i class="la la-send"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end::Modal-->

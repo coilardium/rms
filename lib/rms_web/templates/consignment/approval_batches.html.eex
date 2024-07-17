@@ -1,0 +1,68 @@
+
+<div class="m-subheader" id="consgnmnt-apvals" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Approval</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Consignment</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text"> Approval</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Approval
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                </li>
+                <li class="m-portlet__nav-item"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt-consignment-approval-batch-entries">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>PZ Code</th>
+                    <th>Capture Date</th>
+                    <th>Consignee</th>
+                    <th>Payer</th>
+                    <th>Commodity</th>
+                    <th>Origin Station</th>
+                    <th>Tariff Origin</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

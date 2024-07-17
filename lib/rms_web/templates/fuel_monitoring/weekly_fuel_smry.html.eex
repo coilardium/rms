@@ -1,0 +1,131 @@
+<style>
+	td {
+		text-align: left;
+		vertical-align: top;
+		}
+	
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Fuel Consumption</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Reports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Weekly Summary</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                    <i class="la la-plus m--hide"></i>
+                    <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="m-dropdown__wrapper" style="z-index: 101;">
+                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: 30; right: 21.5px;"></span>
+                    <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                            <div class="m-dropdown__content-sm" >
+								<ul class="m-nav">
+									<li class="m-nav__section m-nav__section--first">
+										<span class="m-nav__section-text">Quick Actions</span>
+									</li>
+									<li class="m-nav__item">
+										<a href="#"  data-target="#onboardingWideFormModal" data-toggle="modal" class="m-nav__link">
+											<i class="m-nav__link-icon flaticon-search"></i>
+											<span class="m-nav__link-text">Search</span>
+										</a>
+									</li>
+									<li class="m-nav__item">
+										<a href="<%= Routes.fuel_monitoring_path(@conn, :weekly_fuel_smry_report_pdf, %{weeks: @weeks, month:  @month, year: @year , weekly: "fuel Based"}) %>" class="m-nav__link">
+											<i class="m-nav__link-icon flaticon-download"></i>
+											<span class="m-nav__link-text">Generate Pdf</span>
+										</a>
+									</li>
+								</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="m-portlet">
+			<div class="m-portlet__body m-portlet__body--no-padding">
+				<div class="m-invoice-2">
+					<div class="m-invoice__wrapper">
+						<div class="m-invoice__head">
+							<div class="m-invoice__container m-invoice__container--centered">
+								<div class="m-invoice__logo">
+									<div class="row">
+										<div class="col-md-4 mt-5">
+											<a href="#" style ="cursor:default; text-decoration: none;">
+												<h4 style="color: #6f727d; margin-left: 0px">Weekly Summary</h4>
+												<span class="m-invoice__text text-muted"></span>
+											</a>
+										</div>
+										<div class="col-md-6 text-center"><h3>Zambia Railways Limited</h3></div>
+										<div class="col-md-2 text-right">
+											<a href="#">
+												<img src="<%= Routes.static_path(@conn, "/images/Logo_mark.png") %>" style="width:55px; height:55px;">
+											</a>
+										</div>
+									</div>
+								</div>
+								<span class="m-invoice__desc">
+									<span style ="color: #9699a2 !important;"><%= @company && @company.company_name %></span>
+									<span style ="color: #9699a2 !important;"><%= @company && @company.company_address %></span>
+								</span><br>
+							</div>
+						</div>
+						<div class="m-invoice__body m-invoice__body--centered">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th style=" font-weight: 500 !important; font-size: 15px; color:black">Consumption(Litres)</th>
+											<%= for month <- @weeks do %>
+											    <th style=" font-weight: 500 !important; font-size: 15px; color:black"><%= month %></th>
+										    <% end %>
+											 <th style=" font-weight: 500 !important; font-size: 15px; color:black">Cummulative</th>
+										</tr>
+									</thead>
+									<tbody>
+										<%= render "weekly_fuel_smry_1.html", assigns%>
+									</tbody>
+								</table>
+								<br>
+								<br>
+								<br>
+								<br>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%= render "weekly_fuel_search.html", assigns%>

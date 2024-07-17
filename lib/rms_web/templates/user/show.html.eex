@@ -1,0 +1,92 @@
+<div class="modal fade  model_select_2" id="view_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Edit User Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right  col-lg-12" action="<%= Routes.user_path(@conn, :update) %>" method="POST">
+                <div class="m-portlet__body"><br>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>First Name:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" style="text-transform: capitalize;" disabled="true" id="vw_first_name" required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-user"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Last Name:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" style="text-transform: capitalize;" disabled="true" id="vw_last_name"  required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-user"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Phone Number:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"id="vw_mobile"  disabled="true"  required="required">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Email Address:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="vw_email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>User role</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="vw_role">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Station</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" disabled="true" id="vw_region">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Created by</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="maker">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Modified by</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" disabled="true" id="checker">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Created Date</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input"  disabled="true" id="created_dt">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Modified Date</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input" disabled="true" id="modified_dt">
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="modal-footer">
+                    <%# <button type="submit" class="btn btn-primary">Save</button> %>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

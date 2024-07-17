@@ -1,0 +1,150 @@
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Supplied Materials</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Reports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Material Supply</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text" id="interchange-outgoing-wagons-report" >Supplied Materials</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                   Supplied Materials
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+               <li class="m-portlet__nav-item">
+                    <a href="#" id="download_interchange_report_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+       <form class="m-form m-form--fit m--margin-bottom-20" id = "interchange_batch_report_form">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" id="materal-direction" name="direction" value="OUTGOING">
+            <input type="hidden" name="report_type" id="report_type" value ="MATERIALS_REPORT">
+            <div class="row m--margin-bottom-20">
+                 <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Administrator:</label>
+                    <select name="administrator" id="administrator" class="form-control m-select2 select2_form">
+                       <option></option>
+                          <%= for admin <- @admins do %>
+                                <option value="<%= admin.id %>"><%= admin.description %></option>
+                            <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Material/Spare:</label>
+                    <select name="equipment" id="equipment" class="form-control m-select2 select2_form">
+                        <option></option>
+                        <%= for spare <- @spares do %>
+                            <option value="<%= spare.id %>"><%= spare.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Date Sent:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_5">
+                            <input type="text" class="form-control m-input clear_form" name="date_sent_from" id="date_sent_from" placeholder="From"  />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="date_sent_to"  id ="date_sent_to" placeholder="To" />
+                            <input type="hidden" class="form-control" name="date_received_from"  id ="date_received_from"/>
+                            <input type="hidden" class="form-control" name="date_received_to"  id ="date_received_to"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Capture Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_6">
+                            <input type="text" class="form-control m-input clear_form" name="from" id="from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="to" id="to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-info m-btn m-btn--icon" id="materials-filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button  type="button" class="btn btn-metal m-btn m-btn--icon" id="material-reset-report-filter">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+        </form>
+        <table class="table table-striped m-table table-sm" id="materials-dt">
+            <thead>
+                <tr>
+                    <th>Administrator</th>
+                    <th>Material/Spare</th>
+                    <th>Cost</th>
+                    <th>Date Sent</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+    <div class="m-form__actions m-form__actions--solid">
+        <div class="row">
+            <div class="col-lg-12"></div>
+        </div>
+    </div>
+</div>

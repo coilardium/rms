@@ -1,0 +1,399 @@
+<div class="m-subheader" id="demurrage-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Demurrage</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Demurrage</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Demurrage
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed interchange_general_entries" id="interchange_general_entries">
+        <input type="hidden" name="_csrf_token" id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon No.</label>
+                        <input type="text" id="mvt_wagon_code" placeholder="Enter Wagon No." class="form-control m-put clear-form">
+                        <input hidden="hidden" class="clear-form" id="wagon_id">
+                        <span class="m-form__help">Please enter Wagon No.</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Owner</label>
+                        <input type="text" id="wagon_owner" placeholder="Wagon Owner" class="form-control m-put clear-form" readonly="true">
+                    </div>
+                </div>
+                 <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Currency<span style="color: red;">*</span></label>
+                            <select required name="currency_id" id="currency_id" class="form-control  m-select2 m_select2_1 clear_selects">
+                                <option></option>
+                                <%= for currency <- @currency do %>
+                                    <option value="<%= currency.id %>"  data-currency = "<%= currency.symbol %>"><%=  currency.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Currency</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Charge Rate<span style="color: red;">*</span></label>
+                        <input type="text" id="charge_rate" name="charge_rate" placeholder=" Charge Rate" class="form-control m-put"  onkeypress="return is_amount_key(event)">
+                        <span class="m-form__help">Please Enter Charge Rate</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Arrival Date<span style="color: red;">*</span></label>
+                        <input required type="date" id="arrival_dt" name="arrival_dt" class="form-control m-put demurrage-yard clear-form">
+                       <span class="m-form__help">Please choose Arrival Date </span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Date Placed<span style="color: red;">*</span></label>
+                        <input required type="date" id="date_placed" name="date_placed"  class="form-control m-put demurrage-yard demurrage-sidings clear-form">
+                        <span class="m-form__help">Please choose Date Placed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Date Placed Over Weekend<span style="color: red;">*</span></label>
+                        <input required type="date" id="dt_placed_over_weekend" name="dt_placed_over_weekend" class="form-control m-put clear-form" readonly="true">
+                        <span class="m-form__help">Please choose Date Placed Over Weekend </span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Date Off Loaded<span style="color: red;">*</span></label>
+                        <input required type="date" id="date_offloaded" name="date_offloaded"  class="form-control m-put demurrage-sidings clear-form">
+                        <span class="m-form__help">Please choose Date Off Loaded</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Date Loaded</label>
+                        <input required type="date" id="date_loaded" name="date_loaded" class="form-control m-put demurrage-sidings clear-form">
+                        <span class="m-form__help">Please choose Date Loaded<</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Date Cleared<span style="color: red;">*</span></label>
+                        <input required type="date" id="date_cleared" name="date_cleared" class="form-control m-put clear-form">
+                        <span class="m-form__help">Please choose Date Cleared</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Commodity In<span style="color: red;">*</span></label>
+                             <select required name="commodity_in_d" id="commodity_in_id" class="form-control m-select2 m_select2_1 m-input demurrage-yard demurrage-sidings clear_selects">
+                                <option></option>
+                                <%= for commodity <- @commodity do %>
+                                    <option value="<%= commodity.id %>" data-load-status ="<%= commodity.load_status %>" data-commodity-description ="<%= commodity.description %>" ><%= commodity.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Commodity In</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Commodity Out<span style="color: red;">*</span></label>
+                             <select required name="commodity_out_id" id="commodity_out_id" class="form-control m-select2 m_select2_1 m-input clear_selects">
+                                <option></option>
+                                <%= for commodity <- @commodity do %>
+                                    <option value="<%= commodity.id %>" data-load-status ="<%= commodity.load_status %>"  data-commodity-description ="<%= commodity.description %>"  ><%= commodity.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Commodity Out</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-3 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Yard</label>
+                        <input type="text" id="yard" name="yard" placeholder="Yard" class="form-control m-put clear-form" readonly="true">
+                    </div>
+                </div>
+                 <div class="col-sm-3 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label"> Sidings</label>
+                        <input type="text" id="sidings" name="sidings" placeholder="Sidings" class="form-control m-put clear-form" readonly="true">
+                    </div>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Total</label>
+                        <input type="text" id="total_days" name="total_days" placeholder="Total" class="form-control m-put clear-form" readonly="true">
+                    </div>
+                </div>
+                 <div class="col-sm-3 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Total Charge</label>
+                        <input type="text" id="total_charge" name="total_charge" placeholder="Total Charge" class="form-control m-put clear-form" readonly="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                       Wagon
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                    <li class="m-portlet__nav-item"></li>
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="btn btn-info m-btn m-btn--icon" id="add-demurrage">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>Add</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <button type="button" class="btn btn-success m-btn m-btn--icon" id="submit-demurrage">
+                            <span>
+                                <i class="la la-save"></i>
+                                <span>Submit</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Datatable -->
+            <table class="table table-striped- table-bordered table-hover table-checkable" id="demurrage-dt">
+                <thead>
+                    <tr>
+                        <th>Wagon No.</th>
+                        <th>Wagon Owner</th>
+                        <th>Rate</th>
+                        <th>Arrival Date</th>
+                        <th>Date Placed</th>
+                        <th>Date Off Loaded</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-12"></div>
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+<div class="modal fade fade model_select_2" id="view-demurrage-model" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Demurrage Details </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right col-lg-12">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Wagon No.:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Wagon No." id="vw-wagon-code" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Wagon Owner" id="vw-wagon-owner" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Charge Rate:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Charge Rate" id="vw-charge-rate" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Arrival Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" placeholder="Arrival Date" id="vw-arrival-date" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Date Placed:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-date-placed" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Date Placed Over Weekend:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-date-placed-weekend" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Date Off Loaded:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input"  id="vw-date-offloaded" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Date Loaded:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-date-loaded" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Date Cleared:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-date-cleared" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Commodity In:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Commodity In" id="vw-commodity-in" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Commodity Out:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Commodity Out" id="vw-commodity-out" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Yard:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Yard" id="vw-yard" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Sidings:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Sidings" id="vw-sidings" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Total:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Total" id="vw-total" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Currency:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Currency" id="vw-currency" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Total Charge:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Total Charge" id="vw-total-charge" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

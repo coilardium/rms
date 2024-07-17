@@ -1,0 +1,323 @@
+<div class="m-subheader" id="works-order-report-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">Works Order</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Reports</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Works Order</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Works Order
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+               <li class="m-portlet__nav-item">
+                    <a href="#" id="download_interchange_report_excel" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-excel"></i>
+                            <span>Excel</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+       <form class="m-form m-form--fit m--margin-bottom-20" id = "interchange_batch_report_form">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" name="report_type" id="report_type" value ="WORKS_ORDER_REPORT">
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Wagon Code:</label>
+                    <input type="text" class="form-control m-input clear_form" name="wagon_code" id = "wagon_code" placeholder="Wagon Code">
+                </div>
+                 <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Wagon Owner:</label>
+                    <select name="administrator_id" id="administrator_id" class="form-control m-select2 select2_form">
+                       <option></option>
+                        <%= for admin <- @admins do %>
+                            <option value="<%= admin.id %>"><%= admin.description %></option>
+                        <% end %>
+                    </select>
+                </div>
+                 <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Client</label>
+                    <select name="client_id" id="client_id" class="form-control js-search_client-ajax m-select2 select2_form">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Commodity:</label>
+                    <select name="commodity_id" id="commodity_id" class="form-control js-consign-search-cmmdity m-select2 select2_form">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Orign Station:</label>
+                    <select name="origin_station_id" id="origin_station_id" class="form-control js-station-ajax  m-select2 select2_form">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Destination Station:</label>
+                    <select name="destin_station_id" id="destin_station_id" class="form-control js-station-ajax  m-select2 select2_form">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Train No.:</label>
+                    <input type="text" class="form-control m-input clear_form" name="train_no" id = "train_no" placeholder="Train No">
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Order No.:</label>
+                    <input type="text" class="form-control m-input clear_form" name="order_no" id = "order_no" placeholder="Order No.">
+                </div>
+            </div>
+            <div class="row m--margin-bottom-20">
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Departure date:</label>
+                    <input type="date" class="form-control m-input clear_form" name="departure_date" id = "departure_date">
+                </div>
+                <div class="col-lg-3 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Departure Time:</label>
+                    <input type="time" class="form-control m-input clear_form" name="departure_time" id = "departure_time">
+                </div>
+                <div class="col-lg-6 m--margin-bottom-10-tablet-and-mobile">
+                    <label>Capture Date:</label>
+                    <div class="">
+                        <div class="input-daterange input-group" id="m_datepicker_6">
+                            <input type="text" class="form-control m-input clear_form" name="from" id="from" placeholder="From" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                            </div>
+                            <input type="text" class="form-control clear_form" name="to" id="to" placeholder="To" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-info m-btn m-btn--icon" id="works-order-report-filter">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Search</span>
+                        </span>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button  type="button" class="btn btn-metal m-btn m-btn--icon" id="works-order-reset-filter">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="m-separator m-separator--md m-separator--dashed"></div>
+        </form>
+        <table class="table table-striped m-table table-sm" id="works-order-report-dt">
+            <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Wagon No.</th>
+                    <th>Commodity</th>
+                    <th>To</th>
+                    <th>From</th>
+                    <th>Departure Date</th>
+                    <th>Departure Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+    <div class="m-form__actions m-form__actions--solid">
+        <div class="row">
+            <div class="col-lg-12"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade fade model_select_2" id="view-work-order-model" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Works Order Details </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right col-lg-12">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Area Name:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Area Name" id="vw-area-name" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Train No.:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Train No." id="vw-train-no" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Driver's Name:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Driver's Name" id="vw-driver-name" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Yard Foreman:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Yard Foreman" id="vw-yard-foreman" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Client:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Client" id="vw-client" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Time Arrival At Location:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="time" class="form-control m-input" id="vw-arrival-time" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Departure Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-departure-date" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Departure Time:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="time" class="form-control m-input" id="vw-departure-time" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Time Out:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="time" class="form-control m-input" id="vw-time-out" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Placed/Removed:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Time Arrival At Location" id="vw-placed" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Wagon No.:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Wagon No." id="vw-wagon-code" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Wagon Owner" id="vw-wagon-owner" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Commodity:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Commodity" id="vw-commodity" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Order No.:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Order No." id="vw-order-no" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Load Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-loaddate" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Off Loading Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" id="vw-offloadingdate" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Left Behind/Supplied:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Left Behind/Supplied" id="vw-supplied" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Remarks:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Remarks" id="vw-remarks" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

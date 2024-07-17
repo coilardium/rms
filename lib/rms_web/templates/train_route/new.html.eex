@@ -1,0 +1,110 @@
+
+<div class="modal fade model_select_2" id="add_route" >
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Route Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12"  action="<%= Routes.train_route_path(@conn, :create) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <input type="hidden" name="id" id="id">
+                <div class="m-portlet__body">
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Code:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter Code"  name="code" id="code">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Code</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter description" name="description" id="description"  required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter code</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Origin Station :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="origin_station" id="origin_station" class="form-control m-select2 select2_modal">
+										<option ></option>
+										<%= for stations <- @stations do %>
+										<option value="<%= stations.id %>"><%=  stations.description %></option>
+										<% end %>
+									</select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please choose</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Destination Station:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="destination_station" id="destination_station" class="form-control m-select2 select2_modal">
+                                        <option ></option>
+                                        <%= for stations <- @stations do %>
+                                        <option value="<%= stations.id %>"><%=  stations.description %></option>
+                                        <% end %>
+                                </select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-envelope-square"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Transport Type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="transport_type" id="transport_type" class="form-control m-select2 select2_modal">
+										<option ></option>
+										<%= for transport_type <- @transport_type do %>
+										<option value="<%= transport_type.id %>"><%=  transport_type.description %></option>
+										<% end %>
+									</select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please choose</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Disatance(KM):</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter distance" name="distance" id="distance"  required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter distance</span>
+                        </div>
+                    </div>
+					<div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Operator:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="operator" id="operator" class="form-control m-select2 select2_modal">
+										<option ></option>
+										<%= for railway_administrator <- @railway_administrator do %>
+										<option value="<%= railway_administrator.id %>"><%=  railway_administrator.description %></option>
+										<% end %>
+									</select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please choose</span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

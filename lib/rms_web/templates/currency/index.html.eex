@@ -1,0 +1,152 @@
+
+<div class="m-subheader" id="currency-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Currency</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">System Maintenance</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text"> Currency</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+<div class="row">
+    <div class="col-md-12 col-lg-offset-2">
+        <div class="form-group">
+        <%= if get_flash(@conn, :info) do %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong><%= get_flash(@conn, :info) %></strong>
+            </div>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong>Oops!</strong> <%= get_flash(@conn, :error) %>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</div>
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Currency
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <%= if Rms.Accounts.User.has_role?(@user, :currency, :create) do %>
+                        <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-target="#add_currency" data-toggle="modal" >
+                            <span>
+                                <i class="la la-plus-circle"></i>
+                                <span>Add Currency</span>
+                            </span>
+                        </button>
+                    <% end %>
+                </li>
+                <li class="m-portlet__nav-item"></li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt_currency">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <input type="hidden" name="id" id="id">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Code</th>
+                    <th>Acronym</th>
+                    <th>Symbol</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th style="width: 70px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for currency <- @currency do %>
+                    <tr>
+                    <td><%= currency.description %></td>
+                    <td><%= currency.code %></td>
+                    <td><%= currency.acronym %></td>
+                    <td><%= currency.symbol %></td>
+                    <td><%= currency.type %></td>
+                    <td>
+                        <%= if currency.status == "A" do %>
+                            <span class="m-badge m-badge--success m-badge--wide">Active</span>
+                        <% else %>
+                                <span class="m-badge m-badge--danger m-badge--wide">Disabled</span>
+                        <% end %>
+                    </td>
+                    <td nowrap="">
+                        <span class="dropdown">
+                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                            <i class="la la-ellipsis-h"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item view" href="#"  data-code ="<%= currency.code %>"  data-id="<%= currency.id %>" data-symbol ="<%= currency.symbol %>" data-type ="<%= currency.type %>"  data-acronym="<%= currency.acronym %>" data-description="<%= currency.description %>"  data-maker ="<%= "#{currency.maker && currency.maker.first_name} #{currency.maker && currency.maker.last_name}" %>"  data-checker ="<%= "#{currency.checker && currency.checker.first_name} #{currency.checker && currency.checker.last_name}" %>" data-created = "<%= Timex.format!(currency.inserted_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-modified ="<%= Timex.format!(currency.updated_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-status="<%= if currency.status == "D", do: "Disabled", else: "Active" %>" ><i class="la la-eye"></i> View</a>
+                                <%= if Rms.Accounts.User.has_role?(@user, :currency, :edit) do %>
+                                    <a class="dropdown-item edit" href="#"  data-code ="<%= currency.code %>"  data-id="<%= currency.id %>" data-symbol ="<%= currency.symbol %>" data-type ="<%= currency.type %>"  data-acronym="<%= currency.acronym %>" data-description="<%= currency.description %>"><i class="la la-edit"></i> Edit</a>
+                                <% end %>
+                                <%= if Rms.Accounts.User.has_role?(@user, :currency, :change_status) do %>
+                                    <a class="status dropdown-item  text-success change-status" href="#" data-id="<%= currency.id %>" data-status="A" style="display: <%= if currency.status == "D", do: "block;", else: "none;" %>"><i class="la la-check"></i>Activate</a>
+                                    <a class="status dropdown-item  text-warning change-status" href="#"  data-id="<%= currency.id %>"  data-status="D" style="display: <%= if currency.status == "A", do: "block;", else: "none;" %>"><i class="la la-close"></i>Disable</a>
+                                <% end %>
+                                <%= if Rms.Accounts.User.has_role?(@user, :currency, :delete) do %>
+                                    <a class="dropdown-item delete text-danger" href="#"  data-id="<%= currency.id %>"><i class="flaticon-delete" aria-hidden="true"></i> Delete</a>
+                                <% end %>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!----------------------------------------------------------Add modal-------------------------------------------------------------------------->
+
+<%= render "new.html", assigns %>
+
+<!----------------------------------------------------------edit modal-------------------------------------------------------------------------->
+
+<%= render "edit.html", assigns %>
+
+<!----------------------------------------------------------view_modal-------------------------------------------------------------------------->
+
+<%= render "show.html", assigns %>

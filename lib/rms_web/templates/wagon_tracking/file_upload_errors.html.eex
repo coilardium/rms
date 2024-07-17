@@ -1,0 +1,66 @@
+<div class="m-subheader" id="wagon-tracking-upload-errors-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">File Upload Errors</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Wagon Tracking</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">File Upload Errors</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+
+<!--begin::Portlet-->
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide"><i class="la la-gear"></i></span>
+                <h3 class="m-portlet__head-text">
+                   Upload Errors
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!--begin::Form-->
+    <div class="m-portlet__body">
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" role="grid" id="dt_wagon_bulk_file_errors">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Filename</th>
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for file_error <- @file_errors do %>
+                    <tr>
+                        <td><%= file_error.col_index %></td>
+                        <td><%= String.replace("#{file_error.filename}", ".xlsx", "") %></td>
+                        <td><%= file_error.error_msg %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--end::Portlet-->

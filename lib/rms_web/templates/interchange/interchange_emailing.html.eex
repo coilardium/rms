@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            }
+
+            td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            }
+
+            tr:nth-child(even) {
+            background-color: #dddddd;
+            }
+        </style>
+    </head>
+    <body>
+
+         <p>Dear User,</p>
+
+        <%=  if @type == "EXCEEDED" do %>
+            <p>Note the following wagons have exceeded the  <%= @days %> days maximum on hire period.</p><br>
+        <% end %>
+
+        <%= if @type == "HALF" do %>
+            <p>Note the following wagons have exceeded half of <%= @days %> days maximum on hire period.</p><br>
+        <% end %>
+
+        <table>
+            <tr style="background-color: #b3d1ff; ">
+                <th>Wagon No.</th>
+                <th>Wagon Owner</th>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Commodity</th>
+                <th>Direction</th>
+                <th>Interchange Point</th>
+                <th>Accumlative days</th>
+            </tr>
+             <%= for interchange <-@interchange do %>
+                <tr>
+                    <td><%= interchange.wagon_code %></td>
+                    <td><%= interchange.wagon_owner %></td>
+                    <td><%= interchange.origin %></td>
+                    <td><%= interchange.destination %></td>
+                    <td><%= interchange.commodity %></td>
+                    <td><%= interchange.direction %></td>
+                    <td><%= interchange.interchange_pt %></td>
+                    <td><%= interchange.accumulative_days %></td>
+                </tr>
+            <% end %>
+        </table>
+
+    </body>
+</html>

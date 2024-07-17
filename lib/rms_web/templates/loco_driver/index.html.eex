@@ -1,0 +1,122 @@
+
+
+<div class="m-subheader" id="loco-drivers-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator"> Loco driver</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">User Management</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Loco driver</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Loco Driver
+                </h3>
+            </div>
+        </div>
+        <%# <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-target="#onboardingWideFormModal" data-toggle="modal"  >
+                        <span>
+                            <i class="la la-balance-scale"></i>
+                            <span>Add Rate</span>
+                        </span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item"></li>
+
+            </ul>
+        </div> %>
+    </div>
+    <div class="m-portlet__body">
+
+        <!--begin: Datatable -->
+        <table class="table table-striped m-table table-sm" id="dt_loco_driver">
+        <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <input type="hidden" name="id" id="id">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for loco_driver <-@loco_driver do %>
+                    <tr>
+                        <td><%= loco_driver.user && loco_driver.user.first_name %> <%= loco_driver.user && loco_driver.user.last_name %></td>
+                        <td><%= loco_driver.user && loco_driver.user.mobile %> </td>
+                        <td><%= loco_driver.user && loco_driver.user.email %> </td>
+                        <td>
+                            <%= if loco_driver.status == "A" do %>
+                                <span class="m-badge m-badge--success m-badge--wide">Active</span>
+                            <% else %>
+                                    <span class="m-badge m-badge--danger m-badge--wide">Disabled</span>
+                            <% end %>
+                        </td>
+                        <td nowrap="">
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                <i class="la la-ellipsis-h"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+
+                                    <a class="status dropdown-item  text-success change-status" href="#" data-id="<%= loco_driver.id %>" data-status="A" style="display: <%= if loco_driver.status == "D", do: "block;", else: "none;" %>"><i class="la la-check"></i>Activate</a>
+                                    <a class="status dropdown-item  text-warning change-status" href="#"  data-id="<%= loco_driver.id %>"  data-status="D" style="display: <%= if loco_driver.status == "A", do: "block;", else: "none;" %>"><i class="la la-close"></i>Disable</a>
+                                    <a class="dropdown-item delete text-danger" href="#"  data-id="<%= loco_driver.id %>"><i class="flaticon-delete" aria-hidden="true"></i> Delete</a>
+                                </div>
+                            </span>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!----------------------------------------------------------edit_modal-------------------------------------------------------------------------->
+
+<%= render "edit.html", assigns %>
+
+<!----------------------------------------------------------view_modal-------------------------------------------------------------------------->
+
+<%= render "show.html", assigns %>

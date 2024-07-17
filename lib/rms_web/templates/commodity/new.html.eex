@@ -1,0 +1,82 @@
+<div class="modal fade model_select_2" id="onboardingWideFormModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Commodity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="<%= Routes.commodity_path(@conn, :create) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <input type="hidden" name="id" id="id">
+                <div class="m-portlet__body">
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Code:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter Code"  name="code" id="code">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Code</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter description" name="description" id="description"  required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter commodity description</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Commodity Group:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="com_group_id" id="com_group_id" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for commodity_group <- @commodity_group do %>
+                                        <option value="<%= commodity_group.id %>"><%= commodity_group.description %></option>
+                                    <% end %>
+                            </select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please choose commodity group</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Container:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select class="form-control m-select2 select2_modal" name="is_container">
+                                    <option></option>
+                                    <option value="Yes"> Yes </option>
+                                    <option value="No"> No</option>
+                                </select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-envelope-square"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please Choose...</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label class="">Load Status:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select class="form-control m-select2 select2_modal" name="load_status">
+                                <option></option>
+                                <option value="L"> Loaded </option>
+                                <option value="E"> Empty </option>
+                            </select>
+                            </div>
+                            <span class="m-form__help">Please Choose...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,303 @@
+
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Wagon Tracking</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Wagon</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">View Tracker</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Tracker Details</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                    <i class="la la-plus m--hide"></i>
+                    <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="m-dropdown__wrapper" style="z-index: 101;">
+                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: 30; right: 21.5px;"></span>
+                    <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                            <div class="m-dropdown__content-sm" >
+                                <ul class="m-nav">
+                                    <li class="m-nav__section m-nav__section--first m--hide">
+                                        <span class="m-nav__section-text">Quick Actions</span>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="<%= Routes.wagon_tracking_path(@conn, :view_wagon_tracker) %>" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-visible"></i>
+                                            <span class="m-nav__link-text">View Trackers</span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="<%= Routes.wagon_tracking_path(@conn, :index) %>" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-add"></i>
+                                            <span class="m-nav__link-text">Add Tracker</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                     <strong> Wagon Details </strong>
+                </h3>
+
+            </div>
+        </div>
+
+         <div class="m-portlet__head-tools">
+            <div class="m-portlet__head-tools">
+
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item"></li>
+                            <button type="button" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air"  id="wagon_defects_lookup">
+                            Defects <i class="la la-wrench"></i>
+                        </button>
+                </ul>
+            </div>
+         </div>
+    </div>
+
+    <!--begin::Form-->
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+                <%= for tracker <-@tracker do %>
+
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Wagon Code</label>
+                                            <input required type="text" class="form-control m-put"  value="<%= tracker.wagon_code %>" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Wagon Type</label>
+                                            <input required type="text" class="form-control m-put"  value="<%= tracker.wagon_type %>" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Wagon Symbol</label>
+                                            <input required type="text" class="form-control m-put"  value="<%= tracker.wagon_symbol %>" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Train Number</label>
+                                            <input required type="text"  value= "<%= tracker.train_no %>" class="form-control m-put clear_form" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Commodity Group</label>
+                                            <input required type="text" value= "<%= tracker.commodity_group %>" class="form-control m-put clear_form " >
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Commodity</label>
+                                            <input required type="text" value= "<%= tracker.commodity_description %>" class="form-control m-put clear_form " >
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Wagon owner</label>
+                                            <input required type="text" class="form-control m-put"  value="<%= tracker.wagon_owner %>" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Domain</label>
+                                            <input required type="text" class="form-control m-put" value="<%= tracker.domain_description %>" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Region</label>
+                                            <input required type="text" class="form-control m-put" value="<%= tracker.region_description %>" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Yard/Siding</label>
+                                            <input required type="text"  value= "<%= tracker.yard_siding %>" class="form-control m-put clear_form " >
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Sub Category</label>
+                                            <input required type="text"class="form-control m-put clear_form " value= "<%= tracker.sub_category %>"  >
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Net Ton</label>
+                                            <input required type="text" value= "<%= tracker.net_ton %>" class="form-control m-put clear_form" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Update Date</label>
+                                            <input required type="date" value= "<%= tracker.update_date %>" class="form-control m-input clear_form" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Customer Name</label>
+                                            <input required type="text" value= "<%= tracker.client_name %>" class="form-control m-put clear_form" >
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h4 class="m-portlet__head-text">
+                                        Wagon Status Details
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Bound</label>
+                                            <input required type="text" value= "<%= tracker.bound %>" class="form-control m-put clear_form" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">On Hire</label>
+                                            <input required type="text" value= "<%= if tracker.on_hire == "Y" do %> Yes <% else %> No <% end %>" class="form-control m-put clear_form" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Condition</label>
+                                            <input required type="text"  class="form-control m-put clear_form" value= "<%= tracker.condition_description %>"  >
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h4 class="m-portlet__head-text">
+                                        Wagon Position Details
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Arrival/Departure</label>
+                                                <input class="form-control m-put" required type="text" value= "<%= tracker.wagon_status_description %>"  >
+				                                <input type="hidden" id="wagon_id" value="<%= tracker.wagon_id %>">
+                                                <input type="hidden" id="tracker_id" value="<%= tracker.id %>">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Current Location</label>
+                                                <input required type="text" value= "<%= tracker.current_location %>" class="form-control m-put clear_form" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Origin Station</label>
+                                                <input required type="text" value= "<%= tracker.origin_station %>" class="form-control m-put clear_form" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Destination Station</label>
+                                                <input required type="text" value= "<%= tracker.destination_station %>" class="form-control m-put clear_form" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Days at</label>
+                                                <input required type="text" value= "<%= tracker.days_at %>" class="form-control m-put clear_form" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Period</label>
+                                                <input required type="text" value = "<%= Rms.Tracking.period_days(tracker.days_at) %>" class="form-control m-put clear_form" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <div class="form-group">
+                                                <label for="example-input-small" class="form-label">Year</label>
+                                                <input required type="text" value= "<%= tracker.year %>" class="form-control m-put clear_form" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                        <div class="form-group">
+                                            <label for="example-input-small" class="form-label">Comment</label>
+                                            <input required type="text" class="form-control m-put clear_form" placeholder="no comment" readonly value=  "<%= if tracker.comment != "" do %> <%= tracker.comment %> <% else %> " " <% end %>" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                <% end %>
+            </form>
+             <!--end::Form-->
+</div>
+
+</div>
+
+
+<%= render "wagon_defect_model.html", assigns %>

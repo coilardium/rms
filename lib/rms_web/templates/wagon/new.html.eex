@@ -1,0 +1,143 @@
+<div class="modal fade model_select_2" id="add_wagon">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Add Wagon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+             <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12" autocomplete="off" action="<%= Routes.wagon_path(@conn, :create) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <input type="hidden" name="id" id="id">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Code:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter code" name="code" id="code" required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter code</span>
+                        </div>
+						<div class="col-lg-6">
+                            <label class="">Description:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter description" name="description" id="description">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter description</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Wagon type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="wagon_type_id" id="wagon_type" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for wagon_type <- @wagon_type |> Enum.reject(&(&1.category != "MAIN")) do %>
+                                    <option value="<%= wagon_type.id %>"><%=  wagon_type.description %></option>
+                                    <% end %>
+                                </select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please choose Wagon type</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Wagon sub type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="wagon_sub_type_id" id="wagon_sub_type" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for wagon_type <- @wagon_type  |> Enum.reject(&(&1.category != "SUB")) do %>
+                                    <option value="<%= wagon_type.id %>"><%=  wagon_type.description %></option>
+                                    <% end %>
+                                </select>
+                                <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-phone"></i></span></span> %>
+                            </div>
+                            <span class="m-form__help">Please choose Wagon sub type</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="owner_id" id="wagon_owner" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for railway_administrator <- @railway_administrator do %>
+                                    <option value="<%= railway_administrator.id %>"><%= railway_administrator.code %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Owner</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Symbol:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Enter Wagon Symbol" name="wagon_symbol" id="wagon_symbol">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter wagon symbol</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                       <div class="col-lg-6">
+                            <label>Wagon condition:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="condition_id" id="new-condition-id" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for  condition <- @conditions do %>
+                                    <option value="<%= condition.id %>"><%=  condition.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Wagon condition</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Wagon status:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="wagon_status_id" id="new-wagon-status" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for wagon_status <- @wagon_status do %>
+                                    <option value="<%= wagon_status.id %>"><%=  wagon_status.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Wagon status</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Commodity:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="commodity_id" id="new-commodity" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for commodity <- @commodity do %>
+                                    <option value="<%= commodity.id %>"><%= commodity.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Commodity</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Current Location:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="station_id" id="new-station" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for station <- @stations do %>
+                                    <option value="<%= station.id %>"><%=  station.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Current Location</span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

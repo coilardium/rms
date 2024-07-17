@@ -1,0 +1,132 @@
+
+<div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">View Tariff Line Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <form  >
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Client</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input"  id="vw_client_id" disabled="true" placeholder="Client" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Origin</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input"  id="vw_orig_station_id" disabled="true" placeholder="Origin" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Destination</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input"  id="vw_destin_station_id" disabled="true" placeholder="Destination" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Commodity</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input"  id="vw_commodity_id" disabled="true" placeholder="Commodity" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Payment Type</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input"  id="vw_pay_type_id" disabled="true" placeholder="Payment Type" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Currency</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input"  id="vw_currency_id" disabled="true" placeholder="Currency" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Active From</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input class="form-control m-input" name="start_dt" id="vw_start_dt" disabled="true" required="required" type="text" placeholder="Date" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Surcharge</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input" id="vw_surcharge_id" disabled="true" placeholder="Surcharge"  aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Maker</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input" id="maker" disabled="true" placeholder="Maker"  aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                         <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Checker</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input" id="checker" disabled="true" placeholder="Checker"  aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Date Created</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input" disabled="true" id="created" placeholder="Date Created"  aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+                            <div class="form-group m-form__group input-group col-sm-6">
+                            <label for="exampleInputEmail1">Date Modified</label>
+                            <div class="input-group input-group">
+                                <div class="input-group-prepend"></div>
+                                <input type="text" required class="form-control m-input" id="modified" disabled="true" placeholder="Date Modified"  aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+
+                        <div class="dataTables_wrapper dt-bootstrap4 col-md-12">
+                            <div class="col-md-12">
+                                <table id="view-tariff-line" class="table table-bordered table-hover table-striped w-100 " role="grid"  style="width: 100%;">
+                                    <input type="hidden" id="csrf" name="_csrf_token" value="">
+                                    <thead>
+                                        <tr>
+                                            <th>Administrator</th>
+                                            <th>Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

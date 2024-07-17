@@ -1,0 +1,270 @@
+
+<div class="m-subheader" id="wagon-summary-report-link" style="padding: 0px 0px 0 0px;">
+   <div class="d-flex align-items-center">
+      <div class="mr-auto">
+         <h3 class="m-subheader__title m-subheader__title--separator">Wagon Summary</h3>
+         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+               <a href="/dashboard" class="m-nav__link m-nav__link--icon">
+               <i class="m-nav__link-icon la la-home"></i>
+               </a>
+            </li>
+            <li class="m-nav__separator" id="maximize-page">-</li>
+            <li class="m-nav__item">
+               <a href="" class="m-nav__link">
+               <span class="m-nav__link-text">Reports</span>
+               </a>
+            </li>
+            <li class="m-nav__separator">-</li>
+            <li class="m-nav__item">
+               <a href="" class="m-nav__link">
+               <span class="m-nav__link-text">Wagon Summary</span>
+               </a>
+            </li>
+         </ul>
+      </div>
+      <div>
+         <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+            <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+            <i class="la la-plus m--hide"></i>
+            <i class="la la-ellipsis-h"></i>
+            </a>
+            <div class="m-dropdown__wrapper" style="z-index: 101;">
+               <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: 30; right: 21.5px;"></span>
+               <div class="m-dropdown__inner">
+                  <div class="m-dropdown__body">
+                     <div class="m-dropdown__content-sm" >
+                        <ul class="m-nav">
+                           <li class="m-nav__section m-nav__section--first">
+                              <span class="m-nav__section-text">Quick Actions</span>
+                           </li>
+                           <li class="m-nav__item">
+										<a href="<%= Routes.wagon_tracking_path(@conn, :generate_wagon_summary_pdf) %>" class="m-nav__link">
+											<i class="m-nav__link-icon flaticon-download"></i>
+											<span class="m-nav__link-text">Generate Pdf</span>
+										</a>
+									</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<br>
+<div class="row">
+   <div class="col-lg-12">
+      <div class="m-portlet">
+         <div class="m-portlet__body m-portlet__body--no-padding">
+            <div class="m-invoice-3">
+               <div class="m-invoice__wrapper">
+                  <div class="m-invoice__head">
+                     <div class="m-invoice__container m-invoice__container--centered">
+                        <div class="m-invoice__logo">
+                           <div class="row">
+                              <div class="col-md-4 mt-5">
+                                 <a href="#" style ="cursor:default; text-decoration: none;">
+                                    <h4 style="color: #6f727d; margin-left: 0px">Wagon Summary</h4>
+                                    <span class="m-invoice__text text-muted"></span>
+                                 </a>
+                              </div>
+                              <div class="col-md-6 text-center">
+                                 <h3><%= @company && @company.company_name %></h3>
+                              </div>
+                              <div class="col-md-2 text-right">
+                                 <a href="#">
+                                 <img src="/images/Logo_mark.png" style="width:55px; height:55px;">
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                        <span class="m-invoice__desc">
+                        <span style ="color: #9699a2 !important;"><%= @company && @company.company_name %></span>
+                        <span style ="color: #9699a2 !important;"><%= @company && @company.company_address %></span>
+                        </span><br>
+
+                     </div>
+                  </div>
+                  <div class="m-invoice__body m-invoice__body--centered">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black">ZRL GO Wagons By Domain</th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td class="border-top" style=" font-weight: normal !important;">Domain</td>
+                                 <%= for {domain, _wagon_count} <- @rms_empty_wagons_by_domain do %>
+                                  <td class="border-top"><%= domain %></td>
+                                 <% end %>
+                                 </td>
+                                 <td class="border-top">
+                                   CEAR/CDN
+                                 </td>
+                                 <td class="border-top">
+                                   TOTAL
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td style=" font-weight: normal !important;">Loaded</td>
+                                    <%= for {_domain, wagon_count} <- @rms_loaded_wagons_by_domain do %>
+                                      <td style=" font-weight: normal !important;"> <%= wagon_count %></td>
+                                    <% end %>
+                                 <td style=" font-weight: normal !important;">
+                                   0
+                                 </td>
+                                 <td><%= Number.Delimit.number_to_delimited(@total_rms_loaded_wagons_by_domain  || 0, precision: 0) %></td>
+                              </tr>
+                              <tr>
+                                 <td style=" font-weight: normal !important;">Empty</td>
+                                    <%= for {_domain, wagon_count} <- @rms_empty_wagons_by_domain do %>
+                                       <td style=" font-weight: normal !important;"> <%= wagon_count %></td>
+                                    <% end %>
+                                 <td style=" font-weight: normal !important;">
+                                   0
+                                 </td>
+                                 <td><%= Number.Delimit.number_to_delimited(@total_rms_empty_wagons_by_domain  || 0, precision: 0) %></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th class="border-bottom" style=" font-weight: 500 !important; font-size: 15px; color:black">ZRL GO Wagons By Symbol</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr style="">
+                                 <td style="font-weight: normal !important">Symbol</td>
+                                 <%= for {symbol, _wagon_count} <- @all_rms_wagons do %>
+                                 <td class="border-top"style="font-weight: normal !important;"><%= symbol %></td>
+                                 <% end %>
+                              </tr>
+                              <tr>
+                                 <td style="font-weight: normal !important;">Total</td>
+                                 <%= for {_symbol, wagon_count} <- @rms_go_wagons do %>
+                                 <td style="font-weight: normal !important;"><%= wagon_count %></td>
+                                 <% end %>
+                              </tr>
+                              <tr>
+                                 <td class="border-bottom" style=" font-weight: 500 !important; font-size: 15px; color:black">Overall ZRL wagons</td>
+                              </tr>
+                              <tr>
+                                 <td class="text-left border-top" style="font-weight: normal !important;">Symbol</td>
+                                 <%= for {symbol, _wagon_count} <- @all_rms_wagons do %>
+                                 <td class="border-top"style="font-weight: normal !important;"><%= symbol %></td>
+                                 <% end %>
+                              </tr>
+                              <tr>
+                                 <td style="font-weight: normal !important;">Total</td>
+                                 <%= for {_symbol, wagon_count} <- @rms_wagon_fleet do %>
+                                 <td style="font-weight: normal !important;"><%= wagon_count %></td>
+                                 <% end %>
+                              </tr>
+                              <tr>
+                                 <td style="font-weight: normal !important;">Loaded</td>
+                                 <%= for {_symbol, wagon_count} <- @rms_loaded_wagons do %>
+                                 <td style="font-weight: normal !important;"><%= wagon_count %></td>
+                                 <% end %>
+                              </tr>
+                              <tr>
+                                 <td style="font-weight: normal !important;">Empty</td>
+                                 <%= for {_symbol, wagon_count} <- @rms_empty_wagons do %>
+                                 <td style="font-weight: normal !important;"><%= wagon_count %></td>
+                                 <% end %>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black">Total LOG Wagons By Domain</th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                                 <th style=" font-weight: 500 !important; font-size: 15px; color:black"></th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td class="border-top" style=" font-weight: normal !important;">Domain</td>
+                                 <%= for {domain, _wagon_count} <- @log_empty_wagons_by_domain do %>
+                                 <td class="border-top"><%= domain %></td>
+                                 <% end %>
+                                 <td class="border-top">
+                                   CEAR/CDN
+                                 </td>
+                                 <td class="border-top">
+                                   TOTAL
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td style=" font-weight: normal !important;">Loaded</td>
+                                 <%= for {_domain, wagon_count} <- @log_loaded_wagons_by_domain do %>
+                                    <td style=" font-weight: normal !important;"> <%= wagon_count %></td>
+                                 <% end %>
+                                 <td style=" font-weight: normal !important;">
+                                   0
+                                 </td>
+                                 <td><%= Number.Delimit.number_to_delimited(@total_log_loaded_wagons_by_domain  || 0, precision: 0) %></td>
+                              </tr>
+                              <tr>
+                                 <td style=" font-weight: normal !important;">Empty</td>
+                                 <%= for {_domain, wagon_count} <- @log_empty_wagons_by_domain do %>
+                                    <td style=" font-weight: normal !important;"> <%= wagon_count %></td>
+                                 <% end %>
+                                 <td style=" font-weight: normal !important;">
+                                   0
+                                 </td>
+                                 <td><%= Number.Delimit.number_to_delimited(@total_log_empty_wagons_by_domain  || 0, precision: 0) %></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="m-invoice__footer" style="margin-top: 2rem;">
+							<div class="m-invoice__table  m-invoice__table--centered table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Total ZRL</th>
+											<th>ZRL Good Order</th>
+											<th>Active ZRL</th>
+                                 <th>Non Active ZRL</th>
+                                 <th>Total LOG</th>
+											<th>LOG Good Order</th>
+                                 <th>ALL Good Order</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><%= Number.Delimit.number_to_delimited(@rms_total_fleet  || 0, precision: 0) %></td>
+											<td><%= Number.Delimit.number_to_delimited(@rms_total_go_fleet  || 0, precision: 0) %></td>
+                                 <td><%= Number.Delimit.number_to_delimited(@rms_total_active  || 0, precision: 0) %></td>
+											<td><%= Number.Delimit.number_to_delimited(@rms_total_non_active  || 0, precision: 0) %></td>
+                                 <td><%= Number.Delimit.number_to_delimited(@total_log_wagons_by_domain  || 0, precision: 0) %></td>
+											<td><%= Number.Delimit.number_to_delimited(@total_log_og_wagons_by_domain  || 0, precision: 0) %></td>
+											<td class="m--font-danger"><%= Number.Delimit.number_to_delimited(@all_admins_og_wagons  || 0, precision: 0) %></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

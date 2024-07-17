@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+</head>
+
+<body class="login-panel">
+
+	<!-- Page container -->
+	<div class="page-container pb-20">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper">
+				<%= render @view_module, @view_template, assigns %>
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<div class="modal fade model_select_2" id="onboardingWideFormModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-top:5px; margin-left:20px;">Add Wagon rate Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+           <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="<%= Routes.interchange_fee_path(@conn, :create) %>" method="POST">
+                <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                <input type="hidden" name="id" id="id">
+                <div class="m-portlet__body">
+				<div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Administrator:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <select required name="partner_id" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for admin <- @admins do %>
+                                    <option value="<%= admin.id %>"><%= admin.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Administrator</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="">Currency:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="currency_id" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for currency <- @currency do %>
+                                    <option value="<%= currency.id %>"><%= currency.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Currency</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Amount</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Amount"  name="amount" required="required" onkeypress="return is_amount_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Amount</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Effective Date:</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="date" class="form-control m-input" placeholder=""  name="effective_date" required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                            </div>
+                            <span class="m-form__help">Please select date</span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>Wagon type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="wagon_type_id" id="wagon_type_id" class="form-control m-select2 select2_modal">
+                                    <option></option>
+                                    <%= for wagon_type <- @wagon_type do %>
+                                    <option value="<%= wagon_type.id %>"><%=  wagon_type.description %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+                            <span class="m-form__help">Please choose Wagon type</span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Escalated Period</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Escalated Period"  name="escalated_period" required="required" onkeypress="return is_number_key(event)">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                            </div>
+                            <span class="m-form__help">Please enter Escalated Period</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

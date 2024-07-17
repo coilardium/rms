@@ -1,0 +1,120 @@
+<div class="modal fade fade model_select_2" id="view-auxiliary-model" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"  style="margin-top:5px; margin-left:20px;">Auxiliary Details </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right  col-lg-12">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Equipment:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Equipment" id="vw-equipment" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Administrator:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Administrator" id="vw-administrator" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Equipment ID:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Equipment Code" id="vw-equipment-code" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Wagon Code:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Wagon Code" id="vw-wagon-code" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Current Location:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Current Location" id="vw-current-location" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Interchange Point:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Interchange Point" id="vw-interchange-point" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Date Received:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Date Received" id="vw-date" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">Accumulated days:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Accumlated days" id="vw-accumlated-days" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Off Hire Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Off Hire Dat" id="vw-off-hire-date" disabled="true">
+                                </div>
+                            </div>
+                             <div class="col-lg-6">
+                                <label class="">On Hire Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="On Hire Date" id="vw-on-hire-date" disabled="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Update Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Update Date" id="vw-update-date" disabled="true">
+                                </div>
+                            </div>
+                                                      <div class="col-lg-6">
+                                  <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input" id="vw-comment" rows="1" disabled="true"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Total Accumulated days:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Accumulated days" id="vw-total-accum-days" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Accumulated Amount:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="Accumulated days" id="vw-accumlated-ammount" disabled="true">
+                                </div>
+                            </div>
+                        </div><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

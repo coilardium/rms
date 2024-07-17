@@ -1,0 +1,210 @@
+
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Haulage History</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                 <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Haulage History</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                     <strong>Edit Haulage History</strong>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                  <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+<!--begin::Form-->
+<form class="m-form m-form--fit m-form--label-align-right entry_data" id="form_wagon_tracker" action="#">
+    <input type="hidden" name="_csrf_token" id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+    <input type="hidden" name="id" value="<%= @entry && @entry.id %>">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Date<span style="color: red;">*</span></label>
+                        <input required type="date" name="date" id="date" value ="<%= @entry && @entry.date %>" class="form-control m-input clear_form">
+                        <span class="m-form__help">Please enter date</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Train No.<span style="color: red;">*</span></label>
+                        <input type="text" name="train_no" id="train_no" placeholder="Enter train number" value ="<%= @entry && @entry.train_no %>"  class="form-control m-put clear_form" required="required">
+                        <span class="m-form__help">Please enter train No</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Loco Number<span style="color: red;">*</span></label>
+                            <select required id="loco_id" class="form-control m-select2 multi_select2_form clear_form" data_loco_no ="<%= @entry && @entry.loco_no %>" multiple="multiple" >
+                                <%= for loco <- @locos do %>
+                                <option value="<%= loco.id %>"><%= loco.loco_number %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please select the Loco number</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Payee Admin<span style="color: red;">*</span></label>
+                             <select required name="payee_admin_id" id="payee_admin_id" data-payee ="<%= @entry && @entry.payee_admin_id %>" class="form-control m-select2 m_select2_1 m-input clear_select">
+                                <option></option>
+                                <%= for admin <- @admins do %>
+                                    <option value="<%= admin.id %>" data-admin ="<%= admin.description %>"><%= admin.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Payee</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Total Wagons<span style="color: red;">*</span></label>
+                        <input type="text" id="wagon_grand_total" placeholder="Enter Total Wagons" value ="<%= @entry && @entry.wagon_grand_total %>" name="wagon_grand_total" class="form-control m-put clear_form" required="required" onkeypress="return is_amount_key(event)" >
+                        <span class="m-form__help">Please enter Total Wagons</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Direction<span style="color: red;">*</span></label>
+                         <select required name="direction"  id="direction" data-direction ="<%= @entry && @entry.direction %>"  class="form-control m-select2 m_select2_1 clear_select">
+                            <option></option>
+                            <option value="INCOMING">Incoming Traffic</option>
+                             <option value="OUTGOING">Outgoing Traffic</option>
+                        </select>
+                        <span class="m-form__help">Please Choose Direction</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Observations</label>
+                        <input type="text" name="observation" id="observation" placeholder="Enter Observations"  value ="<%= @entry && @entry.observation %>"  class="form-control m-put clear_form">
+                        <span class="m-form__help">Please enter Observations</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Remarks</label>
+                        <input type="text" name="comment" id="comment" placeholder="Enter Remarks"  value ="<%= @entry && @entry.comment %>" class="form-control m-put clear_form">
+                        <span class="m-form__help">Please enter Remarks</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Adminstrator<span style="color: red;">*</span></label>
+                             <select required name="admin_id" id="adminstrator_id"  data-admin ="<%= @entry && @entry.admin_id %>" class="form-control m-select2 m_select2_1 m-input clear_select">
+                                <option></option>
+                                <%= for admin <- @admins do %>
+                                    <option value="<%= admin.id %>" data-admin ="<%= admin.description %>"><%= admin.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Adminstrator</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Number of wagons</label>
+                        <input type="text" name="total_wagons" id="total_wagons" placeholder="Enter Number of wagons"  value ="<%= @entry && @entry.total_wagons %>" class="form-control m-put clear_form" onkeypress="return is_amount_key(event)">
+                        <span class="m-form__help">Please Enter Number of wagons</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label"> Modification Reason<span style="color: red;">*</span></label>
+                        <textarea class="form-control m-input" id="modification_reason" name="modification_reason" required  rows="1"><%= @entry && @entry.modification_reason %></textarea>
+                        <span class="m-form__help">Please enter Modification Reason</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-10"></div>
+                <div class="col-lg-2">
+                    <button type="button" id="update-haulage" style="float:right" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+</form>
+<!--end::Form-->
+
+
+
+
+  <%# admin: "National Railways Of Zimbabwe",
+  admin_id: 10018,
+  amount: #Decimal<9.38>,
+  comment: "test",
+  currency: "US$",
+  currency_id: 5,
+  date: ~D[2022-04-22],
+  direction: "INCOMING",
+  distance: nil,
+  id: 10005,
+  inserted_at: ~N[2022-04-22 17:16:16],
+  loco_no: "01-304 / 20187",
+  maker_id: 2,
+  observation: "john B",
+  rate: #Decimal<25.00>,
+  rate_id: 3,
+  status: nil,
+  total_wagons: 6,
+  train_no: "434",
+  updated_at: ~N[2022-04-22 17:16:16],
+  wagon_grand_total: 16,
+  wagon_ratio: "6/16" %>
+</div>

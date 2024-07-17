@@ -1,0 +1,134 @@
+<div class="modal fade" id="edit_rejected_wagon_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Wagon Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Wagon Number:</label>
+                                <select name="wagon_id" id="wagon-code" class="form-control wagon-field-select" type="text" required >
+                                    <option value="Choose..."></option>
+                                     <%= for wagon <-@wagons do %>
+									     <option value="<%= wagon.id %>" data-wagon-type="<%= wagon.wagon_type && wagon.wagon_type.description %>" data-wagon-owner="<%= wagon.wagon_owner && wagon.wagon_owner.code %>" data-wagon-code="<%= wagon.code %>"><%= wagon.code %></option>
+                                    <% end %>	
+								 </select>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input wagon-field-clr" placeholder=""  name="wagon_owner" id="wagon-owner" readonly="true"  required="required">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-user"></i></span></span>
+                                </div>
+                            </div>
+                        </div>
+ 
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-6">
+                                <label class="">Wagon Type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input wagon-field-clr" placeholder="" readonly="true" name="wagon_type" id="wagon-type"  required="required">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>Wagon status:</label>
+                                <select name="wagon_id" id="wagon_status_id" class="form-control wagon-field-select" type="text" required >
+                                    <option value="Choose..."></option>
+                                     <%= for wagon <-@wagon_statuses do %>
+									     <option value="<%= wagon.id %>" data-wagon-status="<%= wagon.description %>"><%= wagon.description %></option>
+                                    <% end %>	
+								 </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-6">
+                                <label>Commodity:</label>
+                                <select required name="commodity_id" class="form-control wagon-field-select" id="commodity_id" >
+                                    <option></option>
+                                    <%= for commodity <- @commodity do %>
+                                    <option value="<%= commodity.id %>" data-commodity ="<%= commodity.code %>"> <%= commodity.code %></option>
+                                    <% end %>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input wagon-field-clr" id="comment" name="comment" rows="1"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+
+                        </div><br>
+
+                        <div class="m-portlet m-portlet--mobile">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                        Defects
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><br>
+                             <div class="col-lg-6">
+                                    <label>Defect:</label>
+                                    <select name="interchange_defect" id="spare_fee" class="form-control wagon-field-select" type="text" required >
+                                        <option value="" disabled selected="true" hidden>Choose Defect</option>
+                                        <%= for fee <-@fees do %>
+                                            <option value="<%= fee.id %>"  data-id="<%= fee.id %>" data-currency="<%= fee.currency && fee.currency.code %>" data-spare ="<%= fee.spare && fee.spare.description %>"  data-code ="<%= fee.spare && fee.spare.code %>" data-amount="<%= fee.amount %>"><%= fee.spare && fee.spare.description %></option>
+                                        <% end %>	
+                                    </select>
+                                </div><br><br>
+                            <div class="m-portlet__body">
+                                <!--begin: Datatable -->
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="dt-interchange-defect">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipment</th>
+                                            <th>Code</th>
+                                            <th>Currency</th>
+                                            <th>Rate</th>
+                                            <th>Action</th>   
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit ">
+                       
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn--pill btn-primary">Update wagon</button>
+                        </div>  
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,469 @@
+<div class="m-subheader" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Fuel Requisite</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Approvals</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">BackOffice</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="<%= Routes.fuel_monitoring_path(@conn, :back_office_fuel_approval) %>" class="m-nav__link">
+                        <span class="m-nav__link-text">Entries</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Entry</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><br>
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                   Edit Requistion Number : <%= @fuel_approval.requisition_no %>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed entry_data" id="fuel_monit">
+        <input type="hidden" name="_csrf_token"  id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <input type="hidden" id="batch_id" name="batch_id" value="<%= @fuel_approval.batch_id %> ">
+        <input type="hidden" id="fuel_batch" name="batch_id" value="<%= @fuel_approval.batch_id %> ">
+        <input type="hidden" id="current_status" name="current_status" value="<%= @fuel_approval.status %>">
+        <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Locomotive Number  :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="bkoffce_loco_no" id="bkoffce_loco_no"  data_bkoff_loco_no ="<%= @batch_items && @batch_items.locomotive_id %>" class="form-control m-select2 m_select2_1">
+                                        <option value="" disabled selected hidden>Please Choose...</option>
+                                        <%= for locomotive <- @locomotive do %>
+                                        <option value="<%= locomotive.id %>" data-loco-number="<%= locomotive.loco_number %>"><%=  locomotive.loco_number %></option>
+                                        <% end %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Locomotive Type :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input" placeholder="locomotive type" name="locomotive_type" value="<%= @batch_items && @batch_items.locomotive_type %>" id="">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                            </div>
+                            <span class="m-form__help"></span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Locomotive Capacity (Litres) :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form " placeholder="Total litres of the engine" name="loco_engine_capacity" value="<%= @batch_items && @batch_items.loco_engine_capacity %>" id="loco_engine_capacity">
+                                <input type="hidden" name="engine_capacity" id="engine_capacity">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                            </div>
+                            <span class="m-form__help"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label class="">Equipment Description :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form " placeholder="Enter the name" value="<%= @batch_items && @batch_items.other_refuel %>" name="other_refuel" id="other_instrument">
+                                <input type="hidden" id="batch_id" name="batch_id" value="<%= @batch_id %>">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Equipment Number :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form " placeholder="Enter the number" value="<%= @batch_items && @batch_items.other_refuel_no %>"  name="other_refuel_no" id="instrument_number">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-check-circle"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Requisition Number :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input " placeholder="Enter requisition number" value="<%= @batch_items && @batch_items.requisition_no %>" name="requisition_no" readonly="true"  value="<%= @batch_no %>" id="requisition_no">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                       <div class="col-lg-4">
+                            <label>Train Origin :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="train_origin" id="train_origin" data_loco_origin ="<%= @batch_items && @batch_items.train_origin_id %>" class="form-control field-clr m-select2 m_select2_1">
+										<option value="">Choose.....</option>
+										<%= for stations <- @stations do %>
+										<option value="<%= stations.id %>" data-train-origin="<%= stations.description %>"><%= stations.description %></option>
+										<% end %>
+									</select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Train Destination :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="train_destination" id="train_destination" data_train_destination ="<%= @batch_items && @batch_items.train_destination_id %>" class="form-control field-clr m-select2 m_select2_1 ">
+										<option value="">Choose.....</option>
+										<%= for stations <- @stations do %>
+										<option value="<%= stations.id %>" data-train-destin="<%= stations.description %>"><%= stations.description %></option>
+										<% end %>
+									</select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Depo Refuelled :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="depo_refueled" id="depo_refueled" data_depo_refuel_stn ="<%= @batch_items && @batch_items.depo_stn %>" class="form-control field-clr m-select2 m_select2_1 ">
+										<option></option>
+                                        <%= for stations <- @stations do %>
+                                        <option value="<%= stations.id %>" data-depo-station="<%= stations.description %>"><%= stations.description %></option>
+                                        <% end %>
+									</select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Refueling Type  :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="refuel_type" id="bkoffice_refuel_type" data_refuel_type_bkoff ="<%= @batch_items && @batch_items.refuel_type %>" class="form-control m-select2 m_select2_1 field-clr ">
+										<option value="">Choose.....</option>
+										<%= for refuel_type <- @refuel_type do %>
+										<option value="<%= refuel_type.id %>" data-train-origin="<%= refuel_type.description %>"><%= refuel_type.description %></option>
+										<% end %>
+									</select>
+                            </div>
+                            <span class="m-form__help">select the type of refuel</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Train Type :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="train_type_id" id="train_type_bkoff" data_train_type_bkoffice ="<%= @batch_items && @batch_items.train_type_id %>" class="form-control  field-clr m-select2 m_select2_1  ">
+                                        <option value="">Choose.....</option>
+                                        <%= for train_type <- @train_type do %>
+                                        <option value="<%= train_type.id %>" data-train-type="<%= train_type.description %>"><%= train_type.description %></option>
+                                        <% end %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Train Number :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter train number" value="<%= @batch_items && @batch_items.train_number %>" name="train_number" id="train_number">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Shunt/Service :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter the shunt/service" value="<%= @batch_items && @batch_items.shunt %>"  name="shunt" id="bkoff_shunt">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Arrival Seal Number :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter seal number at arrival" value="<%= @batch_items && @batch_items.seal_number_at_arrival %>" name="seal_number_at_arrival" id="seal_number_at_arrival">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-lock"></i></span></span>
+                            </div>
+                        </div>
+						<div class="col-lg-4">
+                            <label>Depture Seal Number :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter seal number at depture" value="<%= @batch_items && @batch_items.seal_number_at_depture %>" name="seal_number_at_depture" id="seal_number_at_depture">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-lock"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Arrival Seal color :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter seal color at arrival" value="<%= @batch_items && @batch_items.seal_color_at_arrival %>" name="seal_color_at_arrival" id="seal_color_at_arrival">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-palette"></i></span></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-lg-4">
+                            <label class="">Depture Seal color :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter seal color at depture" value="<%= @batch_items && @batch_items.seal_color_at_depture %>" name="seal_color_at_depture" id="seal_color_at_depture">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-palette"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                                <label class="">Date :</label>
+                            <div class="m-input-icon ">
+                                    <input type="date" class="form-control m-input clear_form  " placeholder="" value="<%= @batch_items && @batch_items.date %>" name="date" id="date">
+                                </div>
+                            </div>
+						<div class="col-lg-4">
+                                <label class="">Time :</label>
+                                <div class="m-input-icon">
+                                    <input type="time" class="form-control m-input clear_form  " placeholder="Select the time" value="<%= @batch_items && @batch_items.time %>" name="time" id="time">
+                                </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                            <div class="col-lg-4">
+                                <label class="">Reading Before Refuel :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter reading before refuel" value="<%= @batch_items && @batch_items.balance_before_refuel %>" name="balance_before_refuel" id="balance_before_refuel">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Litres Authorized by CTC :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter approved refuel" value="<%= @batch_items && @batch_items.approved_refuel %>" name="approved_refuel" id="approved_refuel" required="required">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-check-circle"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="">Diff. CTC & actual :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter Difference btn CTC & actual" value="<%= @batch_items && @batch_items.deff_ctc_actual %>" name="deff_ctc_actual" id="deff_ctc_actual">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-arrows"></i></span></span>
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+
+                            <div class="col-lg-4">
+                                <label class="">Reading After Refuel :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter reading after refuel" value="<%= @batch_items && @batch_items.reading_after_refuel %>" name="reading_after_refuel" id="reading_after_refuel" >
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>fuel Meter Reading Before :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter fuel meter before"  value="<%= @batch_items && @batch_items.bp_meter_before %>" name="bp_meter_before" id="bp_meter_before">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>fuel Meter Reading After :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter fuel meter after" value="<%= @batch_items && @batch_items.bp_meter_after %>" name="bp_meter_after" id="bp_meter_after">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                            <div class="col-lg-4">
+                                <label>Section :</label>
+                                    <div class="m-input-icon m-input-icon--right">
+                                        <select required name="section_id" id="typpe_section" data_typpe_section ="<%= @batch_items && @batch_items.section_id %>" class="form-control  field-clr m-select2 m_select2_1  ">
+                                            <option value="">Choose.....</option>
+                                            <%= for section <- @section do %>
+                                            <option value="<%= section.id %>" data-section="<%= section.code %>"><%= section.code %></option>
+                                            <% end %>
+                                        </select>
+                                </div>
+                                <span class="m-form__help">Please select Section</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="">Fuel Consumed :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter fuel consumed" value="<%= @batch_items && @batch_items.fuel_consumed %>" name="fuel_consumed" id="fuel_consumed">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="">Consumption/km :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter consumption per km" value="<%= @batch_items && @batch_items.consumption_per_km %>" name="consumption_per_km" id="consumption_per_km">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Reading :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter reading" value="<%= @batch_items && @batch_items.reading %>" name="reading" id="reading">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Driver's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter drivers name" value="<%= @batch_items && @batch_items.driver_name %>" name="driver_name" id="driver_name">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-palette"></i></span></span>
+                            </div>
+                        </div>
+                            <div class="col-lg-4">
+                                <label class="">Km to Destination :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="Enter Km to destination" value="<%= @batch_items && @batch_items.km_to_destin %>" name="km_to_destin" id="km_to_destin">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-arrows-alt-h"></i></span></span>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label class="">Yard Master's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="yard masters name" value="<%= @batch_items && @batch_items.yard_master_name %>" name="yard_master_name" id="yard_master_name">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-palette"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>fuel representative's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter the oil representative's name" value="<%= @batch_items && @batch_items.oil_rep_name %>"  name="oil_rep_name" id="oil_rep_name">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Assests Protection Officer's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="Enter the name of the asset officer" value="<%= @batch_items && @batch_items.asset_protection_officers_name %>"  name="asset_protection_officers_name" id="asset_protection_officers_name">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Rate :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input  " placeholder="Depo rate" value="<%= @batch_items && @batch_items.fuel_rate %>" name="fuel_rate" id="" required="required">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-money"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Comment :</label>
+                            <div class="m-input-icon ">
+                                <textarea rows="1" class="form-control m-input  "  name="comment" id="comment"  placeholder = ""><%= @batch_items && @batch_items.comment %></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Quantity Refueled :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="quantity refueled" value="<%= @batch_items && @batch_items.quantity_refueled %>" name="quantity_refueled" id="summary_quantity_refueled">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-fill-drip"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label>Commercial Clarks's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " placeholder="commercial clark name" value="<%= @batch_items && @batch_items.commercial_clk_name %>"  name="commercial_clk_name" id="commercial_clk_name">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Meter@Destin./refuel :</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control m-input clear_form  " placeholder="quantity refueled" value="<%= @batch_items && @batch_items.meter_at_destin %>" name="meter_at_destin" id="meter_at_destin">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-dashboard"></i></span></span>
+                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Total Cost :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form" placeholder="fuel total cost" value="<%= @batch_items && @batch_items.total_cost %>" id="total_cost" name="total_cost" readonly ="true">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-coins"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h4 class="m-portlet__head-text">
+                                    Initiator Details
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label class="">Commercial's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input  " value="<%= "#{@batch_items && @batch_items.maker && @batch_items.maker.first_name} #{@batch_items && @batch_items.maker && @batch_items.maker.last_name}" %>" disabled>
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">Commercial's Time Stamp :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  " value="<%= @batch_items && @batch_items.inserted_at %>" id="" name="updated_at" disabled>
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                            </div>
+                        </div>
+                          <div class="col-lg-4">
+                            <label class="">CTC Timestamp :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form  "  value="<%= @batch_items && @batch_items.ctc_time %>" id="" name="" disabled>
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <label class="">CTC Update Date :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input  " value="<%= @batch_items && @batch_items.ctc_datestamp %>" disabled>
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="">CTC's Name :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input  " value="<%= "#{@batch_items && @batch_items.maker && @batch_items.maker.first_name} #{@batch_items && @batch_items.maker && @batch_items.maker.last_name}" %>" disabled>
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br><br>
+
+                <div class="modal-footer m-form__actions m-form__actions--solid">
+                    <button type="button" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air " id="submit-modified-requesite" data-status="COMPLETE">Update<i class="la la-send"></i></button>
+                </div>
+
+
+
+        </div>
+  </form>

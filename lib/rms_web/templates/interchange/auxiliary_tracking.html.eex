@@ -1,0 +1,197 @@
+<div class="m-subheader" id="auxiliary-tracking-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Auxiliary Tracking</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="/dashboard" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Main Menu</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Interchange</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Auxiliary Hire</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Tracking</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Tracking
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed interchange_general_entries" id="interchange_general_entries">
+        <div class="m-portlet__body">
+            <input type="hidden" name="_csrf_token"  id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Equipment<span style="color: red;">*</span></label>
+                             <select id="entry-equipment-code" class="form-control m-select2 m_select2_1 m-input auxiliary-hire-lookup">
+                                <option></option>
+                                <%= for equipment <- @equipments do %>
+                                <option value="<%= equipment.id %>"><%= equipment.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Equipment</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Entry Wagon ID<span style="color: red;">*</span></label>
+                        <input type="text" id="entry-wagon-code" placeholder="Enter Wagon Code" class="form-control m-put auxiliary-hire-lookup">
+                        <input hidden="hidden" class="clear_input" name="id" id="vw-entry-id">
+                        <span class="m-form__help">Please enter Wagon Code</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Adminstrator</label>
+                        <input type="text" placeholder="Adminstrator" id="vw-adminstrator" class="form-control m-put clear_input" disabled="true">
+                        <span class="m-form__help">Adminstrator</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Equipment ID</label>
+                        <input type="text" placeholder="Equipment ID" id="vw-equipment-id" class="form-control m-put clear_input" disabled="true">
+                        <span class="m-form__help">Equipment ID</span>
+                    </div>
+                </div>
+               <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Interchange Point</label>
+                        <input type="text" placeholder="Interchange Point" id="vw-interchange-point" class="form-control m-put clear_input" disabled="true">
+                        <span class="m-form__help">Interchange Point</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Previous Location</label>
+                        <input type="text" placeholder="Previous Location"  id="vw-current-location" class="form-control m-put clear_input" disabled="true">
+                        <span class="m-form__help">Previous Location</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Direction</label>
+                        <input type="text" placeholder="Direction" id="vw-direction" class="form-control m-put clear_input" disabled="true">
+                        <span class="m-form__help">Direction</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Status</label>
+                        <input required type="text" id="vw-status" class="form-control m-put clear_input" disabled="true">
+                       <span class="m-form__help">Status</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Current Location<span style="color: red;">*</span></label>
+                             <select  class="form-control m-select2 m_select2_1 m-input clear_select" id="current_location">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                        <span class="m-form__help">Please Choose Current Location</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Current Wagon ID</label>
+                        <input type="text" id="mvt_wagon_code" placeholder="Enter Wagon Code" class="form-control m-put clear_input">
+                        <input hidden="hidden" class="clear_input" id="wagon_id">
+                        <span class="m-form__help">Please enter Current Wagon ID</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Type</span></label>
+                        <input type="text" id="wagon_type" placeholder="Wagon Type" class="form-control m-put clear_input"disabled="true">
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Wagon Owner</label>
+                        <input type="text" id="wagon_owner" placeholder="Wagon Owner" class="form-control m-put clear_input" disabled="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+                <div class="col-lg-11"></div>
+                <div class="col-lg-1">
+                    <button type="button" id="track-auxiliary-hire" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--end::Form-->
+</div>

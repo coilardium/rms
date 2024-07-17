@@ -1,0 +1,97 @@
+<div class="modal fade" id="view_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Consignment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <div class="m-portlet__body">
+
+                        <div class="form-group m-form__group row">
+                             <div class="col-lg-6">
+                                <label class="">Wagon Number:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control clear_vw m-input field-clr" placeholder="" id="vw_wagon" disabled="true"  required="required">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Wagon Owner:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control clear_vw m-input field-clr" placeholder=""  name="vw_wagon_owner" id="vw_wagon_owner" disabled="true"  required="required">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Wagon Type:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="text" class="form-control clear_vw m-input" placeholder=""  name="vw_wagon_type" id="vw_wagon_type" disabled="true"  required="required">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Capacity tonnes</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="text" name="capacity_tonnes" id="vw_capacity_tonnes" disabled="true" class="form-control clear_vw">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Tariff Tonnage</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                     <input required type="type" name="tariff_tonnage" id="vw_tariff_tonnage" disabled="true" class="form-control clear_vw">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Actual tonnes</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="type" name="actual_tonnes" id ="vw_actual_tonnes" disabled="true" class="form-control clear_vw ">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Container Number</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                     <input required type="type" name="vw_container_no" id="vw_container_no" disabled="true" class="form-control clear_vw">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="type" name="comment" id="vw_comment" disabled="true" class="form-control clear_vw">
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn--pill btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

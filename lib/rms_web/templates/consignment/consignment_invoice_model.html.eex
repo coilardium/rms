@@ -1,0 +1,76 @@
+<div class="modal fade model_select_2" id="add-invoice-model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Invoice Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed col-lg-12  " action="" method="">
+                    <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Currency:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="" id="invoice_currency" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for currency <- @currency do %>
+                                            <option value="<%= currency.id %>"><%=  currency.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Invoice No:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input required type="text" name="invoice_no" id="invoice_no" class="form-control clear_vw">
+                                    <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span> %>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Invoice Date:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <input type="date" class="form-control clear_vw m-input" placeholder=""  name="invoice_date" id="invoice_date"  required="required">
+                                    <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-calender"></i></span></span> %>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="">Invoice Amount:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                     <input required type="type" name="invoice_amount" id="invoice_amount" class="form-control clear_vw" onkeypress="return is_amount_key(event)">
+                                    <%# <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-train"></i></span></span> %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label>Terms:</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="" id="invoice_term" class="form-control  m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for collection_type <- @collection_types do %>
+                                            <option value="<%= collection_type.description %>"><%=  collection_type.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                          <div class="modal-footer">
+                            <button type="button" class="btn m-btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn m-btn btn-primary" id="add_invoice_details">Procced</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

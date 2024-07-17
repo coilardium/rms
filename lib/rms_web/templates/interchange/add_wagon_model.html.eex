@@ -1,0 +1,104 @@
+<div class="modal fade model_select_2" id="add_inter_change_model" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;" >Wagon Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right col-lg-12  " action="" method="">
+                    <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <div class="m-portlet__body">
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-6">
+                                <label class="">Comment</label>
+                                <div class="m-input-icon m-input-icon--right">
+                                   <textarea class="form-control m-input wagon-field-clr" id="comment" name="comment" rows="1"></textarea>
+                                    <span class="m-input-icon__icon m-input-icon__icon--right"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Condition<span style="color: red;">*</span></label>
+                                <div class="m-input-icon m-input-icon--right">
+                                    <select required name="condition_id" id="condition_id" class="form-control m-select2 select2_modal">
+                                        <option></option>
+                                        <%= for condition <- @condition do %>
+                                            <option value="<%= condition.id %>"><%= condition.description %></option>
+                                        <% end %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="m_repeater_1">
+                            <div class="form-group  m-form__group row" id="m_repeater_1">
+                                <div data-repeater-list="" class="col-lg-12">
+                                    <div data-repeater-item class="form-group m-form__group row align-items-center">
+                                        <div class="col-sm-4">
+                                            <label>Defect</label>
+                                            <div class="input-group input-group">
+                                                <div class="input-group-prepend"></div>
+                                                <select  name="defect_id" id="defect_id" class="form-control defect_id">
+                                                    <option></option>
+                                                    <%= for defect <-@defects do %>
+                                                        <option value="<%= defect.id %>"  data-id="<%= defect.id %>"  data-code ="<%= defect.code %>" data-description="<%= defect.description %>"><%= defect.description %></option>
+                                                    <% end %>
+                                                </select>
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Spare</label>
+                                            <div class="input-group input-group">
+                                                <div class="input-group-prepend"></div>
+                                                <select  name="defect_spare_id" id="defect_spare_id" class="form-control defect_spare_id">
+                                                    <option></option>
+                                                    <%= for spare <-@spares do %>
+                                                        <option value="<%= spare.id %>"  data-id="<%= spare.id %>"  data-code ="<%= spare.code %>" data-description="<%= spare.description %>"><%= spare.description %></option>
+                                                    <% end %>
+                                                </select>
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-12">
+                                            <label>Quantity:</label>
+                                            <div class="input-group input-group">
+                                                <div class="input-group-prepend"></div>
+                                                <input type="text" name="count" class="form-control m-input count"  onkeypress="return is_amount_key(event)" placeholder="Quantity">
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill mt-4">
+                                                <span>
+                                                    <i class="la la-trash-o"></i>
+                                                    <span>Delete</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-form__group form-group row">
+                                <label class="col-form-label"></label>
+                                <div class="col-lg-3">
+                                    <div data-repeater-create="" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Add</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div><br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="update_interchange_wagon">Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

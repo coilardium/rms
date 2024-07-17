@@ -1,0 +1,546 @@
+
+<div class="m-subheader" id="fuel-requisite-menu-new-requisite-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Fuel Requisite</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">New</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Requisite</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><br>
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                   Batch Number : <%= @batch_no %>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <!--begin::Form-->
+<form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed entry_data" id="fuel_monit">
+    <input type="hidden" name="_csrf_token" id="csrf" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+        <div class="m-portlet__body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Requisition Number :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input" placeholder="Enter requisition number" name="requisition_no" value="" id="requisition_no"  required="required">
+                            <input type="hidden" class="form-control m-input" id="total_cost" name="total_cost">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Requisition number</span>
+                    </div>
+                    <div class="col-lg-4">
+                       <label class="">Locomotive Number</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select  name="locomotive_id" id="locomotive_id" class="form-control js-data-locomotive-ajax loco-capacity-lookup">
+                                <option></option>
+                            </select>
+                        </div>
+                        <span class="m-form__help">select the locomotive number</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Refueling Type : <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="refuel_type" id="refuel_type" class="form-control m-select2 m_select2_1 field-clr">
+                                    <option value="">Choose.....</option>
+                                    <%= for refuel_type <- @refuel_type do %>
+                                    <option value="<%= refuel_type.id %>" data-refuel-type-fm="<%= refuel_type.description %>"><%= refuel_type.description %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">select the type of refuel</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Locomotive Capacity (Litres) :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Total litres of the engine" name="loco_engine_capacity" id="loco_engine_capacity" disabled>
+                             <input type="hidden" name="engine_capacity" id="engine_capacity">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                        <span class="m-form__help"></span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Locomotive Type :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="locomotive type" name="locomotive_type" id="locomotive_type" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                        <span class="m-form__help"></span>
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <label class="">Locomotive Type :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select required name="loco_id" id="fuel_loco_id" class="form-control field-clr m-select2 m_select2_1">
+                                <option value="">Choose.....</option>
+                                    <option value="" disabled selected hidden>Please Choose...</option>
+                                    <%= for locomotive_type <- @locomotive_type do %>
+                                    <option value="<%= locomotive_type.id %>" data-loco-type="<%= locomotive_type.description %>"><%=  locomotive_type.description %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please select the locomotive type</span>
+                    </div> -->
+                    <div class="col-lg-4">
+                        <label class="">Equipment Description :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter the name" name="other_refuel" id="other_instrument">
+                            <input type="hidden" id="batch_id" name="batch_id" value="<%= @batch_id %>">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter the name</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>Equipment Number :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form " placeholder="Enter the number"  name="other_refuel_no" id="instrument_number">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-check-circle"></i></span></span>
+                        </div>
+                            <span class="m-form__help">Please enter the number</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Train Number :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter train number" name="train_number" id="train_number">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-comment-o"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter train number</span>
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <label>Train Origin: <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="train_origin" id="train_origin" class="form-control field-clr m-select2 m_select2_1">
+                                    <option value="">Choose.....</option>
+                                    <%= for stations <- @stations do %>
+                                    <option value="<%= stations.id %>" data-train-origin="<%= stations.description %>"><%= stations.description %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please Select the train origin</span>
+                    </div> -->
+                    <div class="col-lg-4">
+                       <label class="">Train Origin</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select  name="train_origin" id="train_origin" class="form-control js-station-ajax ">
+                                <option></option>
+                            </select>
+                        </div>
+                        <span class="m-form__help">Please search for the origin station</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <!--<div class="col-lg-4">
+                        <label>Train Destination : <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="train_destination" id="train_destination" class="form-control distance-lookup field-clr m-select2 m_select2_1">
+                                    <option value="">Choose.....</option>
+                                    <%= for stations <- @stations do %>
+                                    <option value="<%= stations.id %>" data-train-destin="<%= stations.description %>"><%= stations.description %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please Select the train destination</span>
+                    </div> -->
+                    <div class="col-lg-4">
+                       <label class="">Train Destination</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select  name="train_destination" id="train_destination" class="form-control js-station-ajax distance-lookup">
+                                <option></option>
+                            </select>
+                        </div>
+                        <span class="m-form__help">Please search for the destination station</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Train Type :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="train_type_id" id="train_type" class="form-control  field-clr m-select2 m_select2_1">
+                                    <option value="">Choose.....</option>
+                                    <%= for train_type <- @train_type do %>
+                                    <option value="<%= train_type.id %>" data-train-type="<%= train_type.description %>"><%= train_type.description %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please choose train type</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Shunt/Service :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="shunt" id="fuel_shunt" class="form-control  field-clr m-select2 m_select2_1">
+                                    <option value="">Choose.....</option>
+                                    <option value="Shunt">Shunt</option>
+                                    <option value="Service">Service</option>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please choose an option</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Km to Destination :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Kilometers to destination" name="km_to_destin" id="km_to_destin"  required="required" readonly>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-arrows-alt-h"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Kilometers to destination</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Section : <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="section_id" id="Section_type" class="form-control  field-clr m-select2 m_select2_1">
+                                    <option value="">Choose.....</option>
+                                    <%= for section <- @section do %>
+                                    <option value="<%= section.id %>" data-section="<%= section.code %>"><%= section.code %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please select Section</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Date : <span style="color: red;">*</span></label>
+                        <div class="m-input-icon ">
+                                <input type="date" class="form-control m-input clear_form" placeholder="" name="date" id="date" required="required">
+                            </div>
+                            <span class="m-form__help">Please select date</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Time :</label>
+                        <div class="m-input-icon">
+                            <input type="time" class="form-control m-input clear_form" placeholder="Select the time" name="time" id="time">
+                        </div>
+                        <span class="m-form__help">Please select time</span>
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <label>Refueling Depo : <span style="color: red;">*</span></label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <select required name="depo_station" id="depo_station" class="form-control distance-lookup fuel-rate-lkup m-select2 m_select2_1">
+                                    <option></option>
+                                    <%= for stations <- @stations do %>
+                                    <option value="<%= stations.id %>" data-depo-station="<%= stations.description %>"><%= stations.description %></option>
+                                    <% end %>
+                                </select>
+                        </div>
+                        <span class="m-form__help">Please Select the depo refuelled</span>
+                    </div> -->
+                    <div class="col-lg-4">
+                       <label>Refueling Depo : <span style="color: red;">*</span></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <select  name="depo_station" id="depo_station" class="form-control js-station-ajax distance-lookup fuel-rate-lkup">
+                                <option></option>
+                            </select>
+                        </div>
+                        <span class="m-form__help">Please search for the depo station</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Depo Rate :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Depo rate"  name="fuel_rate" id="fuel_rate" required="required" readonly ="true">
+                             <input type="hidden" name="locomotive" id="locomotive">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-money"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Depo fuel rate</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>Arrival Seal Number :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter seal number at arrival"  name="seal_number_at_arrival" id="seal_number_at_arrival" required="required">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-lock"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter seal number at arrival</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Arrival Seal color :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter seal color at arrival" name="seal_color_at_arrival" id="seal_color_at_arrival"  required="required">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-palette"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter seal color at arrival</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Depture Seal Number :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="Enter seal number at depture"  name="seal_number_at_depture" id="seal_number_at_depture" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-lock"></i></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Depture Seal color :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="Enter seal color at depture" name="seal_color_at_depture" id="seal_color_at_depture"  disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-palette"></i></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Balance Before Refuel :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter balance before refuel" name="balance_before_refuel" id="balance_before_refuel"  required="required" autocomplete="off">
+                            <input type="hidden" id="batch_id" name="batch_id" value="<%= @batch_id %>">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter Balance before refuel</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>fuel Meter Reading Before :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter fuel meter before"  name="bp_meter_before" id="bp_meter_before" required="required">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter fuel meter before refuel</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Litres Authorized by CTC :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form " placeholder="Enter approved refuel"  name="approved_refuel" id="approved_refuel" readonly>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-check-circle"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter authorized litres</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>Driver's Name:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="driver's name"  name="driver_name" id="driver_name">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Enter the driver's name</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Commercial Clerk's Name:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="commercial clerk's name"  name="commercial_clk_name" id="commercial_clk_name">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Enter the commercial clark's name</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Yard Master:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="yard master's name"  name="yard_master_name" id="yard_master_name">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Enter the yard master's name</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>Assests Protection Officer's Name :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter the name of the asset officer"  name="asset_protection_officers_name" id="asset_protection_officers_name">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Enter the officers name</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Depot Representative's Name :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form " placeholder="Enter the oil representative's name"  name="oil_rep_name" id="oil_rep_name">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-user"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Enter the name of the oil rep</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Comment :</label>
+                        <div class="m-input-icon ">
+                            <textarea rows="1" class="form-control m-input clear_form" name="comment" id="comment" maxlength="255" form="usrform" placeholder = "Enter your comment(optional)"></textarea>
+                        </div>
+                        <span class="m-form__help">enter your comment</span>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>fuel Meter Reading After :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="Enter fuel meter after" value="" name="bp_meter_after" id="bp_meter_after" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter fuel meter after refuel</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Quantity Refueled :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="quantity refueled" name="quantity_refueled" id="summary_quantity_refueled" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-fill-drip"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter actual litres refueled</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Balance After Refuel :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="balance after refuel" name="reading_after_refuel" id="reading_after_refuel" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Diff. CTC & actual :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="Enter Difference btn CTC & actual" name="deff_ctc_actual" id="deff_ctc_actual" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-arrows"></i></span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Current Reading :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form" placeholder="Enter reading"  name="reading" id="reading" required="required" readonly>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-dashboard"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter reading</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Fuel Consumed :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="Enter fuel consumed" value="" name="fuel_consumed" id="fuel_consumed" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Meter@Destin./refuel :</label>
+                            <div class="m-input-icon m-input-icon--right">
+                                <input type="text" class="form-control m-input clear_form" placeholder="meter@destin./refuel" name="meter_at_destin" id="meter_at_destin">
+                                <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-dashboard"></i></span></span>
+                            </div>
+                                <span class="m-form__help">Please enter meter at destination</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Consumption/km :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="Enter consumption per km" name="consumption_per_km" id="consumption_per_km"  required="required" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa fa-tachometer-alt"></i></span></span>
+                        </div>
+                        <span class="m-form__help">Consumption per km</span>
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <label class="">Total Cost :</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" class="form-control m-input clear_form disable-feild-fuel-form" placeholder="fuel total cost" value="" id="total_cost" name="total_cost" disabled>
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="fa flaticon-coins"></i></span></span>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h4 class="m-portlet__head-text">
+                                CONTROL REFUELING DETAILS
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label>Date:</label>
+                        <input type="date" name="ctc_datestamp" id="ctc_datestamp" class="form-control m-input">
+                        <span class="m-form__help">Please select the date</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="">Time:</label>
+                        <input type="time" name="ctc_time" id="ctc_time" class="form-control m-input" placeholder="">
+                        <span class="m-form__help">Please select the time</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Balance in words:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="fuel_blc_words" id="fuel_blc_words"  class="form-control m-input" placeholder="" readonly="true">
+                        </div>
+                        <span class="m-form__help">Please fuel balance in words</span>
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <label class="">Balance of fuel in figures:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="fuel_blc_figures" id="fuel_blc_figures" class="form-control m-input" placeholder="">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class=""></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter the figures</span>
+                    </div> -->
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-4">
+                        <label class="">Litres authorized by CTC in figures:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="approved_refuel" id="ctc_approved_refuel" maxlength="7" class="form-control m-input clear_form " placeholder="Enter approved refuel" name="approved_refuel" id="approved_refuel" required="required" autocomplete="off">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class=""></i></span></span>
+                        </div>
+                        <span class="m-form__help">Please enter the litres approved</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Approved Litres in words:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="litres_in_words" id="litres_in_words" class="form-control m-input" placeholder="" readonly="true">
+                        </div>
+                        <span class="m-form__help">Please fuel balance in words</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>Controller's Name:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="controllers_name" id="controllers_name" maxlength="255" class="form-control m-input" placeholder="controllers name">
+                        </div>
+                        <span class="m-form__help">Please enter controller's name</span>
+                    </div>
+                </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-8">
+                        <label>Control's Comment:</label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input type="text" name="comment" id="comment" maxlength="255" class="form-control m-input" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+
+            <div class="modal-footer m-form__actions m-form__actions--solid">
+                <button type="button" class="btn btn-danger submit ml-auto" style="background-color: #fc030b;" onclick="history.back(-1)">Go Back</button>
+                <button type="button" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" id="submit-fuel-request"> Submit <i class="la la-check"></i></button>
+            </div>
+        </div>
+</form>

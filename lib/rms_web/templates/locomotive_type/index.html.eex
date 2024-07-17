@@ -1,0 +1,156 @@
+
+<div class="m-subheader" id="locomotive-type-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Loco type</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text"> System Maintenance</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="#" class="m-nav__link">
+                        <span class="m-nav__link-text">Locomotive</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Loco type</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div><br>
+<div class="row">
+    <div class="col-md-12 col-lg-offset-2">
+        <div class="form-group">
+        <%= if get_flash(@conn, :info) do %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong><%= get_flash(@conn, :info) %></strong>
+            </div>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <strong>Oops!</strong> <%= get_flash(@conn, :error) %>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</div>
+<div class="m-portlet m-portlet--mobile">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Loco Type
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<ul class="m-portlet__nav">
+					<li class="m-portlet__nav-item">
+                        <%= if Rms.Accounts.User.has_role?(@user, :locomotive_type, :create) do %>
+                            <button class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-target="#add_loco_type" data-toggle="modal">
+                                <span>
+                                    <i class="la la-plus-circle"></i>
+                                    <span>Add Loco type</span>
+                                </span>
+                            </button>
+                        <% end %>
+					</li>
+					<li class="m-portlet__nav-item"></li>
+
+				</ul>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+
+			<!--begin: Datatable -->
+			<table class="table table-striped m-table table-sm" id="dt_loco_type">
+            <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+            <input type="hidden" name="id" id="id">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Description</th>
+						<th>Status</th>
+                        <th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+                    <%= for locomotive_type <-@locomotive_type do %>
+					<tr>
+						<td><%= locomotive_type.code %></td>
+						<td><%= locomotive_type.description %></td>
+						<td>
+                            <%= if locomotive_type.status == "A" do %>
+                               <span class="m-badge m-badge--success m-badge--wide">Active</span>
+                            <% else %>
+                                 <span class="m-badge m-badge--danger m-badge--wide">Disabled</span>
+                            <% end %>
+                        </td>
+                        <td nowrap="">
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                <i class="la la-ellipsis-h"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item view" href="#" data-status ="<%= if locomotive_type.status == "A", do: "Active", else: "Disabled" %>" data-maker ="<%= "#{locomotive_type.maker && locomotive_type.maker.first_name} #{locomotive_type.maker && locomotive_type.maker.last_name}" %>"  data-checker ="<%= "#{locomotive_type.checker && locomotive_type.checker.first_name} #{locomotive_type.checker && locomotive_type.checker.last_name}" %>" data-created = "<%= Timex.format!(locomotive_type.inserted_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-modified ="<%= Timex.format!(locomotive_type.updated_at, "%d/%m/%Y %H:%M:%S", :strftime) %>" data-id="<%= locomotive_type.id %>" data-code="<%= locomotive_type.code %>"  data-description="<%= locomotive_type.description %>" ><i class="la la-eye"></i>View</a>
+                                    <%= if Rms.Accounts.User.has_role?(@user, :locomotive_type, :edit) do %>
+                                        <a class="dropdown-item edit" href="#" data-id="<%= locomotive_type.id %>" data-code="<%= locomotive_type.code %>"  data-description="<%= locomotive_type.description %>" ><i class="la la-edit"></i> Edit</a>
+                                    <% end %>
+                                    <%= if Rms.Accounts.User.has_role?(@user, :locomotive_type, :change_status) do %>
+                                        <a class="status dropdown-item  text-success change-status" href="#" data-id="<%= locomotive_type.id %>" data-status="A" style="display: <%= if locomotive_type.status == "D", do: "block;", else: "none;" %>"><i class="la la-check"></i>Activate</a>
+                                        <a class="status dropdown-item  text-warning change-status" href="#"  data-id="<%= locomotive_type.id %>"  data-status="D" style="display: <%= if locomotive_type.status == "A", do: "block;", else: "none;" %>"><i class="la la-close"></i>Disable</a>
+                                    <% end %>
+                                    <%= if Rms.Accounts.User.has_role?(@user, :locomotive_type, :delete) do %>
+                                        <a class="dropdown-item delete text-danger" href="#"  data-id="<%= locomotive_type.id %>"><i class="flaticon-delete" aria-hidden="true"></i> Delete</a>
+                                    <% end %>
+                                </div>
+                            </span>
+                        </td>
+					</tr>
+					</tr>
+                    <% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+<!----------------------------------------------------------Add modal-------------------------------------------------------------------------->
+
+<%= render "new.html", assigns %>
+
+<!----------------------------------------------------------edit modal-------------------------------------------------------------------------->
+
+<%= render "edit.html", assigns %>
+
+<!----------------------------------------------------------view_modal-------------------------------------------------------------------------->
+
+<%= render "show.html", assigns %>

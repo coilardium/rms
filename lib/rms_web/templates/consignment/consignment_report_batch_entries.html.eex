@@ -1,0 +1,470 @@
+<div class="m-subheader" id="consignment-list-report-link" style="padding: 0px 0px 0 0px;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">Consignment List</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Consignment</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">Sales Order</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><br>
+
+<div class="row">
+    <div class="col-xl-12 text-center" id="loader" style="display: none;">
+        <div class="m-spinner m-spinner--brand"></div>
+        <div class="m-spinner m-spinner--primary"></div>
+        <div class="m-spinner m-spinner--success"></div>
+        <div class="m-spinner m-spinner--info"></div>
+        <div class="m-spinner m-spinner--warning"></div>
+        <div class="m-spinner m-spinner--danger"></div>
+    </div>
+</div>
+
+<div class="m-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon m--hide">
+                    <i class="la la-gear"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Sales Order
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                <li class="m-portlet__nav-item"></li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" onclick="history.back(-1)" class="btn btn-warning m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-arrow-left"></i>
+                            <span>&nbsp; Back</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="m-portlet__nav-item"></li>
+                  <li class="m-portlet__nav-item">
+                    <a href="/consignment/<%= @batch_items && @batch_items.batch_id %>/delivery/note" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air">
+                        <span>
+                            <i class="fa fa-file-pdf"></i>
+                            <span>&nbsp; Delivery Note</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--begin::Form-->
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed data_entry" id="data_entry">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Sale Order <span style="color: red;"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input required type="text" id="sale_order" name="sale_order" value="<%= @batch_items && @batch_items.sale_order %>" class="form-control m-input clear_form disable-fields">
+                            <input type="hidden" id="batch_id" name="batch_id" value="<%= @batch_items && @batch_items.batch_id %>">
+                            <input type="hidden" id="consignment-verification-batch" value="<%= @batch_items && @batch_items.customer_id %>">
+                            <input type="hidden" id="tarriff_id" value ="<%= @batch_items && @batch_items.tarrif_id %>">
+                            <input type="hidden" id="status" value="<%= @batch_items && @batch_items.status %>">
+                            <input type="hidden" id="origin_tariff_id" value ="<%= @batch_items && @batch_items.tariff_origin_id %>">
+                            <input type="hidden" id="destin_tariff_id" value ="<%= @batch_items && @batch_items.tariff_destination_id %>">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Customer<span style="color: red;"></label>
+                            <select required name="verification_client_id" client_id_data ="<%= @batch_items && @batch_items.customer_id %>" id="verification_client_id" class="form-control m-select2 m_select2_1 tariff-lookup clear_form disable-fields selectoption">
+                                <option></option>
+                                <%= for client <- @clients do %>
+                                <option value="<%= client.id %>"><%=  client.client_name %></option>
+                                <% end %>
+                            </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group" style="margin: 1px 0;">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Consignor<span style="color: red;"></label>
+                         <select required name="consigner_id"  consigner_data ="<%= @batch_items && @batch_items.consigner_id %>" id="consigner"  class="form-control  m-select2 m_select2_1 disable-fields clear_form">
+                            <option></option>
+                            <%= for clients <- @clients do %>
+                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Reporting Station<span style="color: red;"></label>
+                            <select required name="reporting_station_id"  reporting_station_id_data ="<%= @batch_items && @batch_items.reporting_station_id %>" id="reporting_station_id" class="form-control m-select2 m_select2_1 m-input clear_form disable-fields">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Commodity<span style="color: red;"></label>
+                        <select required name="commodity_id"  commodity_id_data ="<%= @batch_items && @batch_items.commodity_id %>" id="commodity_type" class="form-control tariff-lookup m-select2 m_select2_1 m-put clear_form disable-fields">
+                            <option></option>
+                            <%= for commodity <- @commodity do %>
+                            <option value="<%= commodity.id %>"><%= commodity.description %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group" >
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Consignee<span style="color: red;"></label>
+                       <select required name="consignee_id" consignee_data ="<%= @batch_items && @batch_items.consignee_id %>" id="consignee" class="form-control  m-select2 m_select2_1 disable-fields clear_form">
+                            <option></option>
+                            <%= for clients <- @clients do %>
+                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Capture Date<span style="color: red;"></label>
+                        <input required type="date" id="capture_date" name="capture_date"  value="<%= @batch_items && @batch_items.capture_date %>" class="form-control m-put clear_form disable-fields">
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                            <label for="example-input-small" class="form-label">Origin Station<span style="color: red;"></label>
+                            <select required name="origin_station_id"  data_origin_station_id="<%= @batch_items && @batch_items.origin_station_id %>" id="origin_station_id" class="form-control m-select2 m_select2_1 m-put clear_form disable-fields">
+                                <option></option>
+                                <%= for stations <- @stations do %>
+                                <option value="<%= stations.id %>"><%= stations.description %></option>
+                                <% end %>
+                            </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Payer<span style="color: red;"></label>
+                         <select required name="payer_id"  payer_data ="<%= @batch_items && @batch_items.consignee_id %>" id="payer" class="form-control m-select2 m_select2_1 disable-fields clear_form">
+                            <option></option>
+                            <%= for clients <- @clients do %>
+                            <option value="<%= clients.id %>"><%= clients.client_name %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class=input-group'>
+                        <label for="example-input-small" class="form-label">Document Date<span style="color: red;"></label>
+                        <input required type="date" id="document_date" value="<%= @batch_items && @batch_items.document_date %>" name="document_date" class="form-control m-put clear_form disable-fields">
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Tariff Origin<span style="color: red;"></label>
+                         <select required name="tariff_origin_id" data_origin_tariff="<%= @batch_items && @batch_items.tariff_origin_id %>"  id="origin_tariff" class="form-control m-select2 m_select2_1 station_select tariff-lookup clear_form disable-fields">
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Final Destination<span style="color: red;"></label>
+                        <select required name="final_destination_id" final_destination_data ="<%= @batch_items && @batch_items.final_destination_id %>" id="final_destination" class="form-control m-select2 m_select2_1 m-put clear_form disable-fields">
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Station Code<span style="color: red;"></label>
+                        <div class="m-input-icon m-input-icon--right">
+                            <input required type="text" id="station_code" name="station_code" value ="<%= @batch_items && @batch_items.station_code %>" class="form-control m-input clear_form disable-fields">
+                            <span class="m-input-icon__icon m-input-icon__icon--right"><span><i class="la la-bookmark"></i></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Tariff Destination<span style="color: red;"></label>
+                         <select required name="tariff_destination_id" tariff_destination_data ="<%= @batch_items && @batch_items.tariff_destination_id %>" id="destin_tariff" class="form-control m-select2 m_select2_1 station_select m-put tariff-lookup disable-fields clear_form" >
+                            <option></option>
+                            <%= for stations <- @stations do %>
+                            <option value="<%= stations.id %>"><%= stations.description %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <div class="form-group">
+                        <label for="example-input-small" class="form-label">Customer Reference No.<span style="color: red;"></label>
+                        <input required type="text" id="customer_ref"  value ="<%= @batch_items && @batch_items.customer_ref %>" name="customer_ref" class="form-control m-input clear_form disable-fields">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+
+                <h4 class="m-portlet__head-text">
+                    Invoice Details
+                </h4>
+            </div>
+        </div>
+    </div>
+    <form class="m-form m-form--fit m-form--label-align-right">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Invoice No<span style="color: red;"></label>
+                    <input type="text" class="form-control m-input clear_form disable-fields"  value ="<%= @batch_items && @batch_items.invoice_no %>" name="">
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Invoice Amount<span style="color: red;"></label>
+                    <input type="text" class="form-control m-input clear_form disable-fields"  value ="<%= @batch_items && @batch_items.invoice_amount %>" >
+                </div>
+                <div class="col-lg-4">
+                        <label for="example-input-small" class="form-label">Invoice Currency<span style="color: red;"></label>
+                         <select required  data-currency ="<%= @batch_items && @batch_items.invoice_currency_id %>" id="invoice_currency" class="form-control m-select2 m_select2_1 disable-fields clear_form">
+                            <option></option>
+                            <%= for currency <- @currency do %>
+                            <option value="<%= currency.id %>"><%= currency.code %></option>
+                            <% end %>
+                        </select>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Invoice Date<span style="color: red;"></label>
+                    <input type="text" class="form-control m-input clear_form disable-fields"  value ="<%= @batch_items && @batch_items.invoice_date %>">
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label"> Terms<span style="color: red;"></label>
+                    <input type="text" class="form-control m-input clear_form disable-fields" value ="<%= @batch_items && @batch_items.invoice_term %>">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+
+                <h4 class="m-portlet__head-text">
+                    Consignment Summary
+                </h4>
+            </div>
+        </div>
+    </div>
+    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Total Wagon Count<span style="color: red;"></label>
+                    <input type="text" class="form-control m-input clear_form disable-fields" name="" id="wagon_count">
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Total Tonnage<span style="color: red;"></label>
+                    <input type="text" id= "total_tonnage" class="form-control m-input clear_form disable-fields" >
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Surcharge Rate<span style="color: red;"></label>
+                    <input type="text" id="surcharge-percent" value ="<%= @batch_items && (Decimal.div(@batch_items.surcharge, 100) |> to_string) %>" class="form-control m-input clear_form disable-fields">
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">VAT Percentage<span style="color: red;"></label>
+                     <input type="text" id="vat-percentage" value = "<%= @rate && (Decimal.div(@rate.vat, 100) |> to_string) %>" class="form-control m-input disable-fields">
+                </div>
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Total VAT<span style="color: red;"></label>
+                    <input type="text" id="vat_total" class="form-control m-input clear_form disable-fields">
+                </div>
+                <div class="col-lg-4">
+                    <label class="">VAT Applied</label>
+                    <div class="m-radio-inline">
+                        <label class="m-radio m-radio--solid">
+                            <input type="radio" id="no_vat" name="vat"> NO
+                            <span></span>
+                        </label>
+                        <label class="m-radio m-radio--solid">
+                            <input type="radio" id="vat" name="vat" value="<%= @batch_items && @batch_items.vat_applied %>"> YES
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Surchage<span style="color: red;"></label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <input type="text" id="surcharge_total" class="form-control m-input clear_form disable-fields">
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Amount<span style="color: red;"></label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <input type="text" id="total_amount" class="form-control m-input clear_form disable-fields">
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="example-input-small" class="form-label">Total<span style="color: red;"></label>
+                    <div class="m-input-icon m-input-icon--right">
+                          <input type="text" id="overall_total" class="form-control m-input clear_form disable-fields">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="m-portlet__body">
+        <div class="dataTables_wrapper dt-bootstrap4 col-md-12">
+            <div class="col-md-12">
+                <table id="dt-tariff-lines-rates" class="table table-bordered table-hover table-striped w-100 " role="grid"  style="width: 100%;">
+                    <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                    <thead>
+                        <tr>
+                            <th>Rate</th>
+                            <th>Administrator</th>
+                            <th>Country</th>
+                            <th>Start Date</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Wagons
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+            </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <!--begin: Datatable -->
+            <table class="table table-striped m-table table-sm" id="dt-order-batch-entries">
+                <thead>
+                    <tr>
+                        <th>Wagon No.</th>
+                        <th>Wagon Owner</th>
+                        <th>Wagon Type</th>
+                        <th>Tare Weight</th>
+                        <th>Actual Tonnes</th>
+                        <th>Tarriff Tonnage</th>
+                        <th>Container No.</th>
+                        <th>Total Amount</th>
+                        <th>Comment</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <form class = "m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
+        <div class="m-form__actions m-form__actions--solid">
+            <div class="row">
+
+
+            </div>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+
+
+<div class="modal fade" id="tariff_line_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="margin-top:5px; margin-left:20px;">Tarriff line rates Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-portlet__body">
+                    <div class="dataTables_wrapper dt-bootstrap4 col-md-12">
+                        <div class="col-md-12">
+                            <table id="dt_view_tariff_line_rates" class="table table-bordered table-hover table-striped w-100 " role="grid"  style="width: 100%;">
+                                <input type="hidden" id="csrf" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token()%>">
+                                <thead>
+                                    <tr>
+                                        <th>Administrator</th>
+                                        <th>Rate</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div><br>
+                <div class="form-group m-form__group row">
+                    <div class="col-6">
+                    </div>
+                    <label for="example-text-input" class="col-1 col-form-label"><b>Total</b></label>
+                    <div class="col-4">
+                        <input class="form-control m-input" type="text" id="traiff_line_rate_total" disabled ="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

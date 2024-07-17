@@ -1,0 +1,42 @@
+<tr>
+	<td style="font-weight: bold">Consumption Route Base</td>
+</tr>
+<%= for {section, vals} <- @sect_consumption do %>
+	<tr>
+		<td style="font-style: italic; font-weight: normal !important;"><%= section %></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<%= for {week, results} <- Map.drop(vals, ["avg_ltrs", "avg_ton_km", "efficiency"]) do %>
+		<%= for weekly_entry <- results  do %>
+			<tr class="border-top">
+				<td style=" font-weight: normal !important;">litres</td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 0, do: Number.Delimit.number_to_delimited(weekly_entry.litres || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 1, do: Number.Delimit.number_to_delimited(weekly_entry.litres || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 2, do: Number.Delimit.number_to_delimited(weekly_entry.litres || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 3, do: Number.Delimit.number_to_delimited(weekly_entry.litres || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 4, do: Number.Delimit.number_to_delimited(weekly_entry.litres || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: bold !important;"><%=  Number.Delimit.number_to_delimited(vals["avg_ltrs"] || 0, precision: 4) %></td>
+			</tr>
+			<tr>
+				<td style=" font-weight: normal !important;">T-KM</td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 0, do: Number.Delimit.number_to_delimited(weekly_entry.tonnages_per_km || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 1, do: Number.Delimit.number_to_delimited(weekly_entry.tonnages_per_km || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 2, do: Number.Delimit.number_to_delimited(weekly_entry.tonnages_per_km || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 3, do: Number.Delimit.number_to_delimited(weekly_entry.tonnages_per_km || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 4, do: Number.Delimit.number_to_delimited(weekly_entry.tonnages_per_km || 0, precision: 2), else: 0 %></td>
+				<td style=" font-weight: bold !important;"><%=  Number.Delimit.number_to_delimited(vals["avg_ton_km"] || 0, precision: 4) %></td>
+			</tr>
+			<tr>
+				<td style=" font-weight: normal !important;">Efficiency</td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 0, do: Number.Delimit.number_to_delimited(weekly_entry.efficiency || 0, precision: 4), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 1, do: Number.Delimit.number_to_delimited(weekly_entry.efficiency || 0, precision: 4), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 2, do: Number.Delimit.number_to_delimited(weekly_entry.efficiency || 0, precision: 4), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 3, do: Number.Delimit.number_to_delimited(weekly_entry.efficiency || 0, precision: 4), else: 0 %></td>
+				<td style=" font-weight: normal !important;"><%=  if Enum.find_index(@weeks, &(&1 == week)) == 4, do: Number.Delimit.number_to_delimited(weekly_entry.efficiency || 0, precision: 4), else: 0 %></td>
+				<td style=" font-weight: bold !important;"><%=  Number.Delimit.number_to_delimited(vals["efficiency"] || 0, precision: 4) %></td>
+			</tr>
+		<% end %>
+	<% end %>
+<% end %>
