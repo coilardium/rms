@@ -1311,12 +1311,12 @@ defmodule RmsWeb.FuelMonitoringController do
 
   def weekly_fuel_smry_report_pdf(
         conn,
-        %{"month" => month, "year" => year, "weeks" => weeks} = params
+        %{"month" => _month, "year" => _year, "weeks" => _weeks} = _params
       ) do
     # user = conn.assigns.user
-    entries = Rms.Order.get_fuel_request_weekly(month, year)
-    IO.inspect(month, label: "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
-    content = Rms.Workers.WeeklyFuelSummaryReport.generate(entries, month, year, weeks, params)
+    # entries = Rms.Order.get_fuel_request_weekly(month, year)
+    # IO.inspect(month, label: "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
+    # content = Rms.Workers.WeeklyFuelSummaryReport.generate(entries, month, year, weeks, params)
 
     conn =
       conn
@@ -1326,7 +1326,7 @@ defmodule RmsWeb.FuelMonitoringController do
       )
       |> put_resp_content_type("text/pdf")
 
-    send_resp(conn, 200, content)
+    send_resp(conn, 200, "")
   end
 
   #################### depo period report ###################################

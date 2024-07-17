@@ -43,7 +43,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
                                     <h1 class="text-white fw-300 mb-3 d-sm-block d-md-none">
-                                        MCI
+                                        RMS
                                     </h1>
                                     <div class="card p-4 rounded-plus bg-faded">
                                         <div class="row">
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="col col-md-6 col-lg-6 hidden-sm-down">
                                     <h2 class="fs-xxl fw-500 mt-4 text-white" style="padding-left:15px">
-                                        WELCOME TO MCI
+                                        WELCOME TO RMS
                                         <small class="h3 fw-500 mt-3 mb-5 text-white opacity-90" style="font-weight: bold;">
                                            To provide competitive and sustainable rail transport and logistics solutions to the satisfaction of our stakeholders and To be the preferred rail transport and logistics provider.
                                         </small>
@@ -114,10 +114,8 @@
                                 <div class="col col-md-6 col-lg-2"></div>
                             </div>
                             <div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
-                                <%= Timex.today.year %> © Powered By&nbsp;
-                                <a href='http://www.probasegroup.com/' class='text-black' title='ProBASE' target='_blank'>
-                                    <img src="<%= Routes.static_path(@conn, "/images/probase.png") %>"  width="80" height="30">
-                                </a>
+                                ©  <%= Timex.today.year %>
+                                
                             </div>
                         </div>
                     </div>

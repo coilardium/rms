@@ -18,7 +18,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <head>
     <meta charset="utf-8" />
-    <title>MCI</title>
+    <title>RMS</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
@@ -115,7 +115,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<a href="<%= Routes.user_path(@conn, :dashboard) %>" class="m-brand__logo-wrapper">
                                         <img alt="logo" src="<%= Routes.static_path(@conn, "/images/Logo_mark.png") %>" style="width:50px; height:50px; ">
                                     </a>
-                                    <h5 style="color:white;font-weight:bold; font-size: 1.83em;  margin-left: 2.93em;">MCI</h5>
+                                    <h5 style="color:white;font-weight:bold; font-size: 1.83em;  margin-left: 2.93em;">RMS</h5>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
 
@@ -883,10 +883,8 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
 						<div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
 							<span class="m-footer__copyright">
-								 <%= Timex.today.year %> © Powered By&nbsp;
-                            <a href='http://www.probasegroup.com/' class='text-black' title='ProBASE' target='_blank'>
-                                <img src="<%= Routes.static_path(@conn, "/images/2.png") %>" width="70" height="38">
-                            </a>
+								 ©  <%= Timex.today.year %>
+                           
 							</span>
 						</div>
 						<div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">

@@ -4,8 +4,7 @@ use Mix.Config
 config :rms, Rms.Repo,
   username: "sa",
   password: "P@ssw0rd",
-  # database: "rms_test",
-  database: "rms_prod",
+  database: "zrl_prod",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 100
@@ -17,8 +16,8 @@ config :rms, Rms.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :rms, RmsWeb.Endpoint,
-  http: [port: 5502],
-  url: [host: "mci.rms.com.zm", port: 5502],
+  http: [port: 5001],
+  # url: [host: "localhost", port: 4001],
   debug_errors: false,
   code_reloader: true,
   check_origin: false,

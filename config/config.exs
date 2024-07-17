@@ -14,7 +14,7 @@ config :rms, Rms.Emails.Mailer,
   server: "smtp.gmail.com",
   port: 587,
   # or {:system, "SMTP_USERNAME"}
-  username: "reports@probasegroup.com",
+  username: "",
   # or {:system, "SMTP_PASSWORD"}
   password: "Password123$",
   # can be `:always` or `:never`
@@ -25,8 +25,8 @@ config :rms, Rms.Emails.Mailer,
   retries: 2
 
 #Pdf Generator
-config :pdf_generator,
-    wkhtml_path: "/usr/local/bin/wkhtmltopdf"
+# config :pdf_generator,
+#     wkhtml_path: "/usr/local/bin/wkhtmltopdf"
 
 # adapter: Bamboo.SMTPAdapter,
 # server: "smtp.gmail.com", #smtp.office365.com

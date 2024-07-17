@@ -5,13 +5,13 @@ defmodule Rms.Emails.Email do
 
   def send_login_details(recipient, password) do
     new_email()
-    |> from("MCI")
+    |> from("RMS")
     |> to(recipient)
     |> subject("Account Creation")
     |> text_body("""
     Dear User,
 
-    You been created on MCI.
+    You been created on RMS.
     Use the following Credentials to Login into your Account
           Email :#{recipient}
           Password:  #{password}
@@ -23,7 +23,7 @@ defmodule Rms.Emails.Email do
 
   def confirm_password_reset(token, recipient) do
     new_email()
-    |> from("MCI")
+    |> from("RMS")
     |> to(recipient)
     |> subject("Password Reset")
     |> text_body("""
@@ -37,7 +37,7 @@ defmodule Rms.Emails.Email do
 
   def password_alert(recipient, password) do
     new_email()
-    |> from("Probase")
+    |> from("RMS")
     |> to(recipient)
     |> subject("Password Reset")
     |> text_body("""
