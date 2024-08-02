@@ -16,30 +16,16 @@
         <link rel="stylesheet" media="screen, print" href="<%= Routes.static_path(@conn, "/css/login/default.css") %>" />
         <link rel="stylesheet" media="screen, print" href="<%= Routes.static_path(@conn, "/css/login/app.bundle.css") %>" />
 		<link href="/vendors/vendors/line-awesome/css/line-awesome.css" rel="stylesheet" type="text/css" />
-		<link rel="apple-touch-icon" sizes="180x180" href="<%= Routes.static_path(@conn, "/images/apple-touch-icon.png") %>">
-		<link rel="icon" type="image/png" sizes="32x32"  href="<%= Routes.static_path(@conn, "/images/favicon-32x32.png") %>">
-		<link rel="icon" type="image/png" sizes="16x16" href="<%= Routes.static_path(@conn, "/images/favicon-16x16.png") %>">
     </head>
 
     <body>
         <div class="page-wrapper">
             <div class="page-inner bg-brand-gradient">
                 <div class="page-content-wrapper bg-transparent m-0">
-                    <div class="height-10 w-100 shadow-lg px-4 " style="background-color: whitesmoke; border-bottom: 5px solid black;">
-                        <div class="d-flex align-items-center container p-0">
-                            <div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center p-0 bg-transparent bg-img-none shadow-0 height-9">
-                                <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
-                                    <img src="images/limited.png" alt="SmartAdmin WebApp" aria-roledescription="logo" style="height: 50px;">
-                                </a>
-                            </div>
-                            <a href="page_register.html" class="btn-link text-white ml-auto">
-
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex-1" style="background: url(/images/train.jpg) no-repeat center bottom fixed; background-size: cover;  opacity: 1;">
-                        <br><br><br><br>
-                        <div class="container py-4 py-lg-5 my-lg-5 px-5 px-sm-0">
+                    
+                  <div class="flex-1" style="background: url(images/peter.jpg) no-repeat center bottom fixed; background-size: cover;" >
+                        
+                        <div class="container py-4 py-lg-5 my-lg-5 px-5 px-sm-0 mt-5">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ml-auto">
                                     <h1 class="text-white fw-300 mb-3 d-sm-block d-md-none">
@@ -107,14 +93,14 @@
                                     <h2 class="fs-xxl fw-500 mt-4 text-white" style="padding-left:15px">
                                         WELCOME TO RMS
                                         <small class="h3 fw-500 mt-3 mb-5 text-white opacity-90" style="font-weight: bold;">
-                                           To provide competitive and sustainable rail transport and logistics solutions to the satisfaction of our stakeholders and To be the preferred rail transport and logistics provider.
+                                           To provide competitive and sustainable rail transport and logistics system to the satisfaction of our stakeholders.
                                         </small>
                                     </h2>
                                 </div>
                                 <div class="col col-md-6 col-lg-2"></div>
                             </div>
                             <div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
-                                ©  <%= Timex.today.year %>
+                               © <%= Timex.today.year %> 
                                 
                             </div>
                         </div>

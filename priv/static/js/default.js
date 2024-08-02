@@ -13318,7 +13318,6 @@ $(document).ready(function() {
                                 '<div class="dropdown-menu dropdown-menu-right">' +
                                     '<a class="dropdown-item view_interchange_entry"href="/consignment/sales/order/report/entries?batch=' + data + '" ><i class="la la-eye"></i> View</a>' +
                                     '<a class="dropdown-item edit"href="/edit/consignment/batch/order?batch_id='+ row["uuid"] +'" ><i class="la la-edit"></i> Edit</a>' +
-                                    '<a class="dropdown-item "href="/consignment/'+ row["batch_id"] +'/delivery/note" ><i class="fa fa-file-pdf"></i> Delivery Note</a>' +
                                 ' </div>' +
                             '</span>'
 
@@ -13549,7 +13548,6 @@ $(document).ready(function() {
                                 '<div class="dropdown-menu dropdown-menu-right">' +
                                     '<a class="dropdown-item" href="/consignment/approval/entries?batch_id=' + data + '" ><i class="la la-eye"></i> View</a>' +
                                     '<a class="dropdown-item edit" href="/edit/consignment/batch/order?batch_id=' + data + '" ><i class="la la-edit"></i> Edit</a>' +
-                                    '<a class="dropdown-item "href="/consignment/'+ row["batch_id"] +'/delivery/note" ><i class="fa fa-file-pdf"></i> Delivery Note</a>' +
                                 ' </div>' +
                             '</span>'
 

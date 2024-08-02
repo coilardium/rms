@@ -4,7 +4,7 @@ use Mix.Config
 config :rms, Rms.Repo,
   username: "sa",
   password: "P@ssw0rd",
-  database: "zrl_prod",
+  database: "rms_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 100

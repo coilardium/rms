@@ -75,9 +75,6 @@ License: You must have a valid license purchased only from themeforest(the above
 	<link href="/vendors/vendors/fontawesome5/css/all.min.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" media="screen, print" href="<%= Routes.static_path(@conn, "/css/assets/vendors/custom/datatables/datatables.bundle.css") %>">
     <link rel="stylesheet" media="screen, print" href="<%= Routes.static_path(@conn, "/css/assets/demo/demo12/base/style.bundle.css") %>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<%= Routes.static_path(@conn, "/images/apple-touch-icon.png") %>">
-    <link rel="icon" type="image/png" sizes="32x32"  href="<%= Routes.static_path(@conn, "/images/favicon-32x32.png") %>">
-    <link rel="icon" type="image/png" sizes="16x16" href="<%= Routes.static_path(@conn, "/images/favicon-16x16.png") %>">
 
 	<%# <link rel="stylesheet" media="screen, print" href="/css/smartadmin_css/page-invoice.css"> %>
     <!-- <link rel="manifest" href="<%= Routes.static_path(@conn, "/images/site.webmanifest") %>"> -->
@@ -262,32 +259,6 @@ License: You must have a valid license purchased only from themeforest(the above
 																<li class="m-menu__item commodity-group-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.commodity_group_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Commodity Group</span></a></li>
 															<% end %>
 														</ul><br><br>
-														<h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Spares</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3>
-														<ul class="m-menu__inner">
-															<%= if Rms.Accounts.User.has_role?(@user, :spare, :index) do %>
-																<li class="m-menu__item spare-list-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.spare_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Spares</span></a></li>
-															<% end %>
-															<%= if Rms.Accounts.User.has_role?(@user, :spare_fee, :index) do %>
-																<li class="m-menu__item spare-fee-list-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.spare_fee_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Price Catalog</span></a></li>
-															<% end %>
-														</ul>
-														<h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Equipment</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3>
-														<ul class="m-menu__inner">
-															<%= if Rms.Accounts.User.has_role?(@user, :equipment, :index) do %>
-																<li class="m-menu__item equipment-list-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.equipment_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Equipment List</span></a></li>
-															<% end %>
-															<%= if Rms.Accounts.User.has_role?(@user, :equipment_rate, :index) do %>
-																<li class="m-menu__item equipment-rate-list-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.equipment_rate_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Equipment Rates</span></a></li>
-															<% end %>
-														</ul>
-													</li>
-													<li class="m-menu__item">
-														<h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Defects</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3>
-														<ul class="m-menu__inner">
-															<%= if Rms.Accounts.User.has_role?(@user, :defect, :local) do %>
-																<li class="m-menu__item defect-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.defect_path(@conn, :index, "local") %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Defects</span></a></li>
-															<% end %>
-														</ul>
 														<h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Rates</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3>
 														<ul class="m-menu__inner">
 															<%= if Rms.Accounts.User.has_role?(@user, :rate, :index) do %>
@@ -299,17 +270,12 @@ License: You must have a valid license purchased only from themeforest(the above
 															<%= if Rms.Accounts.User.has_role?(@user, :tariff_line, :index) do %>
 																<li class="m-menu__item tariff_line-rates-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.tariff_line_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Tariff Lines</span></a></li>
 															<% end %>
-															<%= if Rms.Accounts.User.has_role?(@user, :loco_detention_rate, :index) do %>
-																<li class="m-menu__item loco-detention-rate-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.loco_detention_rate_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Loco Detention Rates</span></a></li>
-															<% end %>
-															<%= if Rms.Accounts.User.has_role?(@user, :haulage_rate, :index) do %>
-																<li class="m-menu__item haulage-rate-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.haulage_rate_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Haulage Rates</span></a></li>
-															<% end %>
 															<%= if Rms.Accounts.User.has_role?(@user, :surchage, :index) do %>
 																<li class="m-menu__item surchage-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.surchage_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Surcharge</span></a></li>
 															<% end %>
 														</ul>
 													</li>
+													
 												</ul>
 											</div>
 										</div>
@@ -472,125 +438,6 @@ License: You must have a valid license purchased only from themeforest(the above
 												</ul>
 											</div>
 										</li>
-										<li class="m-menu__item  m-menu__item--submenu tracking wagon-tracking-menu-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-												class="m-menu__link-text">Wagon Tracking</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu"><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :index) do %>
-														<li class="m-menu__item wagon-tracking-new-link" aria-haspopup="true"><a href="<%= Routes.wagon_tracking_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">New Tracker</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :handle_bulk_upload) do %>
-														<li class="m-menu__item wagon-tracking-bulk-upload-link" aria-haspopup="true"><a href="<%= Routes.wagon_tracking_path(@conn, :handle_bulk_upload) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Bulk Tracking</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :handle_bulk_ffupload) do %>
-														<li class="m-menu__item wagon-tracking-upload-errors-link" aria-haspopup="true"><a href="<%= Routes.wagon_tracking_path(@conn, :file_upload_errors) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Bulk Upload Errors</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :view_wagon_tracker) do %>
-														<li class="m-menu__item wagon-tracking-list-link" aria-haspopup="true"><a href="<%= Routes.wagon_tracking_path(@conn, :view_wagon_tracker) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Tracking List</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
-										<li class="m-menu__item  m-menu__item--submenu tracking Interchange-menu-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-											class="m-menu__link-text">Interchange</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<li class="m-menu__item  m-menu__item--submenu wagon-hire-menu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-														class="m-menu__link-text">Wagon Hire</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-														<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-															<ul class="m-menu__subnav">
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :index) do %>
-																	<li class="m-menu__item new-interchange" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">New List</span></a></li>
-																<% end %>
-																<li class="m-menu__item  m-menu__item--submenu Interchange-tracking-menu-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-																	class="m-menu__link-text">Tracking</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-																	<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-																		<ul class="m-menu__subnav">
-																			<%= if Rms.Accounts.User.has_role?(@user, :interchange, :wagon_tracking) do %>
-																				<li class="m-menu__item interchange-tracking-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :wagon_tracking) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Local Line</span></a></li>
-																			<% end %>
-																			<%= if Rms.Accounts.User.has_role?(@user, :interchange, :foreign_wagon_tracking) do %>
-																				<li class="m-menu__item interchange-foreign-tracking-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :foreign_wagon_tracking) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Foreign Line</span></a></li>
-																			<% end %>
-																		</ul>
-																	</div>
-																</li>
-																<li class="m-menu__item  m-menu__item--submenu Interchange-incoming-menu-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-																	class="m-menu__link-text">Incoming</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-																	<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-																		<ul class="m-menu__subnav">
-																			<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_wagons_on_hire) do %>
-																				<li class="m-menu__item incoming-on-hire-interchange" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :incoming_wagons_on_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">On Hire</span></a></li>
-																			<% end %>
-																			<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_wagons_off_hire) do %>
-																				<li class="m-menu__item incoming-off-hire-interchange" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :incoming_wagons_off_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Off Hire</span></a></li>
-																			<% end %>
-																		</ul>
-																	</div>
-																</li>
-																<li class="m-menu__item  m-menu__item--submenu Interchange-outgoing-menu-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-																	class="m-menu__link-text">Outgoing</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-																	<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-																		<ul class="m-menu__subnav">
-																			<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_wagons_on_hire) do %>
-																			<li class="m-menu__item outgoing-on-hire-interchange" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :outgoing_wagons_on_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">On Hire</span></a></li>
-																			<% end %>
-																			<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_wagons_off_hire) do %>
-																			<li class="m-menu__item outgoing-off-hire-interchange" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :outgoing_wagons_off_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Off Hire</span></a></li>
-																			<% end %>
-																		</ul>
-																	</div>
-																</li>
-															</ul>
-														</div>
-													</li>
-													<li class="m-menu__item  m-menu__item--submenu auxiliary-hire-menu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-														class="m-menu__link-text">Auxiliary Hire</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-														<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-															<ul class="m-menu__subnav">
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :auxiliary_hire) do %>
-																	<li class="m-menu__item auxiliary-hire-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :auxiliary_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">New Hire</a></li>
-																<% end %>
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :auxiliary_tracking) do %>
-																	<li class="m-menu__item auxiliary-tracking-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :bulk_auxiliary_tracking) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Tracking</a></li>
-																<% end %>
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_auxiliary_hire) do %>
-																	<li class="m-menu__item incoming-auxiliary-hire-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :incoming_auxiliary_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Incoming</span></a></li>
-																<% end %>
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_auxiliary_hire) do %>
-																	<li class="m-menu__item outgoing-auxiliary-hire-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :outgoing_auxiliary_hire) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Outgoing</span></a></li>
-																<% end %>
-															</ul>
-														</div>
-													</li>
-													<li class="m-menu__item  m-menu__item--submenu loco-detention-menu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-														class="m-menu__link-text">Loco Detention</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-														<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-															<ul class="m-menu__subnav">
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :loco_detention) do %>
-																	<li class="m-menu__item new-loco-detention" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :loco_detention) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">New</a></li>
-																<% end %>
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_locomotive) do %>
-																	<li class="m-menu__item incoming-loco-detention" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :incoming_locomotive) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Incoming</span></a></li>
-																<% end %>
-																<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_locomotive) do %>
-																	<li class="m-menu__item outgoing-loco-detention" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :outgoing_locomotive) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Outgoing</span></a></li>
-																<% end %>
-															</ul>
-														</div>
-													</li>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :new_haulage) do %>
-														<li class="m-menu__item new-haulage-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :new_haulage) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text"> Haulage Tariffic</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :materials) do %>
-														<li class="m-menu__item interchange-material" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :materials) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Material Supply</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :foreign_tracking_exceptions) do %>
-														<li class="m-menu__item interchange-exceptions-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :foreign_tracking_exceptions) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">File Exceptions</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
 										<li class="m-menu__item  m-menu__item--submenu tracking fuel-requisite-menu-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
 											class="m-menu__link-text">Fuel Requisite</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -611,18 +458,9 @@ License: You must have a valid license purchased only from themeforest(the above
 													<%= if Rms.Accounts.User.has_role?(@user, :fuel_monitoring, :back_office_fuel_approval) do %>
 														<li class="m-menu__item fuel-requisite-menu-approval-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.fuel_monitoring_path(@conn, :back_office_fuel_approval) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Verification List</span></a></li>
 													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :mvt_exceptions, :index) do %>
-														<li class="m-menu__item fuel-requisite-menu-new-requisite-link " aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_exception_path(@conn, :index) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Movement Exceptions</span></a></li>
-													<% end %>
 												</ul>
 											</div>
 										</li>
-										<%= if Rms.Accounts.User.has_role?(@user, :interchange, :demurrage) do %>
-											<li class="m-menu__item demurrage-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :demurrage) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Demurrage</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :movement, :works_order) do %>
-											<li class="m-menu__item works-order-link" aria-haspopup="true"><a href="<%= Routes.movement_path(@conn, :works_order) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Works Order</span></a></li>
-										<% end %>
 									</ul>
 								</div>
 							</li>
@@ -660,18 +498,6 @@ License: You must have a valid license purchased only from themeforest(the above
 										<%= if Rms.Accounts.User.has_role?(@user, :consignment, :consignment_batch_report) do %>
 											<li class="m-menu__item consignment-list-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :consignment_batch_report) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon la la-shopping-cart"></i><span class="m-menu__link-text">Consignment List</span></a></li>
 										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :consignment, :haulage_invoice) do %>
-											<li class="m-menu__item consignment-haulage-invoice-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :haulage_invoice) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon la la-truck"></i><span class="m-menu__link-text">Haulage Invoice</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :consignment, :unmatched_aging) do %>
-											<li class="m-menu__item consignment-unmatched-aging-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :unmatched_aging) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-graphic-1"></i><span class="m-menu__link-text">Unmatched Aging</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :consignment, :monthly_income_summary) do %>
-											<li class="m-menu__item consignment-monthly_income-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="/consignment/monthly/income/summary/report" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-calendar-with-a-clock-time-tools"><span></span></i><span class="m-menu__link-text">Monthly Income</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :consignment, :consignment_batch_report) do %>
-											<li class="m-menu__item consignment-matching-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :manual_matching) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon la la-random"></i><span class="m-menu__link-text">Manual Matching</span></a></li>
-										<% end %>
 									</ul>
 								</div>
 							</li>
@@ -681,9 +507,6 @@ License: You must have a valid license purchased only from themeforest(the above
 									<ul class="m-menu__subnav">
 										<%= if Rms.Accounts.User.has_role?(@user, :movement, :movement_report_batch) do %>
 											<li class="m-menu__item movement-train-list-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_path(@conn, :movement_report_batch) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon la la-train"></i><span class="m-menu__link-text">Train List</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :movement, :monthly_income_summary) do %>
-											<li class="m-menu__item movement-monthly_income-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="/movement/monthly/income/summary/report" class="m-menu__link "><i class="m-menu__link-icon flaticon-calendar-with-a-clock-time-tools"><span></span></i><span class="m-menu__link-text">Monthly Income</span></a></li>
 										<% end %>
 									</ul>
 								</div>
@@ -698,8 +521,6 @@ License: You must have a valid license purchased only from themeforest(the above
 												<ul class="m-menu__subnav">
 													<%= if Rms.Accounts.User.has_role?(@user, :consignment, :consignment_batch_report) do %>
 														<li class="m-menu__item customer_based_consignment_list" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :customer_based_consignment_list) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Customer Based</span></a></li>
-														<li class="m-menu__item consignment_haulage_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :haulage_export) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Haulage Export</span></a></li>
-														<li class="m-menu__item consignment_recon_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :con_recon_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Reconciliation</span></a></li>
 														<li class="m-menu__item consignment_wagon_querry_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.consignment_path(@conn, :con_wagon_querry_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Wagon Querry</span></a></li>
 													<% end %>
 												</ul>
@@ -711,132 +532,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												<ul class="m-menu__subnav">
 													<%= if Rms.Accounts.User.has_role?(@user, :movement, :movement_report_batch) do %>
 														<li class="m-menu__item movement_customer_based_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_path(@conn, :movement_customer_based_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Customer Based</span></a></li>
-														<li class="m-menu__item movement_haulage_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_path(@conn, :movement_haulage_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Haulage Export</span></a></li>
-														<li class="m-menu__item movement_recon_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_path(@conn, :mvt_recon_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Reconciliation</span></a></li>
 														<li class="m-menu__item movement_wagon_querry_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_path(@conn, :mvt_wagon_querry_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Wagon Querry</span></a></li>
 													<% end %>
 												</ul>
 											</div>
 										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="m-menu__item  m-menu__item--submenu interchange-report-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-network"></i><span
-								class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Interchange</span> <span class="m-menu__link-badge"></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-									<ul class="m-menu__subnav">
-										<li class="m-menu__item  m-menu__item--submenu wagon-hire-report-menu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-											class="m-menu__link-text">Wagon Hire</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_wagons_report) do %>
-														<li class="m-menu__item interchange-incoming-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :interchange_report, "incoming") %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Incoming Wagons</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_wagons_report) do %>
-														<li class="m-menu__item interchange-outgoing-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :interchange_report, "outgoing") %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Outgoing Wagons</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :all_wagons_report) do %>
-														<li class="m-menu__item interchange-list-report-link" aria-haspopup="true"><a href="<%= Routes.interchange_path(@conn, :interchange_list_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">All Wagons</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
-										<li class="m-menu__item  m-menu__item--submenu auxiliary-hire-report" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-											class="m-menu__link-text">Auxiliary Hire</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_auxiliary_report) do %>
-														<li class="m-menu__item incoming_auxiliary_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :incoming_auxiliary_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Incoming</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_auxiliary_report) do %>
-														<li class="m-menu__item outgoing_auxiliary_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :outgoing_auxiliary_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Outgoing</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :auxiliary_daily_summary_report) do %>
-														<li class="m-menu__item auxiliary-daily-summary-report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :auxiliary_daily_summary_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Daily Summary</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
-										<li class="m-menu__item  m-menu__item--submenu loco-detention-report-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-											class="m-menu__link-text">Loco Detention</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_locomotive_report) do %>
-														<li class="m-menu__item incoming_detention_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :incoming_locomotive_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Incoming</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_locomotive_report) do %>
-														<li class="m-menu__item outgoing_detention_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :outgoing_locomotive_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Outgoing</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :locomotive_summary_report) do %>
-														<li class="m-menu__item summary_detention_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :locomotive_summary_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Loco Summary</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
-										<li class="m-menu__item  m-menu__item--submenu haulage-report-link" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-											class="m-menu__link-text">Haulage Tariffic</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_haulage_report) do %>
-														<li class="m-menu__item incoming_haulage_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :incoming_haulage_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Incoming Traffic</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_haulage_report) do %>
-														<li class="m-menu__item outgoing_haulage_report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :outgoing_haulage_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Outgoing Traffic</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
-										<li class="m-menu__item  m-menu__item--submenu material-supply-menu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span
-											class="m-menu__link-text">Material Supply</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-												<ul class="m-menu__subnav">
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :incoming_materials) do %>
-														<li class="m-menu__item interchange-incoming-wagons-report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :incoming_materials) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Received Materials</span></a></li>
-													<% end %>
-													<%= if Rms.Accounts.User.has_role?(@user, :interchange, :outgoing_materials) do %>
-														<li class="m-menu__item interchange-outgoing-wagons-report" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :outgoing_materials) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Supplied Materials</span></a></li>
-													<% end %>
-												</ul>
-											</div>
-										</li>
-										<%= if Rms.Accounts.User.has_role?(@user, :interchange, :current_acc_report) do %>
-									    	<li class="m-menu__item current-acc-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :current_acc_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Current Account </span></a></li>
-											<li class="m-menu__item current-acc-summary-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :account_summary_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Current Acc Summary </span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :interchange, :mechanical_bills_report) do %>
-											<li class="m-menu__item mechanical-bills-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :mechanical_bills_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Mechanical Bills</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :interchange, :wagon_turn_around) do %>
-											<li class="m-menu__item wagon-turn-around-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :wagon_turn_around) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Wagon Turn Around</span></a></li>
-										<% end %>
-									</ul>
-								</div>
-							</li>
-							<li class="m-menu__item  m-menu__item--submenu wagon-tracking-reports-menu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__item-here"></span><i class="m-menu__link-icon fa fa-train"></i><span
-										class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Wagon Tracking</span> <span class="m-menu__link-badge"></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
-								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
-									<ul class="m-menu__subnav">
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :wagon_summary_report) do %>
-											<li class="m-menu__item wagon-summary-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :wagon_summary_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Wagon Summary</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :view_wagon_position_report) do %>
-											<li class="m-menu__item wagon-position-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :view_wagon_position_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Position Summary</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :wagon_allocation_report) do %>
-											<li class="m-menu__item wagon-allocation-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :wagon_allocation_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Allocation Summary</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :view_wagon_yard_position_report) do %>
-											<li class="m-menu__item yard-postion-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :view_wagon_yard_position_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Yard Position</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :view_wagon_by_condition_report) do %>
-											<li class="m-menu__item wagon-condition-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :view_wagon_by_condition_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Condition Summary</span></a></li>
-										<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :list_wagon_delayed) do %>
-											<li class="m-menu__item wagon-delayed-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :list_wagon_delayed) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Delayed Summary</span></a></li>
-							    		<% end %>
-										<%= if Rms.Accounts.User.has_role?(@user, :wagon_tracking, :bad_order_average_entries) do %>
-											<li class="m-menu__item bad-order-average-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.wagon_tracking_path(@conn, :bad_order_average_lookup) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Bad Order Average</span></a></li>
-										<% end %>
 									</ul>
 								</div>
 							</li>
@@ -847,21 +547,9 @@ License: You must have a valid license purchased only from themeforest(the above
 									<%= if Rms.Accounts.User.has_role?(@user, :fuel_monitoring, :fuel_requisite_table) do %>
 										<li class="m-menu__item fuel-requisite-list-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.fuel_monitoring_path(@conn, :fuel_requisite_table) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Requisite List</span></a></li>
 									<% end %>
-									<%= if Rms.Accounts.User.has_role?(@user, :fuel_monitoring, :monthly_report) do %>
-										<li class="m-menu__item fuel-requisite-list-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.fuel_monitoring_path(@conn, :monthly_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Monthly Report</span></a></li>
-									<% end %>
-									<%= if Rms.Accounts.User.has_role?(@user, :fuel_monitoring, :weekly_fuel_report) do %>
-										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.fuel_monitoring_path(@conn, :weekly_fuel_report) %>" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Weekly Summary</span></a></li>
-									<% end %>
 									</ul>
 								</div>
 							</li>
-							<%= if Rms.Accounts.User.has_role?(@user, :interchange, :demurrage_report) do %>
-								<li class="m-menu__item demurrage-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.interchange_path(@conn, :demurrage_report) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-coins"></i><span class="m-menu__link-text">Demurrage</span></a></li>
-							<% end %>
-							<%= if Rms.Accounts.User.has_role?(@user, :movement, :works_order_report) do %>
-								<li class="m-menu__item works-order-report-link" aria-haspopup="true" m-menu-link-redirect="1"><a href="<%= Routes.movement_path(@conn, :works_order_report) %>" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-interface-3"></i><span class="m-menu__link-text">Works Order</span></a></li>
-							<% end %>
 						</ul>
 					</div>
 				</div>

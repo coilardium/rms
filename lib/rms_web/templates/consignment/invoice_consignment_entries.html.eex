@@ -66,12 +66,7 @@
                 </li>
                 <li class="m-portlet__nav-item"></li>
                   <li class="m-portlet__nav-item">
-                    <a href="/consignment/<%= @batch_items && @batch_items.batch_id %>/delivery/note" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air">
-                        <span>
-                            <i class="fa fa-file-pdf"></i>
-                            <span>&nbsp; Delivery Note</span>
-                        </span>
-                    </a>
+                    
                 </li>
             </ul>
         </div>
