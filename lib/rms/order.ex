@@ -1204,8 +1204,8 @@ defmodule Rms.Order do
 
   def movement_report_lookup(search_params, page, size, user) do
     Rms.Order.Movement
-    |> where([a], a.status == "APPROVED")
-    |> verify_user_station_id_for_movement(user)
+    # |> where([a], a.status == "APPROVED")
+    # |> verify_user_station_id_for_movement(user)
     |> join(:left, [a], b in Rms.SystemUtilities.Wagon, on: a.wagon_id == b.id)
     |> join(:left, [a, b], c in Rms.SystemUtilities.WagonType, on: b.wagon_type_id == c.id)
     |> join(:left, [a, b, _c], d in Rms.Accounts.RailwayAdministrator, on: b.owner_id == d.id)
@@ -1234,8 +1234,8 @@ defmodule Rms.Order do
 
   def movement_report_lookup(_source, search_params, user) do
     Rms.Order.Movement
-    |> where([a], a.status == "APPROVED")
-    |> verify_user_station_id_for_movement(user)
+    # |> where([a], a.status == "APPROVED")
+    # |> verify_user_station_id_for_movement(user)
     |> join(:left, [a], b in Rms.SystemUtilities.Wagon, on: a.wagon_id == b.id)
     |> join(:left, [a, b], c in Rms.SystemUtilities.WagonType, on: b.wagon_type_id == c.id)
     |> join(:left, [a, b, _c], d in Rms.Accounts.RailwayAdministrator, on: b.owner_id == d.id)
@@ -1263,8 +1263,8 @@ defmodule Rms.Order do
 
   def movement_report_lookup_excel(_source, search_params, settings, user) do
     Rms.Order.Movement
-    |> where([a], a.status == "APPROVED")
-    |> verify_user_station_id_for_movement(user)
+    # |> where([a], a.status == "APPROVED")
+    # |> verify_user_station_id_for_movement(user)
     |> join(:left, [a], b in Rms.SystemUtilities.Wagon, on: a.wagon_id == b.id)
     |> join(:left, [a, b], c in Rms.SystemUtilities.WagonType, on: b.wagon_type_id == c.id)
     |> join(:left, [a, b, _c], d in Rms.Accounts.RailwayAdministrator, on: b.owner_id == d.id)

@@ -1,0 +1,13 @@
+/*!
+ * Font Awesome Free 5.2.0 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+@font-face {
+  font-family: 'Font Awesome 5 Brands';
+  font-style: normal;
+  font-weight: normal;
+  src: url("../webfonts/fa-brands-400-e8019d507e8cb51d169ab4f94a0cda12.eot?vsn=d");
+  src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-brands-400-6814d0e8136d34e313623eb7129d538e.woff2?vsn=d") format("woff2"), url("../webfonts/fa-brands-400-da408238128b876cbda6424391f1566f.woff?vsn=d") format("woff"), url("../webfonts/fa-brands-400-fdf44bc43e8fa2358bbb7d9165d78455.ttf?vsn=d") format("truetype"), url("../webfonts/fa-brands-400.svg#fontawesome") format("svg"); }
+
+.fab {
+  font-family: 'Font Awesome 5 Brands'; }

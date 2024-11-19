@@ -3,7 +3,7 @@ defmodule Rms.Repo.Migrations.AddWagonStatusIdTblInterchange do
 
   def up do
     alter table(:tbl_interchange) do
-      add :wagon_status_id, references(:tbl_wagon_status, column: :id, on_delete: :nothing)
+      # add :wagon_status_id, references(:tbl_wagon_status, column: :id, on_delete: :nothing)
     end
   end
 

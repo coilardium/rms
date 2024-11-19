@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 # Email Config
 config :rms, Rms.Emails.Mailer,
@@ -77,33 +77,33 @@ config :rms, Rms.Scheduler,
   timeout: 3_620_000,
   timezone: "Africa/Cairo",
   jobs: [
-    wagon_tracking: [
-      schedule: "00 12 * * *",
-      # schedule: "@weekly",
-      task: {Rms.Workers.InterchangeAccumulativeDays, :update_wagon_days_at_station, []}
-    ],
-    wagon_mvt_status_update: [
-      schedule: "00 12 * * *",
-      task: {RmsWeb.WagonTrackingController, :update_wagon_mvt_status, []}
-    ],
-    interchange_accumulative_days: [
-      # schedule: {:extended, "*/20"},
-      schedule: "30 12 * * * *",
-      # schedule: "@weekly",
-      task: {Rms.Workers.InterchangeAccumulativeDays, :wagons_on_hire, []}
-    ],
-    wagons: [
-      # schedule: {:extended, "*/20"},
-      schedule: "54 16 * * * *",
-      # schedule: "@weekly",
-      task: {RmsWeb.WagonTrackingController, :create_wagon_log, []}
-    ],
-    auxiliary_on_hire: [
-      # schedule: {:extended, "*/20"},
-      schedule: "13 12 * * * *",
-      # schedule: "@weekly",
-      task: {Rms.Workers.InterchangeAccumulativeDays, :auxiliary_on_hire, []}
-    ]
+    # wagon_tracking: [
+    #   schedule: "00 12 * * *",
+    #   # schedule: "@weekly",
+    #   task: {Rms.Workers.InterchangeAccumulativeDays, :update_wagon_days_at_station, []}
+    # ],
+    # wagon_mvt_status_update: [
+    #   schedule: "00 12 * * *",
+    #   task: {RmsWeb.WagonTrackingController, :update_wagon_mvt_status, []}
+    # ],
+    # interchange_accumulative_days: [
+    #   # schedule: {:extended, "*/20"},
+    #   schedule: "30 12 * * * *",
+    #   # schedule: "@weekly",
+    #   task: {Rms.Workers.InterchangeAccumulativeDays, :wagons_on_hire, []}
+    # ],
+    # wagons: [
+    #   # schedule: {:extended, "*/20"},
+    #   schedule: "54 16 * * * *",
+    #   # schedule: "@weekly",
+    #   task: {RmsWeb.WagonTrackingController, :create_wagon_log, []}
+    # ],
+    # auxiliary_on_hire: [
+    #   # schedule: {:extended, "*/20"},
+    #   schedule: "13 12 * * * *",
+    #   # schedule: "@weekly",
+    #   task: {Rms.Workers.InterchangeAccumulativeDays, :auxiliary_on_hire, []}
+    # ]
   ]
 
 # Configures the endpoint

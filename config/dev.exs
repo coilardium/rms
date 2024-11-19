@@ -1,13 +1,14 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :rms, Rms.Repo,
   username: "sa",
   password: "P@ssw0rd",
-  database: "rms_dev",
+  database: "rms",
   hostname: "localhost",
+  port: 1433,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 100
+  pool_size: 50
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -17,12 +18,12 @@ config :rms, Rms.Repo,
 # with webpack to recompile .js and .css sources.
 config :rms, RmsWeb.Endpoint,
   http: [port: 4000],
-  https: [
-    port: 4001,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
+  # https: [
+  #   port: 4003,
+  #   cipher_suite: :strong,
+  #   certfile: "priv/cert/selfsigned.pem",
+  #   keyfile: "priv/cert/selfsigned_key.pem"
+  # ],
   debug_errors: false,
   code_reloader: true,
   check_origin: false,

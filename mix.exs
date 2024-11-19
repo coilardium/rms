@@ -63,8 +63,7 @@ defmodule Rms.MixProject do
       {:number, "~> 0.5.7"},
       {:xlsxir, "~> 1.6.2"},
       {:csv, "~>2.3"},
-      {:endon, "~> 1.0"},
-      {:rename_project, "~> 0.1.0"},
+      {:endon, "~> 1.0"}
     ]
   end
 

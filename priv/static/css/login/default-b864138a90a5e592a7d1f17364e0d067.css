@@ -1,0 +1,26 @@
+#app-name{
+	color: rgb(255, 255, 255);
+	font-size: 40px;
+	font-weight: bold;
+}
+#login-content{
+	color: rgb(255,255,255);
+	font-size: 18px;
+	/* font-weight: bold; */
+}
+#loggedIn-user{
+	font-size: 18px;
+	color: #009ccc;
+}
+#login_background{
+	background: url(../../images/zrl.png) no-repeat center bottom fixed; background-size: cover;
+	/* background: url(../../images/login-backgrounds/svg/pattern-1.svg) no-repeat center bottom fixed; background-size: cover; */
+}
+#driver-cards{
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+#empTblHead{
+	font-weight: bold;
+}
