@@ -108,7 +108,7 @@ defmodule Rms.Order.FuelMonitoring do
     field :date, :date
     field :deff_ctc_actual, :decimal
     field :fuel_consumed, :decimal
-    field :fuel_rate, :decimal, precision: 18, scale: 2
+    field :fuel_rate, :decimal
     field :loco_no, :string
     field :quantity_refueled, :decimal
     field :reading, :decimal
@@ -136,7 +136,7 @@ defmodule Rms.Order.FuelMonitoring do
     field :ctc_time, :string
     field :fuel_blc_words, :string
     field :litres_in_words, :string
-    field :loco_engine_capacity, :decimal, precision: 18, scale: 2
+    field :loco_engine_capacity, :decimal
     field :locomotive_type, :string
     field :shunt, :string
     field :driver_name, :string

@@ -11,7 +11,7 @@ defmodule Rms.Locomotives.Locomotive do
     # field :type_id, :string
     # field :weight, :float
     field :status, :string, default: "D"
-    field :loco_engine_capacity, :decimal, precision: 18, scale: 2
+    field :loco_engine_capacity, :decimal
 
     belongs_to :owner, Rms.Accounts.RailwayAdministrator, foreign_key: :owner_id, type: :id
     belongs_to :model, Rms.SystemUtilities.Model, foreign_key: :model_id, type: :id

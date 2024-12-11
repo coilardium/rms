@@ -184,7 +184,7 @@
             <div class="row">
                  <div class="col-lg-9"></div>
                 <div class="col-lg-3">
-                    <button type="button" class="btn btn-success" id="approve-movement-entries" style="margin-right:5px;" data-status="INTRANSIT" >Approve</button>
+                    <button type="button" class="btn btn-success" id="approve-movement-entries" style="margin-right:5px;" data-status="APPROVED" >Approve</button>
                     <button type="button" class="btn btn-danger" id="reject-mvt">Reject</button>
                 </div>
 

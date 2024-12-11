@@ -6,7 +6,7 @@ defmodule Rms.SystemUtilities.Rates do
   @timestamps_opts [autogenerate: {TariffLine.Localtime, :autogenerate, []}]
   schema "tbl_fuel_rates" do
     field :code, :string
-    field :fuel_rate, :decimal, precision: 18, scale: 2
+    field :fuel_rate, :decimal
     field :month, :string
     field :start_date, :date
     field :refueling_depo, :string

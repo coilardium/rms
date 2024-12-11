@@ -34,7 +34,7 @@ if config_env() == :prod do
   config :rms, Rms.Repo,
   username: "sa",
   password: "P@ssw0rd",
-  database: "rms_dev",
+  database: "rms",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 100

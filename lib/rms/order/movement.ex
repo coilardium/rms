@@ -61,7 +61,7 @@ defmodule Rms.Order.Movement do
     field :consignment_date, :date
     field :container_no, :string
     field :dead_loco, :string
-    field :status, :string, default: "PENDING"
+    field :status, :string, default: "PENDING_VERIFICATION"
     field :invoice_no, :string
     field :movement_date, :date
     field :movement_time, :string

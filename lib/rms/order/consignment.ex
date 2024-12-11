@@ -86,7 +86,7 @@ defmodule Rms.Order.Consignment do
     field :document_date, :date
     field :sale_order, :string
     field :station_code, :string
-    field :status, :string, default: "PENDING"
+    field :status, :string, default: "PENDING_APPROVAL"
     field :vat_amount, :decimal
     field :invoice_no, :string
     field :rsz, :decimal
